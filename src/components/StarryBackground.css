@@ -5,6 +5,9 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: linear-gradient(to bottom, #050510 0%, #0a0a20 50%, #0f0f30 100%);
-    cursor: crosshair;
+    /* Richer, deeper space gradient */
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    overflow: hidden;
+    pointer-events: none;
+    /* Allow clicks to pass through to content, but canvas captures mousemove via window listener */
 }

@@ -33,7 +33,7 @@ const AboutPage = () => {
                 >
                     <div className="image-container">
                         <img
-                            src="/Image/Pic.jpg"
+                            src="./Image/Pic.jpg"
                             alt="Lesley Mutsambiwa"
                             className="profile-image"
                         />
@@ -105,7 +105,7 @@ const AboutPage = () => {
 
                     {/* Resume Download Button */}
                     <motion.a
-                        href="/resume.pdf"
+                        href="./resume.pdf"
                         download="Lesley_Mutsambiwa_Resume.pdf"
                         className="resume-button"
                         whileHover={{ scale: 1.05 }}
