@@ -24,7 +24,7 @@ const ContactPage = () => {
         setStatus('submitting');
 
         try {
-            const response = await fetch("https://formspree.io/f/manrdqqq", {
+            const response = await fetch(`https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_ID}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const ContactPage = () => {
         {
             icon: FaEnvelope,
             label: 'Email',
-            url: 'mailto:lesleymutsambiwa@gmail.com',
+            url: `mailto:${import.meta.env.VITE_EMAIL}`,
             color: '#ea4335'
         },
     ];
