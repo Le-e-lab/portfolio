@@ -1,28 +1,43 @@
-import React from 'react';
-import StarryBackground from './components/StarryBackground';
-import BookLayout from './components/BookLayout';
-import CoverPage from './pages/CoverPage';
-import SkillsPage from './pages/SkillsPage';
-import ProjectsPage from './pages/ProjectsPage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
-import './App.css';
+import '@fontsource/playfair-display/400.css';
+import '@fontsource/playfair-display/500.css';
+import '@fontsource/playfair-display/600.css';
+import '@fontsource/playfair-display/700.css';
+import '@fontsource/playfair-display/400-italic.css';
+import '@fontsource/inter/300.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import Hero from './components/Hero';
+import About from './components/About';
+import Projects from './components/Projects';
+import Interests from './components/Interests';
+import Contact from './components/Contact';
+import HireMe from './components/HireMe';
+
+
+
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
-    const pages = [
-        <CoverPage />,
-        <AboutPage />,
-        <SkillsPage />,
-        <ProjectsPage />,
-        <ContactPage />,
-    ];
-
-    return (
-        <div className="App">
-            <StarryBackground />
-            <BookLayout pages={pages} />
-        </div>
-    );
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Hero />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/interests" element={<Interests />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/hire-me" element={<HireMe />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

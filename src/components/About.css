@@ -1,0 +1,131 @@
+.about-section {
+  position: relative;
+}
+
+.about-content {
+  max-width: 720px;
+}
+
+.about-heading {
+  margin-bottom: var(--space-xl);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent-lavender), var(--accent-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about-bio {
+  margin-bottom: var(--space-lg);
+  max-width: 600px;
+}
+
+.about-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+/* Tech Stack */
+.about-tech {
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all var(--duration-normal) var(--ease-out);
+  cursor: default;
+}
+
+/* Interests */
+.interests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: var(--space-md);
+}
+
+.interest-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  cursor: default;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.interest-card:hover {
+  border-color: var(--accent-lavender-dim);
+  background: var(--bg-card-hover);
+}
+
+.interest-emoji {
+  font-size: 1.5rem;
+}
+
+.interest-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 480px) {
+  .interests-grid {
+    grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .interest-card {
+    padding: var(--space-md) var(--space-sm);
+  }
+}
+
+/* Poem Styles */
+.about-poem {
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.poem-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  font-family: 'Georgia', serif; 
+}
+
+.poem-author {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: normal;
+}

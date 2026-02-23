@@ -1,0 +1,36 @@
+﻿
+> fgs@0.0.0 lint
+> eslint .
+
+
+C:\Users\DELL\Documents\GitHub\portfolio\src\components\About.jsx
+   1:41  warning  Unused eslint-disable directive (no problems were reported from 'no-unused-vars')
+  67:13  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                    react/no-unescaped-entities
+  67:51  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                    react/no-unescaped-entities
+  70:13  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                    react/no-unescaped-entities
+  70:95  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                    react/no-unescaped-entities
+  76:72  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                    react/no-unescaped-entities
+  77:31  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                    react/no-unescaped-entities
+  79:31  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                    react/no-unescaped-entities
+  83:33  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                    react/no-unescaped-entities
+
+C:\Users\DELL\Documents\GitHub\portfolio\src\components\Contact.jsx
+   1:41  warning  Unused eslint-disable directive (no problems were reported from 'no-unused-vars')
+  47:14  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                    react/no-unescaped-entities
+  52:12  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                    react/no-unescaped-entities
+
+C:\Users\DELL\Documents\GitHub\portfolio\src\components\Hero.jsx
+  124:12  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\DELL\Documents\GitHub\portfolio\src\components\MobileNav.jsx
+  3:58  warning  Unused eslint-disable directive (no problems were reported from 'no-unused-vars')
+
+C:\Users\DELL\Documents\GitHub\portfolio\src\components\Projects.jsx
+  1:41  warning  Unused eslint-disable directive (no problems were reported from 'no-unused-vars')
+
+C:\Users\DELL\Documents\GitHub\portfolio\src\components\Sidebar.jsx
+  1:41  warning  Unused eslint-disable directive (no problems were reported from 'no-unused-vars')
+
+Γ£û 16 problems (11 errors, 5 warnings)
+  0 errors and 5 warnings potentially fixable with the `--fix` option.
+

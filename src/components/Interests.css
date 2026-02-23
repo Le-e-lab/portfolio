@@ -1,0 +1,119 @@
+.interests-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.interests-heading {
+  margin-bottom: var(--space-2xl);
+}
+
+/* Poetry Block */
+.poem-block {
+  display: flex;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-3xl);
+  background: var(--bg-card);
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  max-width: 750px;
+}
+
+.poem-accent-line {
+  width: 3px;
+  min-height: 100%;
+  background: linear-gradient(180deg, var(--accent-lavender), var(--accent-gold), transparent);
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+}
+
+.poem-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.poem-line {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+}
+
+.poem-word {
+  display: inline-block;
+  margin-right: 0.25em;
+}
+
+/* Passion Cards */
+.passion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--space-xl);
+  max-width: 900px;
+}
+
+.passion-card {
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  cursor: default;
+  background: var(--bg-card);
+
+  transition: all var(--duration-normal) var(--ease-out);
+  box-shadow: var(--shadow-sm);
+}
+
+.passion-card:hover {
+  border-color: var(--border-medium);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+.passion-visual {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+.passion-title {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.passion-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Atmospheric Glow */
+.interests-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(167, 139, 250, 0.04);
+  filter: blur(150px);
+  bottom: -20%;
+  right: -10%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@media (max-width: 640px) {
+  .passion-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .poem-line {
+    font-size: 1rem;
+  }
+}

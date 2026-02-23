@@ -1,0 +1,133 @@
+.hire-me-section {
+  align-items: center;
+  padding-top: var(--space-4xl);
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-bottom: var(--space-xl);
+  transition: color var(--duration-normal);
+}
+
+.back-btn:hover {
+  color: var(--accent-lavender);
+}
+
+.hire-heading {
+  margin-bottom: var(--space-lg);
+}
+
+.hire-bio {
+  max-width: 600px;
+  margin-bottom: var(--space-2xl);
+  font-size: 1.1rem;
+}
+
+.hire-actions {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-3xl);
+  flex-wrap: wrap;
+}
+
+.resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.75rem;
+  background: var(--accent-lavender);
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-family: var(--font-sans);
+  box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.resume-btn:hover {
+  color: #ffffff;
+  background: var(--accent-lavender); /* Ensure background stays */
+  filter: brightness(1.1);
+}
+
+[data-theme="light"] .resume-btn {
+  background: var(--accent-lavender);
+  color: white;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.contact-btn-alt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  font-weight: 500;
+  background: transparent;
+  transition: all var(--duration-normal);
+}
+
+.contact-btn-alt:hover {
+  border-color: var(--text-primary);
+  background: var(--bg-card-hover);
+}
+
+/* Grid */
+.hire-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-lg);
+  width: 100%;
+}
+
+.hire-card {
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+}
+
+.hire-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+.hire-card-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.hire-card-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 640px) {
+  .hire-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .resume-btn, .contact-btn-alt {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.hire-me-content {
+  width: 100%;
+  max-width: 700px;
+}

@@ -1,0 +1,19 @@
+.app {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  isolation: isolate;
+}
+
+.main-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+}

@@ -1,0 +1,68 @@
+﻿On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	deleted:    .env.example
+	modified:   .gitignore
+	deleted:    Image/Pic.jpg
+	deleted:    Lesley Mutsambiwa (2).pdf
+	modified:   README.md
+	modified:   index.html
+	modified:   package-lock.json
+	modified:   package.json
+	deleted:    public/Image/Pic.jpg
+	deleted:    public/resume.pdf
+	deleted:    src/App.css
+	modified:   src/App.jsx
+	deleted:    src/components/BookLayout.css
+	deleted:    src/components/BookLayout.jsx
+	deleted:    src/components/StarryBackground.css
+	deleted:    src/components/StarryBackground.jsx
+	modified:   src/index.css
+	modified:   src/main.jsx
+	deleted:    src/pages/AboutPage.css
+	deleted:    src/pages/AboutPage.jsx
+	deleted:    src/pages/ContactPage.css
+	deleted:    src/pages/ContactPage.jsx
+	deleted:    src/pages/CoverPage.css
+	deleted:    src/pages/CoverPage.jsx
+	deleted:    src/pages/ProjectsPage.css
+	deleted:    src/pages/ProjectsPage.jsx
+	deleted:    src/pages/SkillsPage.css
+	deleted:    src/pages/SkillsPage.jsx
+	deleted:    vercel.json
+	modified:   vite.config.js
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	eslint.config.js
+	git-status.txt
+	lint-results.txt
+	public/Lesley_Mutsambiwa_Resume.docx
+	public/vite.svg
+	src/components/About.css
+	src/components/About.jsx
+	src/components/Contact.css
+	src/components/Contact.jsx
+	src/components/Hero.css
+	src/components/Hero.jsx
+	src/components/HireMe.css
+	src/components/HireMe.jsx
+	src/components/Interests.css
+	src/components/Interests.jsx
+	src/components/Layout.css
+	src/components/Layout.jsx
+	src/components/MobileNav.css
+	src/components/MobileNav.jsx
+	src/components/Projects.css
+	src/components/Projects.jsx
+	src/components/ScrollToTop.jsx
+	src/components/Sidebar.css
+	src/components/Sidebar.jsx
+	src/components/ThemeToggle.css
+	src/components/ThemeToggle.jsx
+	src/hooks/
+
+no changes added to commit (use "git add" and/or "git commit -a")

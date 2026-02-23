@@ -1,0 +1,33 @@
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all var(--duration-normal) var(--ease-out);
+  margin-top: auto; /* Push to bottom if in flex container */
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent-lavender);
+  color: var(--accent-lavender);
+  background: var(--accent-lavender-dim);
+  box-shadow: var(--shadow-glow-lavender);
+}
+
+.theme-icon {
+  display: block;
+}
+
+.theme-icon.sun {
+  color: var(--accent-gold);
+}
+
+.theme-icon.moon {
+  color: var(--accent-lavender);
+}

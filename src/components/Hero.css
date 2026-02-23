@@ -1,0 +1,125 @@
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.875rem;
+  color: var(--accent-emerald);
+  margin-bottom: var(--space-xl);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Title */
+.hero-title {
+  margin-bottom: var(--space-2xl);
+  perspective: 600px;
+}
+
+.title-line {
+  display: flex;
+  gap: 0.35em;
+  flex-wrap: wrap;
+}
+
+.title-word {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-primary);
+  display: inline-block;
+}
+
+.title-word.accent {
+  background: linear-gradient(135deg, var(--accent-lavender), var(--accent-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Socials */
+.hero-socials {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--duration-normal) var(--ease-out);
+  background: transparent;
+}
+
+.social-btn:hover {
+  border-color: var(--accent-lavender);
+  background: var(--accent-lavender-dim);
+  color: var(--accent-lavender);
+  transform: translateY(-2px);
+  transform: translateY(-2px);
+}
+
+/* Bio */
+.hero-bio {
+  max-width: 560px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+/* Animated line */
+.hero-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-lavender), var(--accent-gold), transparent);
+  margin-top: var(--space-3xl);
+  transform-origin: left;
+}
+
+
+
+@media (max-width: 480px) {
+  .title-word {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .hero-socials {
+    gap: var(--space-sm);
+  }
+
+  .social-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}

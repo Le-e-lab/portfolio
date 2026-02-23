@@ -1,61 +1,16 @@
-# Lesley Mutsambiwa - Portfolio
+# React + Vite
 
-A modern, interactive portfolio website showcasing my work as a Mobile Developer, Backend Developer, and Cyber Analyst. Built with React and Vite.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🚀 Features
+Currently, two official plugins are available:
 
-- **Interactive Book Layout** - Unique page-flip navigation
-- **Scroll Navigation** - Navigate pages by scrolling (desktop only)
-- **Instant Transitions** - Fast, lag-free page switching
-- **Responsive Design** - Works beautifully on all devices
-- **Interactive Background** - Starry night with shooting stars on click
-- **Contact Form** - Integrated with Formspree for direct messages
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 🛠️ Tech Stack
+## React Compiler
 
-- **React** - UI framework
-- **Vite** - Build tool
-- **Framer Motion** - Animations
-- **React Icons** - Icon library
-- **Vanilla CSS** - Styling
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## 📦 Installation
+## Expanding the ESLint configuration
 
-```bash
-# Clone the repository
-git clone https://github.com/Le-e-lab/portfolio.git
-
-# Navigate to project directory
-cd portfolio
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-```
-
-## 🌟 Sections
-
-1. **Cover** - Introduction and greeting
-2. **About** - Background, education, interests, and GDG leadership
-3. **Skills** - Technical skills and proficiencies
-4. **Projects** - Showcase of key projects
-5. **Contact** - Get in touch form and social links
-
-## 📧 Contact
-
-- **Email**: lesleymutsambiwa@gmail.com
-- **GitHub**: [Le-e-lab](https://github.com/Le-e-lab)
-- **LinkedIn**: [Lesley Mutsambiwa](https://www.linkedin.com/in/lesley-mutsambiwa/)
-
-## 📄 License
-
-MIT License - feel free to use this as inspiration for your own portfolio!
-
----
-
-Built with ❤️ by Lesley Mutsambiwa
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
