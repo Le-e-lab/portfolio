@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { HiOutlineEnvelope } from 'react-icons/hi2';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 import './Hero.css';
 
 /* Stagger container */
@@ -79,23 +80,27 @@ export default function Hero() {
 
         {/* Social Buttons — staggered with spring */}
         <motion.div className="hero-socials" variants={fadeUp}>
-          <motion.a
-            href="/hire-me"
-            className="social-btn hire-me-btn"
+          <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.8, type: 'spring', stiffness: 200, damping: 15 }}
             whileHover={{ y: -3, scale: 1.05, boxShadow: '0 0 20px rgba(167,139,250,0.3)' }}
             whileTap={{ scale: 0.95 }}
-            style={{ 
-              background: 'var(--accent-lavender)', 
-              color: '#fff',
-              border: 'none',
-              fontWeight: 600
-            }}
           >
-            Hire Me
-          </motion.a>
+            <Link
+              to="/hire-me"
+              className="social-btn hire-me-btn"
+              style={{ 
+                background: 'var(--accent-lavender)', 
+                color: '#fff',
+                border: 'none',
+                fontWeight: 600,
+                display: 'inline-block'
+              }}
+            >
+              Hire Me
+            </Link>
+          </motion.div>
           {[
             { href: 'https://mail.google.com/mail/?view=cm&fs=1&to=lesleymutsambiwa@gmail.com', icon: <HiOutlineEnvelope size={16} />, label: 'Email' },
             { href: 'https://github.com/Le-e-lab', icon: <FaGithub size={16} />, label: 'GitHub' },
