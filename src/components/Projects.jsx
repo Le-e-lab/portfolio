@@ -1,8 +1,9 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { HiOutlineArrowUpRight } from 'react-icons/hi2';
 import './Projects.css';
 
-const projects = [
+const fallbackProjects = [
   {
     tag: 'Group Project',
     title: 'UPath',
@@ -53,6 +54,8 @@ const projects = [
   },
 ];
 
+const presetColors = ['#3b82f6', '#f97316', '#8b5cf6', '#2ea44f', '#34d399', '#d4a574', '#ec4899', '#06b6d4'];
+
 const container = {
   hidden: {},
   visible: {
@@ -71,6 +74,72 @@ const fadeUp = {
 };
 
 export default function Projects() {
+  const [projects, setProjects] = useState(fallbackProjects);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('https://api.github.com/users/Le-e-lab/repos?sort=updated&per_page=6');
+        if (!response.ok) throw new Error('Failed to fetch projects');
+        const data = await response.json();
+        
+        const formattedProjects = await Promise.all(
+          data.map(async (repo, index) => {
+            let description = repo.description;
+
+            // If no description, try fetching the README
+            if (!description) {
+              try {
+                const readmeRes = await fetch(
+                  `https://api.github.com/repos/Le-e-lab/${repo.name}/readme`,
+                  {
+                    headers: { Accept: 'application/vnd.github.v3.raw' },
+                  }
+                );
+                
+                if (readmeRes.ok) {
+                  const readmeText = await readmeRes.text();
+                  
+                  // Basic text extraction: remove markdown headers, links, images, and HTML tags
+                  const cleanText = readmeText
+                    .replace(/^#+.*$/gm, '') // Remove headers
+                    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Extract text from links
+                    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '') // Remove images
+                    .replace(/<[^>]*>?/gm, '') // Remove HTML tags
+                    .trim();
+                  
+                  const lines = cleanText.split('\n').filter(line => line.trim().length > 0);
+                  if (lines.length > 0) {
+                    description = lines[0].slice(0, 120) + (lines[0].length > 120 ? '...' : '');
+                  }
+                }
+              } catch (err) {
+                console.error(`Failed to fetch readme for ${repo.name}:`, err);
+              }
+            }
+
+            return {
+              tag: repo.private ? 'Private' : 'Public',
+              title: repo.name.replace(/-/g, ' '),
+              description: description || 'No description provided.',
+              tech: repo.topics && repo.topics.length > 0 
+                ? repo.topics.slice(0, 3) 
+                : (repo.language ? [repo.language] : ['Code']),
+              color: presetColors[index % presetColors.length],
+              link: repo.html_url
+            };
+          })
+        );
+        
+        setProjects(formattedProjects);
+      } catch (error) {
+        console.error('Error fetching projects, falling back to static list:', error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   return (
     <section className="section projects-section">
       <motion.div
@@ -87,14 +156,13 @@ export default function Projects() {
         </motion.h2>
 
         <motion.p className="projects-desc" variants={fadeUp}>
-          A collection of projects and experiments — from full-stack apps to
-          Linux configurations. Each one taught me something new.
+          Automatically synced with my latest GitHub activity. A collection of projects and experiments — from full-stack apps to configuration scripts.
         </motion.p>
 
         <div className="projects-grid">
           {projects.map((project, i) => (
             <motion.a
-              key={project.title}
+              key={project.link + i}
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
@@ -131,7 +199,7 @@ export default function Projects() {
                 </motion.div>
               </div>
 
-              <h3 className="project-title">{project.title}</h3>
+              <h3 className="project-title" style={{ textTransform: 'capitalize' }}>{project.title}</h3>
               <p className="project-description">{project.description}</p>
 
               <div className="project-tech">
