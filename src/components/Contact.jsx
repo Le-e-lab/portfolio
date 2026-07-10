@@ -56,7 +56,7 @@ export default function Contact() {
         <motion.div className="contact-actions" variants={fadeUp}>
           <motion.a
             href="/portfolio/Lesley_Mutsambiwa_Resume.docx"
-            download="Lesley_Mutsambiwa_Resume.docx"
+            download="Lesley_Mutsambiwa_CV.docx"
             className="contact-btn-primary interactive"
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.97 }}

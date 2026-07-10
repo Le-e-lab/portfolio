@@ -1,4 +1,4 @@
-.contact-section { padding-top: 120px; }
+.contact-section { padding-top: 100px; padding-bottom: var(--space-4xl); }
 .contact-heading { margin-bottom: var(--space-md); }
 .contact-desc { max-width: 520px; margin-bottom: var(--space-2xl); font-size: 1.1rem; }
 

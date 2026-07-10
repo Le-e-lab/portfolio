@@ -153,11 +153,12 @@
   text-transform: uppercase;
   letter-spacing: 0.25em;
   color: var(--teal);
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-xl);
   background: rgba(58, 138, 138, 0.1);
   padding: 0.5em 1em;
   border-radius: var(--radius-full);
   border: 1px solid rgba(58, 138, 138, 0.2);
+  margin-top: var(--space-xl);
 }
 
 .hero-dot {
