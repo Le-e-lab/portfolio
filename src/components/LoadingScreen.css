@@ -1,0 +1,90 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+}
+
+.loader-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.loader-stroke {
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  transform-origin: center;
+  opacity: 0.4;
+}
+
+.loader-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--teal);
+  pointer-events: none;
+}
+
+.loader-circle--1 {
+  width: 300px;
+  height: 300px;
+}
+
+.loader-circle--2 {
+  width: 500px;
+  height: 500px;
+}
+
+.loader-logo {
+  width: 52px;
+  height: 52px;
+  position: relative;
+  z-index: 1;
+}
+
+.loader-name {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  position: relative;
+  z-index: 1;
+}
+
+.loader-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  color: var(--text-muted);
+  position: relative;
+  z-index: 1;
+}
+
+.loader-progress {
+  position: absolute;
+  bottom: 80px;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.loader-progress-bar {
+  width: 100%;
+  height: 100%;
+  background: var(--teal);
+  transform-origin: left;
+}

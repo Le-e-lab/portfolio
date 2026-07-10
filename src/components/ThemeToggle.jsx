@@ -8,7 +8,8 @@ export default function ThemeToggle() {
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('theme');
     if (saved) return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    // Default to dark (Night Rain is primary aesthetic)
+    return 'dark';
   });
 
   useEffect(() => {

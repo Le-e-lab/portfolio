@@ -1,19 +1,35 @@
 .app {
   position: relative;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  isolation: isolate;
 }
 
 .main-content {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 0 var(--space-4xl);
+  padding-right: 80px; /* Space for right-edge nav */
 }
 
 .page-wrapper {
   min-height: 100vh;
+}
+
+/* Film grain overlay */
+.app::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.4;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 0 var(--space-lg);
+    padding-top: var(--space-2xl);
+    padding-bottom: 80px; /* Space for bottom tab bar */
+  }
 }

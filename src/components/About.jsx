@@ -20,122 +20,68 @@ const techStack = [
   { icon: SiTypescript, name: 'TypeScript', color: '#3178c6' },
 ];
 
-const interests = [
-  { label: 'Gaming', emoji: '🎮' },
-  { label: 'F1', emoji: '🏎️' },
-  { label: 'Poetry', emoji: '📜' },
-  { label: 'Hiking', emoji: '🥾' },
-];
-
 const container = {
   hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
-  },
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.2 } },
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 25, filter: 'blur(6px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-  },
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.23, 1, 0.32, 1] } },
 };
 
 export default function About() {
   return (
     <section className="section about-section">
-      <motion.div
-        className="about-content"
-        variants={container}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.span className="section-label" variants={fadeUp}>
-          About Me
-        </motion.span>
+      <motion.div className="about-content" variants={container} initial="hidden" animate="visible">
+        <motion.span className="section-number" variants={fadeUp}>03</motion.span>
+        <motion.span className="section-label" variants={fadeUp}>About</motion.span>
 
         <motion.h2 className="about-heading" variants={fadeUp}>
           A night owl who codes <br />
           <span className="text-gradient">in the quiet.</span>
         </motion.h2>
 
-        <motion.div className="about-poem" variants={fadeUp}>
-           <p className="poem-text">
-            &quot;Rest if you must, but don’t you quit.&quot;
-           </p>
-           <p className="poem-text">
-            &quot;You are the handicap you must face, / You are the one who must choose your place.&quot;
-           </p>
-           <span className="poem-author">— Edgar Albert Guest, <em>Motivation</em></span>
+        {/* Lewis Hamilton Quote */}
+        <motion.div className="about-quote" variants={fadeUp}>
+          <div className="quote-accent" />
+          <div className="quote-body">
+            <p className="quote-text">&quot;You have to believe in yourself when no one else does — that makes you a winner right there.&quot;</p>
+            <span className="quote-attr">— Lewis Hamilton</span>
+          </div>
         </motion.div>
 
         <motion.p className="about-bio" variants={fadeUp}>
-          I thrive in the quiet hours — when the world slows down. That&apos;s when I build my best work. As a CS student at
-          Africa University, I&apos;m deeply passionate about crafting beautiful web
-          and mobile applications. I run Linux (Fedora & CachyOS), dabble in
-          cybersecurity, and I&apos;m always looking for my next startup to contribute to.
+          I build things that work — and look good doing it. As a second-year CS student
+          at Africa University, I&apos;m focused on full-stack development with a designer&apos;s eye.
+          I run Linux, I write clean code, and I ship projects that matter.
         </motion.p>
 
         <motion.p className="about-bio" variants={fadeUp}>
-          Beyond the screen, you&apos;ll find me reading poetry, watching F1 races,
-          or planning my next hiking trip under the stars. I believe in clean code
-          and clean aesthetics.
+          When I&apos;m not coding, you&apos;ll find me watching F1, reading poetry,
+          or hiking under the stars. I believe great software starts with great taste.
         </motion.p>
 
-        {/* Tech Stack */}
-        <motion.div className="about-tech" variants={fadeUp}>
+        {/* Tech Stack — Rotating Marquee */}
+        <motion.div className="about-block" variants={fadeUp}>
           <h3 className="about-subtitle">Tech Stack</h3>
-          <div className="tech-grid">
-            {techStack.map((tech, i) => {
-              const Icon = tech.icon;
-              return (
-                <motion.div
-                  key={tech.name}
-                  className="tech-badge"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 + i * 0.06, type: 'spring', stiffness: 200 }}
-                  whileHover={{
-                    y: -4,
-                    boxShadow: `0 0 20px ${tech.color}22`,
-                    borderColor: `${tech.color}44`,
-                  }}
-                >
-                  <Icon size={18} style={{ color: tech.color }} />
-                  <span>{tech.name}</span>
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        {/* Interests */}
-        <motion.div className="about-interests" variants={fadeUp}>
-          <h3 className="about-subtitle">What I Love</h3>
-          <div className="interests-grid">
-            {interests.map((item, i) => (
-              <motion.div
-                key={item.label}
-                className="interest-card"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + i * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{
-                  y: -6,
-                  scale: 1.05,
-                  transition: { type: 'spring', stiffness: 300 },
-                }}
-              >
-                <span className="interest-emoji">{item.emoji}</span>
-                <span className="interest-label">{item.label}</span>
-              </motion.div>
-            ))}
-          </div>
         </motion.div>
       </motion.div>
+
+      {/* Marquee — full width */}
+      <div className="tech-marquee">
+        <div className="tech-marquee-track">
+          {[...techStack, ...techStack, ...techStack].map((tech, i) => {
+            const Icon = tech.icon;
+            return (
+              <div key={`${tech.name}-${i}`} className="tech-marquee-item">
+                <Icon size={20} style={{ color: tech.color }} />
+                <span>{tech.name}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </section>
   );
 }

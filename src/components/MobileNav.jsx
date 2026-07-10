@@ -1,83 +1,43 @@
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineBars3, HiOutlineXMark } from 'react-icons/hi2';
-import ThemeToggle from './ThemeToggle';
+import { NavLink, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { HiOutlineHome, HiOutlineUser, HiOutlineCodeBracket, HiOutlineEnvelope } from 'react-icons/hi2';
 import './MobileNav.css';
 
 const navItems = [
-  { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
-  { to: '/projects', label: 'Projects' },
-  { to: '/interests', label: 'Interests' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/', icon: HiOutlineHome, label: 'Home' },
+  { to: '/work', icon: HiOutlineCodeBracket, label: 'Work' },
+  { to: '/about', icon: HiOutlineUser, label: 'About' },
+  { to: '/contact', icon: HiOutlineEnvelope, label: 'Contact' },
 ];
 
 export default function MobileNav() {
-  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   return (
-    <>
-      <motion.button
-        className="mobile-menu-btn"
-        onClick={() => setIsOpen(!isOpen)}
-        whileTap={{ scale: 0.9 }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        {isOpen ? <HiOutlineXMark size={22} /> : <HiOutlineBars3 size={22} />}
-      </motion.button>
-
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              className="mobile-overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-            />
-            <motion.div
-              className="mobile-menu glass"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+    <nav className="bottombar">
+      <div className="bottombar-inner">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = location.pathname === item.to;
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={`bottombar-item ${isActive ? 'bottombar-item--active' : ''}`}
             >
-              <div className="mobile-menu-header">
-                <div className="header-left">
-                  <span className="mobile-logo">L</span>
-                  <span className="mobile-name">Lesley</span>
-                </div>
-                <ThemeToggle />
-              </div>
-
-              <nav className="mobile-nav-links">
-                {navItems.map((item, i) => (
-                  <NavLink
-                    key={item.to}
-                    to={item.to}
-                    className={({ isActive }) =>
-                      `mobile-nav-link ${isActive ? 'active' : ''}`
-                    }
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <motion.span
-                      initial={{ opacity: 0, x: 30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 + i * 0.06 }}
-                    >
-                      {item.label}
-                    </motion.span>
-                  </NavLink>
-                ))}
-              </nav>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+              <Icon size={20} />
+              <span className="bottombar-label">{item.label}</span>
+              {isActive && (
+                <motion.div
+                  className="bottombar-dot"
+                  layoutId="bottomNav"
+                  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                />
+              )}
+            </NavLink>
+          );
+        })}
+      </div>
+    </nav>
   );
 }

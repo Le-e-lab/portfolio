@@ -1,78 +1,59 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { NavLink, useLocation } from 'react-router-dom';
-import {
-  HiOutlineHome,
-  HiOutlineUser,
-  HiOutlineCodeBracket,
-  HiOutlineSparkles,
-  HiOutlineEnvelope,
-} from 'react-icons/hi2';
 import ThemeToggle from './ThemeToggle';
 import './Sidebar.css';
 
 const navItems = [
-  { to: '/', icon: HiOutlineHome, label: 'Home' },
-  { to: '/about', icon: HiOutlineUser, label: 'About' },
-  { to: '/projects', icon: HiOutlineCodeBracket, label: 'Projects' },
-  { to: '/interests', icon: HiOutlineSparkles, label: 'Interests' },
-  { to: '/contact', icon: HiOutlineEnvelope, label: 'Contact' },
+  { to: '/', label: 'Home', num: '01' },
+  { to: '/work', label: 'Work', num: '02' },
+  { to: '/about', label: 'About', num: '03' },
+  { to: '/contact', label: 'Contact', num: '04' },
 ];
 
 export default function Sidebar() {
   const location = useLocation();
+  const [hovered, setHovered] = useState(null);
 
   return (
     <motion.nav
-      className="sidebar"
-      initial={{ x: -80, opacity: 0 }}
+      className="sidenav"
+      initial={{ x: 60, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+      transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1], delay: 0.5 }}
     >
-      <div className="sidebar-inner">
-        <motion.div
-          className="sidebar-logo"
-          whileHover={{ scale: 1.1, rotate: 5 }}
-          transition={{ type: 'spring', stiffness: 300 }}
-        >
-          L
-        </motion.div>
+      {/* Vertical line */}
+      <div className="sidenav-line" />
 
-        <div className="sidebar-nav">
-          {navItems.map((item, index) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.to;
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className="sidebar-link"
-                title={item.label}
+      {/* Nav items — vertical text on right edge */}
+      <div className="sidenav-items">
+        {navItems.map((item, i) => {
+          const isActive = location.pathname === item.to;
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className="sidenav-link"
+              onMouseEnter={() => setHovered(i)}
+              onMouseLeave={() => setHovered(null)}
+            >
+              <motion.span
+                className={`sidenav-item ${isActive ? 'sidenav-item--active' : ''}`}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 + i * 0.08 }}
               >
-                <motion.div
-                  className={`sidebar-btn ${isActive ? 'active' : ''}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7 + index * 0.1 }}
-                  whileHover={{ scale: 1.15 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Icon size={20} />
-                  {isActive && (
-                    <motion.div
-                      className="active-indicator"
-                      layoutId="activeNav"
-                      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                    />
-                  )}
-                </motion.div>
-              </NavLink>
-            );
-          })}
-        </div>
-        
-        <div className="sidebar-footer">
-           <ThemeToggle />
-        </div>
+                <span className="sidenav-num">{item.num}</span>
+                <span className="sidenav-label">{item.label}</span>
+              </motion.span>
+            </NavLink>
+          );
+        })}
+      </div>
+
+      {/* Theme toggle — bottom */}
+      <div className="sidenav-bottom">
+        <ThemeToggle />
       </div>
     </motion.nav>
   );

@@ -1,0 +1,51 @@
+name: Sync GitHub Projects
+
+on:
+  push:
+    branches: ["main"]
+  schedule:
+    # Run daily at midnight UTC to keep projects fresh
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch all repos (public + private)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Fetch all repos the authenticated user owns, sorted by recently updated
+          gh api '/user/repos?sort=updated&per_page=100&type=all' \
+            --paginate \
+            --jq '[.[] | {
+              name: .name,
+              description: .description,
+              html_url: .html_url,
+              language: .language,
+              topics: (.topics // []),
+              private: .private,
+              fork: .fork,
+              stargazers_count: .stargazers_count,
+              updated_at: .updated_at
+            }]' > /tmp/repos.json
+
+          # Wrap in a root object with metadata
+          echo "{\"repos\": $(cat /tmp/repos.json), \"generated_at\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" > public/projects.json
+
+          echo "Synced $(cat /tmp/repos.json | jq length) repos"
+
+      - name: Commit projects.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/projects.json
+          # Only commit if there are changes
+          git diff --cached --quiet || git commit -m "chore: sync projects.json [skip ci]" && git push
