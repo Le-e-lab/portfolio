@@ -18,8 +18,8 @@ export default function LoadingScreen({ onComplete }) {
       {phase < 3 && (
         <motion.div
           className="loader"
-          exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+          exit={{ opacity: 0, scale: 1.03 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* Background grain */}
           <div className="loader-grain" />
@@ -29,43 +29,103 @@ export default function LoadingScreen({ onComplete }) {
             className="loader-stroke"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: phase >= 1 ? 1 : 0 }}
-            transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           />
 
           {/* Decorative circles */}
           <motion.div
             className="loader-circle loader-circle--1"
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: phase >= 1 ? 1 : 0, opacity: phase >= 1 ? 0.06 : 0 }}
-            transition={{ duration: 1.5, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
+            animate={{ scale: phase >= 1 ? 1 : 0, opacity: phase >= 1 ? 0.05 : 0 }}
+            transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           />
           <motion.div
             className="loader-circle loader-circle--2"
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: phase >= 1 ? 1 : 0, opacity: phase >= 1 ? 0.04 : 0 }}
-            transition={{ duration: 1.8, delay: 0.5, ease: [0.23, 1, 0.32, 1] }}
+            animate={{ scale: phase >= 1 ? 1 : 0, opacity: phase >= 1 ? 0.03 : 0 }}
+            transition={{ duration: 1.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           />
 
-          {/* Logo */}
+          {/* Redesigned Custom Interlocking Geometric Logo */}
           <motion.div
             className="loader-logo"
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: phase >= 1 ? 1 : 0, scale: phase >= 1 ? 1 : 0.8, y: phase >= 1 ? 0 : 20 }}
-            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M16 3c0 0-9 10-9 18a9 9 0 0018 0c0-8-9-18-9-18z" fill="var(--teal)" opacity="0.9"/>
-              <path d="M12 16l-3 3 3 3" stroke="var(--bg)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-              <path d="M20 16l3 3-3 3" stroke="var(--bg)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Outer Hexagon Outline */}
+              <motion.polygon 
+                points="50,10 85,30 85,70 50,90 15,70 15,30" 
+                stroke="var(--teal)" 
+                strokeWidth="1.5" 
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 0.6 }}
+                transition={{ duration: 1.6, ease: "easeInOut" }}
+              />
+              
+              {/* Interlocking geometric background blueprint lines */}
+              <motion.line x1="50" y1="10" x2="50" y2="90" stroke="var(--teal)" strokeWidth="0.5" strokeDasharray="2 3" opacity="0.15" />
+              <motion.line x1="15" y1="30" x2="85" y2="70" stroke="var(--teal)" strokeWidth="0.5" strokeDasharray="2 3" opacity="0.15" />
+              <motion.line x1="15" y1="70" x2="85" y2="30" stroke="var(--teal)" strokeWidth="0.5" strokeDasharray="2 3" opacity="0.15" />
+
+              {/* L Initial stylized path */}
+              <motion.path 
+                d="M 32,35 L 32,65 C 32,68 35,68 38,68 L 48,68" 
+                stroke="var(--teal)" 
+                strokeWidth="2.5" 
+                strokeLinecap="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 1.2, ease: "easeInOut", delay: 0.4 }}
+              />
+
+              {/* M Stylized overlapping Infinity Loop path */}
+              <motion.path 
+                d="M 44,68 C 47,68 47,42 52,42 C 57,42 57,68 62,68 C 67,68 68,52 68,35" 
+                stroke="var(--amber)" 
+                strokeWidth="2.5" 
+                strokeLinecap="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 1.4, ease: "easeInOut", delay: 0.7 }}
+              />
+
+              {/* Interlocking Glowing Nodes (overlapping points) */}
+              <motion.circle 
+                cx="32" cy="35" r="3" 
+                fill="var(--teal)" 
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.4, duration: 0.3 }}
+              />
+              <motion.circle 
+                cx="68" cy="35" r="3" 
+                fill="var(--amber)" 
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.6, duration: 0.3 }}
+              />
+              <motion.circle 
+                cx="52" cy="42" r="2.5" 
+                fill="var(--teal)" 
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.8, duration: 0.3 }}
+              />
             </svg>
           </motion.div>
 
-          {/* Name */}
+          {/* Name in Antonio font */}
           <motion.h1
-            className="loader-name"
-            initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
-            animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : 20, filter: phase >= 2 ? 'blur(0px)' : 'blur(8px)' }}
-            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            className="loader-name font-display"
+            initial={{ opacity: 0, y: 15, filter: 'blur(6px)' }}
+            animate={{ 
+              opacity: phase >= 2 ? 1 : 0, 
+              y: phase >= 2 ? 0 : 15, 
+              filter: phase >= 2 ? 'blur(0px)' : 'blur(6px)' 
+            }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             Lesley
           </motion.h1>
@@ -80,13 +140,13 @@ export default function LoadingScreen({ onComplete }) {
             Developer · Designer · Builder
           </motion.p>
 
-          {/* Progress */}
+          {/* Progress bar */}
           <motion.div className="loader-progress">
             <motion.div
               className="loader-progress-bar"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: phase >= 1 ? 1 : 0 }}
-              transition={{ duration: 3, ease: [0.23, 1, 0.32, 1] }}
+              transition={{ duration: 2.8, ease: [0.16, 1, 0.3, 1] }}
             />
           </motion.div>
         </motion.div>

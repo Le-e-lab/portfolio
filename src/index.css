@@ -1,10 +1,5 @@
-/* ═══════════════════════════════════════════════════════════
-   LESLEY'S PORTFOLIO — Design System v4
-   Palette extracted from Lesley's hero image
-   ═══════════════════════════════════════════════════════════ */
-
-@import url('https://api.fontshare.com/v2/css?f[]=space-grotesk@300;400;500;600;700&f[]=general-sans@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=Syne:wght@400;500;700;800&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@300;400;500;600;700&display=swap');
 
 @font-face {
   font-family: 'Kashima';
@@ -15,38 +10,36 @@
 }
 
 :root {
-  /* ── Palette: Cinematic Teal & Amber ── */
-  --bg: #080a09;
-  --bg-raised: #0e1110;
-  --bg-card: #131816;
-  --bg-card-hover: #191f1c;
+  /* ── Palette: True Graphite + Forest Green ── */
+  --bg: #141517;
+  --bg-raised: #1b1d20;
+  --bg-card: #212328;
+  --bg-card-hover: #282b32;
 
-  /* Teal — the dominant mood of the image */
-  --teal: #3a8a8a;
-  --teal-deep: #1f5e5e;
-  --teal-dim: rgba(58, 138, 138, 0.1);
-  --teal-glow: rgba(58, 138, 138, 0.2);
+  /* Primary Accent: Deep Forest Green */
+  --teal: #1e5335;
+  --teal-deep: #143b25;
+  --teal-dim: rgba(30, 83, 53, 0.1);
+  --teal-glow: rgba(30, 83, 53, 0.25);
 
-  /* Amber — the warm light in the image */
-  --amber: #c9a87c;
-  --amber-dim: rgba(201, 168, 124, 0.1);
+  /* Secondary Highlight: Vibrant Emerald/Mint */
+  --amber: #22c55e;
+  --amber-light: #4ade80;
+  --amber-dim: rgba(34, 197, 94, 0.08);
 
-  /* Cream — highlights */
-  --cream: #e8ddd0;
-
-  /* Text */
-  --text: #e0ddd8;
-  --text-dim: #8a8883;
-  --text-muted: #4d4c49;
+  /* Text — slate cool gray system */
+  --text: #f1f5f9;
+  --text-dim: #cbd5e1;
+  --text-muted: #64748b;
 
   /* Borders */
-  --border: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(58, 138, 138, 0.3);
+  --border: rgba(255, 255, 255, 0.055);
+  --border-hover: rgba(30, 83, 53, 0.25);
 
   /* Typography */
   --font-display: 'Kashima', Georgia, serif;
-  --font-heading: 'Space Grotesk', -apple-system, sans-serif;
-  --font-body: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Syne', sans-serif;
+  --font-body: 'General Sans', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* Spacing */
@@ -72,19 +65,8 @@
   --dur: 250ms;
 
   /* Shadows */
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-  --shadow-glow: 0 0 30px var(--teal-glow);
-}
-
-[data-theme="light"] {
-  --bg: #f0ece6;
-  --bg-raised: #f7f4ef;
-  --bg-card: #fff;
-  --bg-card-hover: #f5f2ed;
-  --text: #1a1a1a;
-  --text-dim: #666;
-  --text-muted: #999;
-  --border: rgba(0, 0, 0, 0.08);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 24px var(--teal-glow);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -103,9 +85,14 @@ body {
   overflow-x: hidden;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  a, button, [role="button"], .interactive { cursor: none; }
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.15;
 }
 
@@ -114,7 +101,7 @@ h1 {
   font-size: clamp(4rem, 11vw, 9rem);
   font-weight: 400;
   line-height: 0.9;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
 }
 
 h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
@@ -141,32 +128,11 @@ a:hover { color: var(--text); }
   position: relative;
 }
 
-/* Paint splatter accent — organic blob shape */
-.paint-blob {
-  position: absolute;
-  border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
-  filter: blur(60px);
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.paint-blob--teal {
-  background: var(--teal);
-}
-
-.paint-blob--amber {
-  background: var(--amber);
-}
-
-/* Brush stroke divider */
-.brush-divider {
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--teal), var(--amber), transparent);
-  border-radius: 2px;
-  opacity: 0.3;
-  margin: var(--space-3xl) 0;
+/* Mobile layout bottombar padding fix */
+@media (max-width: 768px) {
+  .section, .hero {
+    padding-bottom: 120px !important;
+  }
 }
 
 .section-label {
@@ -195,6 +161,25 @@ a:hover { color: var(--text); }
   letter-spacing: 0.15em;
   margin-bottom: var(--space-xs);
   display: block;
+}
+
+.magnetic-btn {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.magnetic-btn:active {
+  transform: scale(0.97);
+  transition: transform 100ms var(--ease-out);
+}
+
+.magnetic-btn-content {
+  display: inline-flex;
+  align-items: center;
+  gap: inherit;
 }
 
 @media (max-width: 768px) {

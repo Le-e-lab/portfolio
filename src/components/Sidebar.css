@@ -97,6 +97,12 @@
   align-items: center;
 }
 
+@media (max-width: 1024px) {
+  .sidenav { width: 56px; }
+  .sidenav-line { right: 28px; }
+  .sidenav-items { gap: var(--space-xl); }
+}
+
 @media (max-width: 768px) {
   .sidenav { display: none; }
 }

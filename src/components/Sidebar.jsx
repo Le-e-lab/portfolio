@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { NavLink, useLocation } from 'react-router-dom';
-import ThemeToggle from './ThemeToggle';
 import './Sidebar.css';
 
 const navItems = [
@@ -13,7 +11,6 @@ const navItems = [
 
 export default function Sidebar() {
   const location = useLocation();
-  const [hovered, setHovered] = useState(null);
 
   return (
     <motion.nav
@@ -34,8 +31,6 @@ export default function Sidebar() {
               key={item.to}
               to={item.to}
               className="sidenav-link"
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
             >
               <motion.span
                 className={`sidenav-item ${isActive ? 'sidenav-item--active' : ''}`}
@@ -51,9 +46,8 @@ export default function Sidebar() {
         })}
       </div>
 
-      {/* Theme toggle — bottom */}
+      {/* Theme toggle removed */}
       <div className="sidenav-bottom">
-        <ThemeToggle />
       </div>
     </motion.nav>
   );

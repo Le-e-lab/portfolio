@@ -8,7 +8,7 @@
   z-index: 1;
   width: 100%;
   padding: 0 var(--space-4xl);
-  padding-right: 80px; /* Space for right-edge nav */
+  padding-right: 100px;
 }
 
 .page-wrapper {
@@ -26,10 +26,55 @@
   opacity: 0.4;
 }
 
+/* Curtain Transitions */
+.curtain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99999;
+}
+
+.curtain-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.primary-curtain {
+  background: var(--teal); /* Forest Green sweeps first */
+  z-index: 1;
+}
+
+.secondary-curtain {
+  background: var(--bg); /* Graphite sweeps second & covers */
+  z-index: 2;
+}
+
+/* Iris panel specific styles */
+.iris-panel {
+  top: 50% !important;
+  left: 50% !important;
+  width: 150vmax !important;
+  height: 150vmax !important;
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: center center;
+  border-radius: 50%;
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 0 var(--space-2xl);
+    padding-right: 70px;
+  }
+}
+
 @media (max-width: 768px) {
   .main-content {
     padding: 0 var(--space-lg);
     padding-top: var(--space-2xl);
-    padding-bottom: 80px; /* Space for bottom tab bar */
+    padding-bottom: 80px;
   }
 }

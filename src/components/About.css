@@ -1,13 +1,30 @@
-.about-section { padding-top: 120px; }
-.about-heading { margin-bottom: var(--space-xl); }
+/* ═══ About Section & Dossier ═══ */
+.about-section {
+  padding-top: var(--space-4xl);
+  overflow: visible;
+}
 
-/* Quote */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-3xl);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  align-items: flex-start;
+}
+
+.about-heading {
+  margin-bottom: var(--space-xl);
+}
+
+/* Quote Box */
 .about-quote {
-  padding: var(--space-2xl);
+  padding: var(--space-xl);
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  margin-bottom: var(--space-3xl);
+  margin-bottom: var(--space-2xl);
   position: relative;
 }
 
@@ -21,19 +38,21 @@
   border-radius: 3px;
 }
 
-.quote-body { padding-left: var(--space-xl); }
+.quote-body {
+  padding-left: var(--space-md);
+}
 
 .quote-text {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   color: var(--text);
-  line-height: 1.8;
+  line-height: 1.7;
   letter-spacing: 0.02em;
 }
 
 .quote-attr {
   display: block;
-  margin-top: var(--space-lg);
+  margin-top: var(--space-md);
   font-family: var(--font-mono);
   font-size: 0.6rem;
   text-transform: uppercase;
@@ -41,71 +60,399 @@
   color: var(--text-muted);
 }
 
-.about-bio { max-width: 600px; margin-bottom: var(--space-lg); font-size: 1.05rem; }
+.about-bio {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: var(--space-lg);
+  color: var(--text-dim);
+}
 
-/* Blocks */
-.about-block { margin-top: var(--space-3xl); width: 100%; }
+/* Timeline Layout */
+.about-timeline {
+  margin-top: var(--space-3xl);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-2xl);
+}
 
-.about-subtitle {
+.timeline-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xl);
+}
+
+.timeline-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: var(--space-md);
+}
+
+.timeline-dot-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  z-index: 2;
+  box-shadow: 0 0 8px var(--teal);
+}
+
+.timeline-connector {
+  position: absolute;
+  top: 8px;
+  bottom: -24px;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--border),
+    var(--border) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  z-index: 1;
+}
+
+.timeline-content {
+  padding-bottom: var(--space-md);
+}
+
+.timeline-year {
+  font-size: 0.75rem;
+  color: var(--amber-light);
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.timeline-role {
   font-family: var(--font-heading);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--text);
-  margin-bottom: var(--space-xl);
+}
+
+.timeline-company {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.timeline-link {
+  color: var(--amber-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 250ms var(--ease-out);
+  border-bottom: 1px dashed rgba(74, 222, 128, 0.3);
+}
+
+.timeline-link:hover {
+  color: #fff;
+  border-bottom-color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.timeline-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+
+/* ═══ COLUMN 2: Visual Experience (Split Viewport) ═══ */
+.about-system-col {
+  width: 100%;
+}
+
+/* Visibility Control rules based on Desktop/Mobile split */
+.desktop-only {
+  display: block;
+}
+.mobile-tablet-only {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-tablet-only {
+    display: block !important;
+  }
+}
+
+/* 1. Retro Unix CLI Terminal Console CSS */
+.terminal-window {
+  background: #0d0f12;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.terminal-header {
+  height: 32px;
+  background: #14171d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  padding: 0 var(--space-md);
+  position: relative;
 }
 
-.about-subtitle::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+  position: absolute;
+  left: var(--space-md);
 }
 
-/* Tech Marquee — infinite scroll */
+.terminal-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
+
+.terminal-title {
+  margin: 0 auto;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.terminal-cli-screen {
+  padding: var(--space-lg);
+  min-height: 220px;
+  max-height: 320px;
+  overflow-y: auto;
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  background: #0b0c0f;
+  display: flex;
+  flex-direction: column;
+}
+
+.cli-placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+.cli-btn-group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+  background: #101217;
+}
+
+.cli-btn {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all 200ms var(--ease-out);
+}
+
+.cli-btn:last-child {
+  border-right: none;
+}
+
+.cli-btn:hover {
+  background: var(--teal-dim);
+  color: var(--amber-light);
+}
+
+/* CLI Output items styling */
+.cli-neofetch-output {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: flex-start;
+}
+
+.ascii-art {
+  font-size: 0.65rem;
+  line-height: 1.25;
+  white-space: pre;
+}
+
+.neofetch-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.68rem;
+}
+
+.cli-bio-text {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+.cli-git-output {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: var(--text-muted);
+}
+
+
+/* 2. Linux Dotfiles Setup Gallery CSS */
+.setup-gallery-desktop {
+  width: 100%;
+}
+
+.gallery-header-tab {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  padding: 6px 12px;
+  width: fit-content;
+  font-size: 0.58rem;
+  color: var(--amber-light);
+  letter-spacing: 0.08em;
+}
+
+.setup-screens-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  border: 1px solid var(--border);
+  border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
+  padding: var(--space-xl);
+  background: rgba(20, 21, 23, 0.45);
+}
+
+.setup-window {
+  background: #0d0f12;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.setup-window-header {
+  height: 26px;
+  background: #14171d;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 var(--space-md);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.setup-window-header .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.setup-window-title {
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  margin-left: var(--space-sm);
+}
+
+.setup-window-content {
+  padding: var(--space-md);
+  min-height: 110px;
+  font-size: 0.65rem;
+  line-height: 1.5;
+  background: #090a0d;
+  color: var(--text-dim);
+}
+
+/* Setup Neofetch Content */
+.setup-window-content .ascii-logo {
+  float: left;
+  line-height: 1.2;
+  color: var(--teal);
+  display: flex;
+  flex-direction: column;
+  margin-right: var(--space-xl);
+}
+
+.setup-window-content .sys-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Setup Compilation Content */
+.code-compiling {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Tech Marquee layout styling */
 .tech-marquee {
   width: 100%;
+  margin-top: var(--space-4xl);
   overflow: hidden;
-  padding: var(--space-2xl) 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  margin-top: var(--space-2xl);
+  padding: var(--space-lg) 0;
+  background: rgba(20, 21, 23, 0.2);
 }
 
 .tech-marquee-track {
   display: flex;
-  gap: var(--space-3xl);
-  animation: marquee-scroll 30s linear infinite;
   width: max-content;
+  animation: marquee 25s linear infinite;
+  gap: var(--space-3xl);
 }
 
 .tech-marquee-item {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
   color: var(--text-dim);
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: color 300ms var(--ease-out);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
 }
 
-.tech-marquee-item:hover {
-  color: var(--text);
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
 }
 
-@keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-33.333%); }
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3xl);
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .tech-marquee-track {
-    animation: none;
+@media (max-width: 768px) {
+  .about-grid {
+    padding: 0 var(--space-lg);
+  }
+  .terminal-window {
+    max-width: 100%;
   }
 }

@@ -25,15 +25,17 @@ export default function MobileNav() {
               to={item.to}
               className={`bottombar-item ${isActive ? 'bottombar-item--active' : ''}`}
             >
-              <Icon size={20} />
-              <span className="bottombar-label">{item.label}</span>
+              {/* Active Background Capsule Overlay sliding smoothly */}
               {isActive && (
                 <motion.div
-                  className="bottombar-dot"
-                  layoutId="bottomNav"
-                  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                  className="bottombar-active-bubble"
+                  layoutId="mobileNavBubble"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}
+              
+              <Icon size={18} className="bottombar-icon" />
+              <span className="bottombar-label font-mono">{item.label}</span>
             </NavLink>
           );
         })}
