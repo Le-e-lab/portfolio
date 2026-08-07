@@ -18,12 +18,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch all repos (public + private)
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Fetch all public repos
         run: |
-          # Fetch all repos the authenticated user owns, sorted by recently updated
-          gh api '/user/repos?sort=updated&per_page=100&type=all' \
+          # Public endpoint (works with the auto-injected GITHUB_TOKEN; no PAT needed)
+          gh api '/users/Le-e-lab/repos?sort=updated&per_page=100' \
             --paginate \
             --jq '[.[] | {
               name: .name,
