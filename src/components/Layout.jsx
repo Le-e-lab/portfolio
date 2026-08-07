@@ -72,8 +72,9 @@ export default function Layout() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   usePaintBrush();
 
-  // Trigger transitions on pathname change
+  // Trigger transitions on pathname change (state is reset by curtain onAnimationComplete)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- deliberate route-change trigger, not a render cascade
     setIsTransitioning(true);
   }, [location.pathname]);
 

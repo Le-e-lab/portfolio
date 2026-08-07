@@ -163,7 +163,7 @@ const fadeUp = {
 
 export default function Work() {
   const [projects, setProjects] = useState(fallbackProjects);
-  const [isGridView, setIsGridView] = useState(false);
+  const [isGridView, setIsGridView] = useState(() => window.innerWidth < 768);
   const [activeProject, setActiveProject] = useState(null);
   
   const containerRef = useRef(null);
@@ -172,12 +172,6 @@ export default function Work() {
   
   const springX = useSpring(mouseX, { stiffness: 220, damping: 26 });
   const springY = useSpring(mouseY, { stiffness: 220, damping: 26 });
-
-  useEffect(() => {
-    if (window.innerWidth < 768) {
-      setIsGridView(true);
-    }
-  }, []);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -194,6 +188,7 @@ export default function Work() {
         if (!repos) {
           const response = await fetch('https://api.github.com/users/Le-e-lab/repos?sort=updated&per_page=30');
           if (response.ok) {
+            const allRepos = await response.json();
             repos = allRepos.filter(r => 
               !r.fork && 
               !r.name.includes('.github') &&
@@ -238,7 +233,7 @@ export default function Work() {
         } else {
           setProjects(fallbackProjects);
         }
-      } catch (err) {
+      } catch {
         setProjects(fallbackProjects);
       }
     };
@@ -300,7 +295,7 @@ export default function Work() {
           initial="hidden"
           animate="visible"
         >
-          {projects.map((project, i) => (
+          {projects.map((project) => (
             <motion.a
               key={project.link}
               href={project.link}
@@ -333,10 +328,10 @@ export default function Work() {
                   
                   {/* Code Text lines */}
                   <div className="ide-code font-mono">
-                    <div className="code-line"><span className="token keyword">import</span> React <span className="token keyword">from</span> <span className="token string">'react'</span>;</div>
+                    <div className="code-line"><span className="token keyword">import</span> React <span className="token keyword">from</span> <span className="token string">&apos;react&apos;</span>;</div>
                     <div className="code-line"><span className="token keyword">const</span> {project.title.replace(/\s+/g, '')} = () =&gt; &#123;</div>
                     <div className="code-line indent"><span className="token keyword">return</span> (</div>
-                    <div className="code-line indent-2">&lt;<span className="token tag">div</span> className=<span className="token string">"app"</span>&gt;</div>
+                    <div className="code-line indent-2">&lt;<span className="token tag">div</span> className=<span className="token string">&quot;app&quot;</span>&gt;</div>
                     <div className="code-line indent-3">{project.tech[0]} core active</div>
                     <div className="code-line indent-2">&lt;/<span className="token tag">div</span>&gt;</div>
                     <div className="code-line indent font-mono">);</div>

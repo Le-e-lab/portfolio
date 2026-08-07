@@ -190,7 +190,7 @@ export default function Contact() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="contact-glass-form-container">
-            <h3 className="glass-form-title font-mono">// INITIATE_CONTACT_PROTOCOL</h3>
+            <h3 className="glass-form-title font-mono">{'// INITIATE_CONTACT_PROTOCOL'}</h3>
             
             {formState === 'sent' ? (
               <motion.div 
@@ -317,7 +317,7 @@ export default function Contact() {
       {/* WHY WORK WITH ME */}
       <div className="contact-block why-block">
         <div className="block-header-wrap">
-          <h3 className="contact-subtitle">// PERF_CAPABILITIES</h3>
+          <h3 className="contact-subtitle">{'// PERF_CAPABILITIES'}</h3>
         </div>
         
         <div className="reasons-grid">

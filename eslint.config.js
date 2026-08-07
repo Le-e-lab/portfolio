@@ -31,6 +31,8 @@ export default defineConfig([
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       'react/jsx-no-target-blank': 'off',
+      // JS React 19 app — runtime prop-types are unused boilerplate here (Vite template default)
+      'react/prop-types': 'off',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
