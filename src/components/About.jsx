@@ -23,8 +23,8 @@ const techStack = [
 
 const timeline = [
   {
-    year: '2024 — Present',
-    role: 'Lead Developer',
+    year: '2025 — Present',
+    role: 'Developer',
     company: 'Tarisai & Elevate Value Partners',
     desc: 'Directing system architectures and engineering pipelines. Architected client web portals, API routing layers, and secure databases for Tarisai and Elevate Value Partners to maximize scalability and accessibility.',
     links: [
@@ -33,20 +33,20 @@ const timeline = [
     ]
   },
   {
-    year: '2024 — Present',
+    year: '2025 — Present',
     role: 'Computer Science Student',
     company: 'Africa University',
     desc: 'Deepening understanding of software engineering, database architectures, and algorithms. Actively leading developer group collaborations.'
   },
   {
-    year: '2023 — Present',
+    year: '2025 — Present',
     role: 'Full-Stack Developer',
     company: 'Freelance & Open Source',
     desc: 'Designing and deploying web applications with React, Node.js, and Python. Authoring shell script tools and Linux configuration dotfiles.'
   },
   {
-    year: '2021 — 2023',
-    role: 'Visual Designer',
+    year: '2025 — Present',
+    role: 'Graphic Designer',
     company: 'Freelance Design Studio',
     desc: 'Crafting premium UI layouts, logos, and vector illustrations. Merging geometric grid structures with interactive digital interfaces.'
   }
