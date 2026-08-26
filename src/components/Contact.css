@@ -38,14 +38,14 @@
   align-items: center;
   gap: var(--space-sm);
   padding: 0.45rem 1.1rem;
-  background: var(--teal-dim);
-  border: 1px solid rgba(58, 138, 138, 0.18);
+  background: var(--tangerine-dim);
+  border: 1px solid rgba(232, 101, 10, 0.18);
   border-radius: var(--radius-full);
   font-family: var(--font-mono);
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--teal);
+  color: var(--tangerine);
   margin-bottom: var(--space-2xl);
   width: fit-content;
 }
@@ -54,7 +54,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--teal);
+  background: var(--tangerine);
   animation: dot-pulse 2s ease-in-out infinite;
 }
 
@@ -107,15 +107,15 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-image: 
-    linear-gradient(rgba(58, 138, 138, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(58, 138, 138, 0.015) 1px, transparent 1px);
+  background-image:
+    linear-gradient(rgba(232, 101, 10, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 101, 10, 0.015) 1px, transparent 1px);
   background-size: 20px 20px;
   pointer-events: none;
 }
 
 .resume-dossier-ticket:hover {
-  border-color: rgba(58, 138, 138, 0.3);
+  border-color: rgba(232, 101, 10, 0.3);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
@@ -135,7 +135,7 @@
 
 .ticket-status {
   font-size: 0.58rem;
-  color: var(--teal);
+  color: var(--tangerine);
   font-weight: bold;
   letter-spacing: 0.1em;
 }
@@ -188,9 +188,9 @@
 }
 
 .ticket-download-btn:hover {
-  border-color: var(--teal);
-  color: var(--teal);
-  background: var(--teal-dim);
+  border-color: var(--tangerine);
+  color: var(--tangerine);
+  background: var(--tangerine-dim);
   transform: scale(1.05);
 }
 
@@ -276,7 +276,7 @@
 }
 
 .glass-input:focus {
-  border-color: var(--teal);
+  border-color: var(--tangerine);
 }
 
 .glass-label {
@@ -295,7 +295,7 @@
 .glass-input:focus ~ .glass-label,
 .glass-input:not(:placeholder-shown) ~ .glass-label {
   transform: translateY(-20px) scale(0.8);
-  color: var(--teal);
+  color: var(--tangerine);
 }
 
 /* Expanding animated line under inputs */
@@ -305,9 +305,9 @@
   left: 0;
   width: 0%;
   height: 1.5px;
-  background: var(--teal);
+  background: var(--tangerine);
   transition: width 350ms var(--ease-out);
-  box-shadow: 0 1px 8px var(--teal-glow);
+  box-shadow: 0 1px 8px var(--tangerine-glow);
 }
 
 .glass-input:focus ~ .input-line {
@@ -335,7 +335,7 @@
   align-items: center;
   gap: 12px;
   padding: 0.95rem 2.2rem;
-  background: var(--teal);
+  background: var(--tangerine);
   color: var(--bg);
   border: none;
   border-radius: var(--radius-full);
@@ -350,8 +350,8 @@
 
 .glass-submit-btn:hover {
   transform: translateY(-2px);
-  background: #3eb5b5;
-  box-shadow: 0 0 20px rgba(58, 138, 138, 0.4);
+  background: var(--tangerine-light);
+  box-shadow: 0 0 20px var(--tangerine-glow);
 }
 
 .glass-submit-btn:hover .btn-icon {
@@ -392,12 +392,12 @@
 }
 
 .reason-card:hover {
-  border-color: var(--teal);
+  border-color: var(--tangerine);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .reason-svg-wrapper {
-  color: var(--teal);
+  color: var(--tangerine);
   width: 28px;
   height: 28px;
   margin-bottom: var(--space-md);
@@ -452,9 +452,9 @@
 }
 
 .social-circle:hover {
-  color: var(--teal);
-  border-color: var(--teal);
-  background: var(--teal-dim);
+  color: var(--tangerine);
+  border-color: var(--tangerine);
+  background: var(--tangerine-dim);
   transform: translateY(-3px) scale(1.08);
 }
 
@@ -506,9 +506,9 @@
 .success-title {
   font-size: 0.95rem;
   letter-spacing: 0.15em;
-  color: var(--amber);
+  color: var(--tangerine);
   margin-bottom: var(--space-sm);
-  text-shadow: 0 0 10px var(--amber-dim);
+  text-shadow: 0 0 10px var(--tangerine-dim);
 }
 
 .success-text {
@@ -563,8 +563,8 @@
 }
 
 .success-reset-btn:hover {
-  border-color: var(--teal);
-  color: var(--teal);
+  border-color: var(--tangerine);
+  color: var(--tangerine);
   background: var(--teal-dim);
 }
 

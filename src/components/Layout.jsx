@@ -92,14 +92,14 @@ export default function Layout() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.2 } }}
           >
-            {/* Primary curtain (forest green) */}
+            {/* Primary curtain (tangerine) */}
             <motion.div 
               className="curtain-panel primary-curtain" 
               initial="initial"
               animate="animate"
               variants={getTransitionStyle(location.pathname, false)}
             />
-            {/* Secondary curtain (graphite) */}
+            {/* Secondary curtain (carbon black) */}
             <motion.div 
               className="curtain-panel secondary-curtain"
               initial="initial"

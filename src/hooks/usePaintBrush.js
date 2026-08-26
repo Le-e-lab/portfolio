@@ -105,7 +105,7 @@ export default function usePaintBrush() {
           ctx.save();
           ctx.globalAlpha = alpha;
           ctx.fillStyle = isHovering.current
-            ? `rgba(58, 138, 138, ${alpha * 0.8})`
+            ? `rgba(232, 101, 10, ${alpha * 0.8})`
             : isLight
               ? `rgba(26, 26, 26, ${alpha * 0.5})`
               : `rgba(232, 228, 222, ${alpha * 0.5})`;
@@ -131,7 +131,7 @@ export default function usePaintBrush() {
 
         const alpha = life * (isHovering.current ? 0.45 : 0.25);
         ctx.strokeStyle = isHovering.current
-          ? `rgba(58, 138, 138, ${alpha})`
+          ? `rgba(232, 101, 10, ${alpha})`
           : isLight
             ? `rgba(26, 26, 26, ${alpha * 0.4})`
             : `rgba(232, 228, 222, ${alpha * 0.4})`;
@@ -150,8 +150,8 @@ export default function usePaintBrush() {
       );
 
       if (isHovering.current) {
-        gradient.addColorStop(0, 'rgba(58, 138, 138, 0.08)');
-        gradient.addColorStop(1, 'rgba(58, 138, 138, 0)');
+        gradient.addColorStop(0, 'rgba(232, 101, 10, 0.08)');
+        gradient.addColorStop(1, 'rgba(232, 101, 10, 0)');
       } else {
         if (isLight) {
           gradient.addColorStop(0, 'rgba(26, 26, 26, 0.03)');
@@ -169,7 +169,7 @@ export default function usePaintBrush() {
 
       // Dot cursor
       ctx.fillStyle = isHovering.current
-        ? 'rgba(58, 138, 138, 0.8)'
+        ? 'rgba(232, 101, 10, 0.8)'
         : isLight
           ? 'rgba(26, 26, 26, 0.7)'
           : 'rgba(232, 228, 222, 0.7)';

@@ -1,46 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=Syne:wght@400;500;700;800&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=general-sans@300;400;500;600;700&display=swap');
-
-@font-face {
-  font-family: 'Kashima';
-  src: url('/portfolio/fonts/Kashima%20Demo.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+/* ═══ Design System: Carbon Black + Tangerine Orange ═══ */
 
 :root {
-  /* ── Palette: True Graphite + Forest Green ── */
-  --bg: #141517;
-  --bg-raised: #1b1d20;
-  --bg-card: #212328;
-  --bg-card-hover: #282b32;
+  /* ── Palette ── */
+  --bg: #0c0c0c;
+  --bg-raised: #141414;
+  --bg-card: #1a1a1a;
 
-  /* Primary Accent: Deep Forest Green */
-  --teal: #1e5335;
-  --teal-deep: #143b25;
-  --teal-dim: rgba(30, 83, 53, 0.1);
-  --teal-glow: rgba(30, 83, 53, 0.25);
+  /* Primary Accent: Tangerine Orange */
+  --tangerine: #E8650A;
+  --tangerine-light: #FF8C38;
+  --tangerine-dim: rgba(232, 101, 10, 0.1);
+  --tangerine-glow: rgba(232, 101, 10, 0.2);
 
-  /* Secondary Highlight: Vibrant Emerald/Mint */
-  --amber: #22c55e;
-  --amber-light: #4ade80;
-  --amber-dim: rgba(34, 197, 94, 0.08);
-
-  /* Text — slate cool gray system */
-  --text: #f1f5f9;
-  --text-dim: #cbd5e1;
-  --text-muted: #64748b;
+  /* Text — warm tones */
+  --text: #F5F0EB;
+  --text-dim: #A89F97;
+  --text-muted: #5C5650;
 
   /* Borders */
-  --border: rgba(255, 255, 255, 0.055);
-  --border-hover: rgba(30, 83, 53, 0.25);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(232, 101, 10, 0.25);
 
   /* Typography */
-  --font-display: 'Kashima', Georgia, serif;
-  --font-heading: 'Syne', sans-serif;
-  --font-body: 'General Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-heading: 'Bebas Neue', 'Outfit', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -66,7 +51,7 @@
 
   /* Shadows */
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 24px var(--teal-glow);
+  --shadow-glow: 0 0 24px var(--tangerine-glow);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -92,15 +77,17 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 700;
-  line-height: 1.15;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 h1 {
   font-family: var(--font-display);
-  font-size: clamp(4rem, 11vw, 9rem);
+  font-size: clamp(3.5rem, 10vw, 8rem);
   font-weight: 400;
-  line-height: 0.9;
+  line-height: 0.95;
   letter-spacing: -0.01em;
 }
 
@@ -108,16 +95,16 @@ h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
 
 p { color: var(--text-dim); line-height: 1.75; font-size: 1.05rem; }
 
-a { color: var(--teal); text-decoration: none; transition: color var(--dur) var(--ease-out); }
+a { color: var(--tangerine); text-decoration: none; transition: color var(--dur) var(--ease-out); }
 a:hover { color: var(--text); }
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: var(--radius-full); }
-::selection { background: var(--teal-dim); color: var(--text); }
+::selection { background: var(--tangerine-dim); color: var(--text); }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--teal), var(--amber));
+  background: linear-gradient(135deg, var(--tangerine), var(--tangerine-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -128,17 +115,14 @@ a:hover { color: var(--text); }
   position: relative;
 }
 
-/* Mobile layout bottombar padding fix */
 @media (max-width: 768px) {
-  .section, .hero {
-    padding-bottom: 120px !important;
-  }
+  .section, .hero { padding-bottom: 120px !important; }
 }
 
 .section-label {
   font-family: var(--font-mono);
   font-size: 0.6rem;
-  color: var(--teal);
+  color: var(--tangerine);
   text-transform: uppercase;
   letter-spacing: 0.25em;
   margin-bottom: var(--space-lg);
@@ -151,7 +135,7 @@ a:hover { color: var(--text); }
   content: "";
   width: 20px;
   height: 1px;
-  background: var(--teal);
+  background: var(--tangerine);
 }
 
 .section-number {

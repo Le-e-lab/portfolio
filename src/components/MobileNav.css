@@ -3,23 +3,22 @@
   display: none;
 }
 
-/* Floating Capsule Mobile Tab Bar */
 @media (max-width: 768px) {
   .bottombar {
     display: block;
     position: fixed;
-    bottom: 24px; /* floats above the bottom edge */
+    bottom: 24px;
     left: var(--space-md);
     right: var(--space-md);
     max-width: 480px;
     margin: 0 auto;
     z-index: 1000;
-    background: rgba(27, 29, 32, 0.75); /* Graphite glass */
+    background: rgba(20, 20, 20, 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-full);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     padding: 3px 6px;
   }
 }
@@ -50,7 +49,7 @@
 }
 
 .bottombar-item--active {
-  color: #fff !important; /* Stand out on the forest green bubble background */
+  color: #fff !important;
 }
 
 .bottombar-label {
@@ -64,8 +63,8 @@
 .bottombar-active-bubble {
   position: absolute;
   inset: 4px var(--space-sm);
-  background: var(--teal); /* Forest Green active bubble */
+  background: var(--tangerine);
   border-radius: var(--radius-full);
   z-index: -1;
-  box-shadow: 0 0 12px var(--teal-glow);
+  box-shadow: 0 0 12px var(--tangerine-glow);
 }

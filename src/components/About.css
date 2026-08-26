@@ -1,82 +1,45 @@
-/* ═══ About Section & Dossier ═══ */
+/* ═══ About Section ═══ */
 .about-section {
   padding-top: var(--space-4xl);
   overflow: visible;
 }
 
-.about-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: var(--space-3xl);
-  max-width: 1400px;
+.about-container {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--space-xl);
-  align-items: flex-start;
+}
+
+.about-header {
+  margin-bottom: var(--space-3xl);
 }
 
 .about-heading {
   margin-bottom: var(--space-xl);
 }
 
-/* Quote Box */
-.about-quote {
-  padding: var(--space-xl);
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  margin-bottom: var(--space-2xl);
-  position: relative;
-}
-
-.quote-accent {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--teal), var(--amber));
-  border-radius: 3px;
-}
-
-.quote-body {
-  padding-left: var(--space-md);
-}
-
-.quote-text {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  color: var(--text);
-  line-height: 1.7;
-  letter-spacing: 0.02em;
-}
-
-.quote-attr {
-  display: block;
-  margin-top: var(--space-md);
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--text-muted);
-}
-
 .about-bio {
-  font-size: 1.05rem;
+  max-width: 600px;
+  font-size: 1.1rem;
   line-height: 1.75;
-  margin-bottom: var(--space-lg);
   color: var(--text-dim);
 }
 
-/* Timeline Layout */
-.about-timeline {
-  margin-top: var(--space-3xl);
-  border-top: 1px solid var(--border);
-  padding-top: var(--space-2xl);
+/* Two-column grid */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-3xl);
+  align-items: start;
+  margin-bottom: var(--space-4xl);
 }
 
+/* Timeline */
 .timeline-title {
-  font-size: 0.7rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
   letter-spacing: 0.15em;
+  text-transform: uppercase;
   color: var(--text-muted);
   margin-bottom: var(--space-xl);
 }
@@ -89,7 +52,7 @@
 
 .timeline-item {
   display: grid;
-  grid-template-columns: 30px 1fr;
+  grid-template-columns: 24px 1fr;
   gap: var(--space-md);
 }
 
@@ -104,15 +67,15 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--teal);
+  background: var(--tangerine);
   z-index: 2;
-  box-shadow: 0 0 8px var(--teal);
+  box-shadow: 0 0 8px var(--tangerine-glow);
 }
 
 .timeline-connector {
   position: absolute;
   top: 8px;
-  bottom: -24px;
+  bottom: -20px;
   width: 1px;
   background: repeating-linear-gradient(
     to bottom,
@@ -121,7 +84,6 @@
     transparent 4px,
     transparent 8px
   );
-  z-index: 1;
 }
 
 .timeline-content {
@@ -129,8 +91,8 @@
 }
 
 .timeline-year {
-  font-size: 0.75rem;
-  color: var(--amber-light);
+  font-size: 0.7rem;
+  color: var(--tangerine-light);
   letter-spacing: 0.05em;
   display: block;
   margin-bottom: var(--space-xs);
@@ -139,8 +101,8 @@
 .timeline-role {
   font-family: var(--font-heading);
   font-size: 1.15rem;
-  font-weight: 600;
   color: var(--text);
+  margin-bottom: 2px;
 }
 
 .timeline-company {
@@ -151,17 +113,14 @@
 }
 
 .timeline-link {
-  color: var(--amber-light);
+  color: var(--tangerine-light);
   text-decoration: none;
   font-weight: 500;
-  transition: all 250ms var(--ease-out);
-  border-bottom: 1px dashed rgba(74, 222, 128, 0.3);
+  transition: color 250ms var(--ease-out);
 }
 
 .timeline-link:hover {
   color: #fff;
-  border-bottom-color: #fff;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
 .timeline-desc {
@@ -170,47 +129,64 @@
   color: var(--text-muted);
 }
 
-
-/* ═══ COLUMN 2: Visual Experience (Split Viewport) ═══ */
-.about-system-col {
-  width: 100%;
-}
-
-/* Visibility Control rules based on Desktop/Mobile split */
-.desktop-only {
-  display: block;
-}
-.mobile-tablet-only {
-  display: none;
-}
-
-@media (max-width: 1024px) {
-  .desktop-only {
-    display: none !important;
-  }
-  .mobile-tablet-only {
-    display: block !important;
-  }
-}
-
-/* 1. Retro Unix CLI Terminal Console CSS */
-.terminal-window {
-  background: #0d0f12;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-  overflow: hidden;
+/* Aside column */
+.about-aside {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 550px;
-  margin: 0 auto;
+  gap: var(--space-xl);
+}
+
+/* Quote */
+.about-quote {
+  padding: var(--space-xl);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+
+.quote-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--tangerine), var(--tangerine-light));
+  border-radius: 3px;
+}
+
+.quote-body {
+  padding-left: var(--space-md);
+}
+
+.quote-text {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.quote-attr {
+  display: block;
+  margin-top: var(--space-md);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+/* Mini terminal */
+.mini-terminal {
+  background: #0c0c0c;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
 
 .terminal-header {
-  height: 32px;
-  background: #14171d;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  height: 30px;
+  background: #141414;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   display: flex;
   align-items: center;
   padding: 0 var(--space-md);
@@ -225,8 +201,8 @@
 }
 
 .terminal-dots .dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
 }
 
@@ -236,223 +212,101 @@
 
 .terminal-title {
   margin: 0 auto;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   color: var(--text-muted);
 }
 
-.terminal-cli-screen {
-  padding: var(--space-lg);
-  min-height: 220px;
-  max-height: 320px;
-  overflow-y: auto;
-  color: var(--text-dim);
-  font-size: 0.72rem;
-  line-height: 1.5;
-  background: #0b0c0f;
-  display: flex;
-  flex-direction: column;
-}
-
-.cli-placeholder {
-  color: var(--text-muted);
-  opacity: 0.8;
-}
-
-.cli-btn-group {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--border);
-  background: #101217;
-}
-
-.cli-btn {
-  background: transparent;
-  border: none;
-  border-right: 1px solid var(--border);
-  color: var(--text-muted);
-  font-size: 0.65rem;
-  padding: 10px 0;
-  cursor: pointer;
-  transition: all 200ms var(--ease-out);
-}
-
-.cli-btn:last-child {
-  border-right: none;
-}
-
-.cli-btn:hover {
-  background: var(--teal-dim);
-  color: var(--amber-light);
-}
-
-/* CLI Output items styling */
-.cli-neofetch-output {
-  display: flex;
-  gap: var(--space-lg);
-  align-items: flex-start;
-}
-
-.ascii-art {
-  font-size: 0.65rem;
-  line-height: 1.25;
-  white-space: pre;
-}
-
-.neofetch-specs {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 0.68rem;
-}
-
-.cli-bio-text {
-  font-size: 0.72rem;
-  line-height: 1.6;
-  color: var(--text-dim);
-}
-
-.cli-git-output {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  color: var(--text-muted);
-}
-
-
-/* 2. Linux Dotfiles Setup Gallery CSS */
-.setup-gallery-desktop {
-  width: 100%;
-}
-
-.gallery-header-tab {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-bottom: none;
-  border-radius: 6px 6px 0 0;
-  padding: 6px 12px;
-  width: fit-content;
-  font-size: 0.58rem;
-  color: var(--amber-light);
-  letter-spacing: 0.08em;
-}
-
-.setup-screens-grid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-  border: 1px solid var(--border);
-  border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
-  padding: var(--space-xl);
-  background: rgba(20, 21, 23, 0.45);
-}
-
-.setup-window {
-  background: #0d0f12;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
-
-.setup-window-header {
-  height: 26px;
-  background: #14171d;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 var(--space-md);
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-
-.setup-window-header .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.setup-window-title {
-  font-size: 0.58rem;
-  color: var(--text-muted);
-  margin-left: var(--space-sm);
-}
-
-.setup-window-content {
+.terminal-body {
   padding: var(--space-md);
-  min-height: 110px;
-  font-size: 0.65rem;
-  line-height: 1.5;
-  background: #090a0d;
-  color: var(--text-dim);
+  font-size: 0.7rem;
+  line-height: 1.6;
 }
 
-/* Setup Neofetch Content */
-.setup-window-content .ascii-logo {
-  float: left;
-  line-height: 1.2;
-  color: var(--teal);
-  display: flex;
-  flex-direction: column;
-  margin-right: var(--space-xl);
-}
-
-.setup-window-content .sys-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-/* Setup Compilation Content */
-.code-compiling {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-/* Tech Marquee layout styling */
-.tech-marquee {
-  width: 100%;
-  margin-top: var(--space-4xl);
-  overflow: hidden;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: var(--space-lg) 0;
-  background: rgba(20, 21, 23, 0.2);
-}
-
-.tech-marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 25s linear infinite;
-  gap: var(--space-3xl);
-}
-
-.tech-marquee-item {
+.terminal-line {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+}
+
+.t-prompt {
+  color: var(--tangerine);
+}
+
+.t-cmd {
+  background: none;
+  border: none;
   color: var(--text-dim);
-  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  cursor: pointer;
+  padding: 0;
+  transition: color 250ms var(--ease-out);
+}
+
+.t-cmd:hover {
+  color: var(--tangerine);
+}
+
+.terminal-output {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-sm) 0;
+  color: var(--text-muted);
+}
+
+.text-tangerine {
+  color: var(--tangerine);
+}
+
+/* Tech grid */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-md);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3xl);
+}
+
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color 300ms var(--ease-out), background 300ms var(--ease-out);
+}
+
+.tech-item:hover {
+  border-color: var(--tangerine);
+  background: var(--tangerine-dim);
+}
+
+.tech-name {
+  font-size: 0.6rem;
+  text-transform: uppercase;
   letter-spacing: 0.1em;
+  color: var(--text-dim);
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-33.333%); }
-}
-
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 1024px) {
   .about-grid {
     grid-template-columns: 1fr;
     gap: var(--space-3xl);
   }
+  .tech-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
-  .about-grid {
+  .about-container {
     padding: 0 var(--space-lg);
   }
-  .terminal-window {
-    max-width: 100%;
+  .tech-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

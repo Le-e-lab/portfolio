@@ -203,7 +203,7 @@ export default function Contact() {
                   <svg viewBox="0 0 50 50" className="success-svg-check">
                     <motion.circle 
                       cx="25" cy="25" r="20" 
-                      stroke="var(--amber)" 
+                      stroke="var(--tangerine)" 
                       strokeWidth="2" 
                       fill="none"
                       initial={{ pathLength: 0 }}
@@ -212,7 +212,7 @@ export default function Contact() {
                     />
                     <motion.path 
                       d="M 15 25 L 22 32 L 35 18" 
-                      stroke="var(--amber)" 
+                      stroke="var(--tangerine)" 
                       strokeWidth="3" 
                       strokeLinecap="round" 
                       strokeLinejoin="round"

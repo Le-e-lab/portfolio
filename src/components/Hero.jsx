@@ -1,284 +1,114 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { HiOutlineEnvelope } from 'react-icons/hi2';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa6';
-import MagneticButton from './MagneticButton';
 import './Hero.css';
-
-const letterReveal = {
-  hidden: { opacity: 0, y: 120, rotateX: -60 },
-  visible: (i) => ({
-    opacity: 1, y: 0, rotateX: 0,
-    transition: { duration: 1.1, delay: 0.2 + i * 0.08, ease: [0.16, 1, 0.3, 1] },
-  }),
-};
-
-const clipReveal = {
-  hidden: { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
-  visible: { clipPath: 'inset(0 0% 0 0)', opacity: 1, transition: { duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] } },
-};
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 1.2 } },
+  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.6 } },
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30, filter: 'blur(4px)' },
+  hidden: { opacity: 0, y: 25, filter: 'blur(4px)' },
   visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const F1CircuitGraphic = () => {
-  const trackPath = "M 60,100 L 300,100 C 330,100 350,120 340,150 C 330,180 300,190 320,220 C 340,250 370,270 340,300 L 220,340 C 180,350 150,330 140,290 C 130,250 90,200 60,160 C 40,130 40,100 60,100 Z";
-  return (
-    <div className="f1-circuit-container">
-      <svg viewBox="0 0 400 400" className="blueprint-svg f1-circuit-svg">
-        {/* Track Outline Background Grid */}
-        <line x1="200" y1="5" x2="200" y2="395" stroke="var(--teal)" strokeWidth="0.5" strokeDasharray="2 3" opacity="0.12" />
-        <line x1="5" y1="200" x2="395" y2="200" stroke="var(--teal)" strokeWidth="0.5" strokeDasharray="2 3" opacity="0.12" />
-
-        {/* F1 Circuit Track Path */}
-        <path 
-          d={trackPath} 
-          stroke="var(--teal)" 
-          strokeWidth="3.5" 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-          fill="none" 
-          opacity="0.8" 
-        />
-        
-        {/* F1 Circuit Track Path Inner details */}
-        <path 
-          d={trackPath} 
-          stroke="var(--bg)" 
-          strokeWidth="1.5" 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-          fill="none" 
-          opacity="1" 
-        />
-        
-        {/* Dotted racing line guide */}
-        <path 
-          d={trackPath} 
-          stroke="var(--amber)" 
-          strokeWidth="0.5" 
-          strokeDasharray="4 6" 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-          fill="none" 
-          opacity="0.5" 
-        />
-
-        {/* Track Corner Skill Names & Coordinates */}
-        <g className="track-labels">
-          {/* Turn 1: Node Straight */}
-          <text x="180" y="85" fill="var(--text)" className="svg-text label-title">NODE STRAIGHT</text>
-          <circle cx="180" cy="100" r="3" fill="var(--teal)" />
-          
-          {/* Turn 2: React Chicane */}
-          <text x="310" y="240" fill="var(--text)" className="svg-text label-title">REACT CHICANE</text>
-          <circle cx="320" cy="220" r="3" fill="var(--teal)" />
-          
-          {/* Turn 3: Python Hairpin */}
-          <text x="210" y="365" fill="var(--text)" className="svg-text label-title">PYTHON HAIRPIN</text>
-          <circle cx="220" cy="340" r="3" fill="var(--teal)" />
-
-          {/* Turn 4: Linux Sweeper */}
-          <text x="20" y="180" fill="var(--text)" className="svg-text label-title">LINUX SWEEPER</text>
-          <circle cx="65" cy="160" r="3" fill="var(--teal)" />
-          
-          {/* Track Stats */}
-          <text x="25" y="35" fill="var(--text-muted)" className="svg-text font-mono" opacity="0.6">CIRCUIT: LSL_DEV_V6</text>
-          <text x="25" y="48" fill="var(--text-muted)" className="svg-text font-mono" opacity="0.6">LENGTH: 4.86 KM</text>
-          <text x="25" y="61" fill="var(--text-muted)" className="svg-text font-mono" opacity="0.6">RECORD: 1:14.286</text>
-        </g>
-      </svg>
-
-      {/* Animating F1 Car Dot */}
-      <div className="f1-car-dot" />
-    </div>
-  );
-};
-
 export default function Hero() {
-  const ref = useRef(null);
   const navigate = useNavigate();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, -30]);
-  const nameLetters = 'Lesley'.split('');
-
-  // Mobile Speedometer Booster widget states
-  const [engineSpeed, setEngineSpeed] = useState(0);
-  const [isRevving, setIsRevving] = useState(false);
-  const boosterAnimationRef = useRef(null);
-
-  const engageBooster = () => {
-    if (isRevving) return;
-    setIsRevving(true);
-    let startTimestamp = null;
-    const duration = 2400; // 2.4s total animation cycle
-
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = timestamp - startTimestamp;
-
-      if (progress < duration) {
-        const halfTime = duration * 0.55;
-        let speedVal = 0;
-        
-        if (progress < halfTime) {
-          // Accelerate to 312 KM/H
-          const t = progress / halfTime;
-          speedVal = 312 * t * t;
-        } else {
-          // Decelerate back to idle (0)
-          const t = (progress - halfTime) / (duration - halfTime);
-          speedVal = 312 * (1 - t * t);
-        }
-        
-        setEngineSpeed(Math.max(0, speedVal));
-        boosterAnimationRef.current = requestAnimationFrame(step);
-      } else {
-        setEngineSpeed(0);
-        setIsRevving(false);
-      }
-    };
-
-    boosterAnimationRef.current = requestAnimationFrame(step);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (boosterAnimationRef.current) {
-        cancelAnimationFrame(boosterAnimationRef.current);
-      }
-    };
-  }, []);
 
   return (
-    <section className="hero" ref={ref}>
-      {/* Blueprint Grid Overlay background */}
-      <div className="hero-blueprint-bg" />
+    <section className="hero">
+      <div className="hero-content">
+        {/* Portrait */}
+        <motion.div
+          className="hero-portrait"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="portrait-ring">
+            <svg viewBox="0 0 200 200" className="portrait-svg">
+              {/* Outer ring */}
+              <circle cx="100" cy="100" r="96" stroke="#E8650A" strokeWidth="1" fill="none" opacity="0.3" />
+              <circle cx="100" cy="100" r="90" stroke="#E8650A" strokeWidth="0.5" fill="none" opacity="0.15" strokeDasharray="4 6" />
 
-      {/* Absolutely Positioned F1 Track Background behind content layers */}
-      <F1CircuitGraphic />
-      
-      <motion.div className="hero-grid" style={{ y: heroY }}>
-        {/* COLUMN 1: Content details (takes left area) */}
-        <div className="hero-grid-col content-col">
-          <motion.div 
-            className="hero-status" 
-            initial={{ opacity: 0, x: -15 }} 
-            animate={{ opacity: 1, x: 0 }} 
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <span className="hero-dot" />Available for work
-          </motion.div>
+              {/* Stylized face silhouette */}
+              <ellipse cx="100" cy="82" rx="32" ry="38" fill="#1a1a1a" stroke="#E8650A" strokeWidth="1.2" />
+              <ellipse cx="100" cy="135" rx="22" ry="16" fill="#1a1a1a" stroke="#E8650A" strokeWidth="1" />
 
-          <div className="hero-title">
-            <h1 className="hero-name">
-              {nameLetters.map((letter, i) => (
-                <div key={i} className="letter-wrapper">
-                  <motion.span 
-                    className="hero-letter" 
-                    custom={i} 
-                    variants={letterReveal} 
-                    initial="hidden" 
-                    animate="visible"
-                  >
-                    {letter}
-                  </motion.span>
-                </div>
-              ))}
-            </h1>
-            <motion.div className="hero-subtitle" variants={clipReveal} initial="hidden" animate="visible">
-              <span className="hero-prefix">I&apos;m a</span>
-              <span className="hero-role text-gradient">Developer.</span>
-            </motion.div>
+              {/* Hair spikes */}
+              <path d="M 72 65 L 65 40 L 80 55" fill="#1a1a1a" stroke="#E8650A" strokeWidth="1" />
+              <path d="M 82 52 L 78 28 L 95 48" fill="#1a1a1a" stroke="#E8650A" strokeWidth="1" />
+              <path d="M 100 48 L 102 22 L 115 48" fill="#1a1a1a" stroke="#E8650A" strokeWidth="1" />
+              <path d="M 118 52 L 125 30 L 128 55" fill="#1a1a1a" stroke="#E8650A" strokeWidth="1" />
+              <path d="M 130 65 L 138 42 L 125 58" fill="#1a1a1a" stroke="#E8650A" strokeWidth="1" />
+
+              {/* Eyes */}
+              <ellipse cx="88" cy="80" rx="5" ry="4" fill="#E8650A" opacity="0.8" />
+              <ellipse cx="112" cy="80" rx="5" ry="4" fill="#E8650A" opacity="0.8" />
+              <circle cx="89" cy="79" r="1.5" fill="#F5F0EB" />
+              <circle cx="113" cy="79" r="1.5" fill="#F5F0EB" />
+
+              {/* Subtle smile */}
+              <path d="M 93 92 Q 100 97 107 92" stroke="#E8650A" strokeWidth="0.8" fill="none" opacity="0.5" />
+
+              {/* Glow dots */}
+              <circle cx="100" cy="100" r="98" fill="none" stroke="#E8650A" strokeWidth="0.3" opacity="0.1">
+                <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite" />
+              </circle>
+            </svg>
           </div>
+          <div className="portrait-glow" />
+        </motion.div>
 
-          <motion.p 
-            className="hero-desc" 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.8, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-          >
-            I build fast full-stack applications with a focus on type safety and visual design. When I&apos;m not studying CS, you&apos;ll find me writing custom script tools, configuring bspwm/Linux configs, or building responsive interfaces.
+        {/* Name + Role */}
+        <motion.div
+          className="hero-text"
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.h1 className="hero-name" variants={fadeUp}>
+            Lesley
+          </motion.h1>
+
+          <motion.p className="hero-role" variants={fadeUp}>
+            Developer <span className="hero-amp">&</span> Designer
           </motion.p>
 
-          <motion.div className="hero-pills" variants={stagger} initial="hidden" animate="visible">
-            {['React', 'Node.js', 'Python', 'Linux', 'Cybersecurity'].map((t) => (
-              <motion.span key={t} className="hero-pill" variants={fadeUp}>{t}</motion.span>
+          <motion.p className="hero-desc" variants={fadeUp}>
+            Full-stack applications with type safety and visual design. CS student at Africa University, building from Harare to the world.
+          </motion.p>
+
+          <motion.div className="hero-pills" variants={fadeUp}>
+            {['React', 'Node.js', 'Python', 'Linux'].map((t) => (
+              <span key={t} className="hero-pill">{t}</span>
             ))}
           </motion.div>
 
-          <motion.div className="hero-ctas" variants={stagger} initial="hidden" animate="visible">
-            <motion.div variants={fadeUp}>
-              <MagneticButton className="cta-primary" onClick={() => navigate('/work')}>
-                View Work →
-              </MagneticButton>
-            </motion.div>
-            <motion.div variants={fadeUp}>
-              <MagneticButton className="cta-secondary" onClick={() => navigate('/contact')}>
-                Let&apos;s Talk
-              </MagneticButton>
-            </motion.div>
-          </motion.div>
-
-          {/* Socials horizontal row under CTAs */}
-          <motion.div 
-            className="hero-socials-horizontal" 
-            variants={stagger} 
-            initial="hidden" 
-            animate="visible"
-          >
-            {[
-              { href: 'https://mail.google.com/mail/?view=cm&fs=1&to=lesleymutsambiwa@gmail.com', icon: <HiOutlineEnvelope size={14} />, label: 'Email' },
-              { href: 'https://github.com/Le-e-lab', icon: <FaGithub size={14} />, label: 'GitHub' },
-              { href: 'https://www.linkedin.com/in/lesley-mutsambiwa/', icon: <FaLinkedinIn size={14} />, label: 'LinkedIn' },
-            ].map((link) => (
-              <motion.a 
-                key={link.label} 
-                href={link.href} 
-                target={link.href.startsWith('mailto') ? undefined : '_blank'} 
-                rel="noreferrer" 
-                className="hero-social interactive" 
-                variants={fadeUp} 
-                whileHover={{ y: -2 }}
-              >
-                {link.icon}
-                <span>{link.label}</span>
-              </motion.a>
-            ))}
-          </motion.div>
-
-          {/* Speedometer Mobile Widget (shows on mobile < 768px only) */}
-          <div className="speedometer-mobile-wrap">
-            <span className="speedometer-lbl font-mono">BOOSTER_CONSOLE // TOUCH INITIATE</span>
-            <div className={`speed-dial-display ${isRevving ? 'pulse-active' : ''}`}>
-              <div className="speed-val font-mono">
-                {Math.floor(engineSpeed)} <span className="speed-unit">KM/H</span>
-              </div>
-              <div className="speed-dial-bar">
-                <div 
-                  className="speed-dial-fill" 
-                  style={{ width: `${(engineSpeed / 312) * 100}%` }} 
-                />
-              </div>
-            </div>
-            <button 
-              onClick={engageBooster}
-              disabled={isRevving}
-              className="engage-booster-btn font-mono interactive"
-            >
-              {isRevving ? 'BOOSTER_ENGAGED' : '[ ENGAGE ENGINE BOOSTER ]'}
+          <motion.div className="hero-ctas" variants={fadeUp}>
+            <button className="cta-primary" onClick={() => navigate('/work')}>
+              View Work
             </button>
-          </div>
-        </div>
-      </motion.div>
+            <button className="cta-secondary" onClick={() => navigate('/contact')}>
+              Let&apos;s Talk
+            </button>
+          </motion.div>
+
+          <motion.div className="hero-socials" variants={fadeUp}>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lesleymutsambiwa@gmail.com" className="hero-social interactive">
+              <HiOutlineEnvelope size={14} /> <span>Email</span>
+            </a>
+            <a href="https://github.com/Le-e-lab" target="_blank" rel="noreferrer" className="hero-social interactive">
+              <FaGithub size={14} /> <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/lesley-mutsambiwa/" target="_blank" rel="noreferrer" className="hero-social interactive">
+              <FaLinkedinIn size={14} /> <span>LinkedIn</span>
+            </a>
+          </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }

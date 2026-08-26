@@ -14,9 +14,9 @@
 }
 
 .theme-toggle:hover {
-  border-color: var(--teal);
-  color: var(--teal);
-  background: var(--teal-dim);
+  border-color: var(--tangerine);
+  color: var(--tangerine);
+  background: var(--tangerine-dim);
 }
 
 .theme-icon {
@@ -24,9 +24,9 @@
 }
 
 .theme-icon.sun {
-  color: var(--amber);
+  color: var(--tangerine-light);
 }
 
 .theme-icon.moon {
-  color: var(--teal);
+  color: var(--tangerine);
 }

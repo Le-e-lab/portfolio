@@ -44,7 +44,7 @@
 }
 
 .primary-curtain {
-  background: var(--teal); /* Forest Green sweeps first */
+  background: var(--tangerine); /* Tangerine sweeps first */
   z-index: 1;
 }
 

@@ -1,4 +1,4 @@
-/* ═══ Unique Right-Edge Vertical Navigation ═══ */
+/* ═══ Right-Edge Vertical Navigation ═══ */
 .sidenav {
   position: fixed;
   right: 0;
@@ -19,7 +19,7 @@
   top: 60px;
   bottom: 60px;
   width: 1px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .sidenav-items {
@@ -42,7 +42,7 @@
   cursor: pointer;
   padding: var(--space-sm);
   border-radius: var(--radius-md);
-  transition: all 400ms var(--ease-out);
+  transition: background 400ms var(--ease-out);
 }
 
 .sidenav-item:hover {
@@ -68,27 +68,16 @@
   transition: color 400ms var(--ease-out);
 }
 
-.sidenav-item:hover .sidenav-num {
-  color: var(--text);
-}
-
+.sidenav-item:hover .sidenav-num,
 .sidenav-item:hover .sidenav-label {
   color: var(--text);
 }
 
-.sidenav-item--active {
-  background: rgba(58, 138, 138, 0.08);
-}
-
-.sidenav-item--active .sidenav-num {
-  color: var(--teal);
-}
-
+.sidenav-item--active .sidenav-num,
 .sidenav-item--active .sidenav-label {
-  color: var(--teal);
+  color: var(--tangerine);
 }
 
-/* Bottom */
 .sidenav-bottom {
   position: absolute;
   bottom: var(--space-2xl);
