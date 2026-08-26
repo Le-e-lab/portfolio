@@ -541,7 +541,7 @@
 }
 
 .log-line:last-child {
-  color: var(--amber-light);
+  color: var(--tangerine-light);
   animation: pulse-text 1.5s infinite ease-in-out;
 }
 
@@ -565,7 +565,7 @@
 .success-reset-btn:hover {
   border-color: var(--tangerine);
   color: var(--tangerine);
-  background: var(--teal-dim);
+  background: var(--tangerine-dim);
 }
 
 /* Responsive styles */
