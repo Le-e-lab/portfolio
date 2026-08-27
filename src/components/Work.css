@@ -62,7 +62,7 @@
 
 /* Category Block */
 .work-category-block {
-  margin-bottom: var(--space-4xl);
+  margin-bottom: var(--space-2xl);
 }
 
 .work-category-block:last-child {
