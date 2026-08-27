@@ -24,20 +24,11 @@ const curatedProjects = [
     category: 'software'
   },
   {
-    tag: 'Group Project',
-    title: 'UPath',
-    description: 'University portal with attendance tracking, QR scanning, and role-based access.',
-    tech: ['React', 'Node.js', 'Express', 'QR'],
-    color: '#E8650A',
-    link: 'https://github.com/Le-e-lab/upath-simulation',
-    category: 'software'
-  },
-  {
     tag: 'Project',
     title: "The Chef's Muse",
     description: 'AI-powered recipe generator with calorie scanning via Gemini Vision.',
     tech: ['React', 'Tailwind', 'Gemini API'],
-    color: '#FF8C38',
+    color: '#E8650A',
     link: 'https://le-e-lab.github.io/chefs-muse/',
     category: 'software'
   },
@@ -48,21 +39,21 @@ const designProjects = [
   {
     title: 'Studio Logo',
     description: 'Black and white minimal studio identity — clean geometry, timeless type.',
-    image: '/portfolio/images/studio-logo.png',
+    image: '/portfolio/images/studio-logo.jpg',
     color: '#E8650A',
     category: 'design'
   },
   {
     title: 'Gold Brand Piece',
     description: 'Premium gold-toned brand asset — rich palette with editorial structure.',
-    image: '/portfolio/images/gold.png',
+    image: '/portfolio/images/gold.jpg',
     color: '#FF8C38',
     category: 'design'
   },
   {
     title: 'Logo Design',
     description: 'Custom logomark — geometric precision meets bold visual identity.',
-    image: '/portfolio/images/logo.png',
+    image: '/portfolio/images/logo.jpg',
     color: '#E8650A',
     category: 'design'
   },
@@ -113,7 +104,13 @@ export default function Work() {
               !r.name.toLowerCase().includes('skills') &&
               !r.name.toLowerCase().includes('learning') &&
               !r.name.toLowerCase().includes('test') &&
-              !r.name.toLowerCase().includes('portfolio')
+              !r.name.toLowerCase().includes('portfolio') &&
+              !r.name.toLowerCase().includes('introduction') &&
+              !r.name.toLowerCase().includes('copilot') &&
+              !r.name.toLowerCase().includes('group') &&
+              !r.name.toLowerCase().includes('gdg') &&
+              !r.name.toLowerCase().includes('gym') &&
+              r.description !== null
             );
           }
         }
