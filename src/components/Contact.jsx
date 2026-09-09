@@ -119,7 +119,7 @@ export default function Contact() {
           {/* Dossier Ticket for Resume Download */}
           <a
             className="resume-dossier-ticket interactive"
-            href="/portfolio/Lesley_Mutsambiwa_Resume.docx"
+            href="/Lesley_Mutsambiwa_Resume.docx"
             download="Lesley_Mutsambiwa_CV.docx"
             title="Download CV"
           >

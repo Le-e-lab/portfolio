@@ -58,7 +58,7 @@ export default function Hero() {
         <div className="hero-image-col hero-image-anim">
           <div className="hero-portrait-frame">
             <img
-              src="/portfolio/images/hero-portrait.jpg"
+              src="/images/hero-portrait.jpg"
               alt="Lesley Mutsambiwa at his desk"
               className="hero-portrait-img"
               width={1200}

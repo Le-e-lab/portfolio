@@ -9,21 +9,21 @@ const fallbackDesign = [
     title: 'Studio Logo',
     category: 'Logo',
     description: 'Black and white minimal studio identity — clean geometry, timeless type.',
-    image: '/portfolio/images/design/logo/studio-logo.jpg',
+    image: '/images/design/logo/studio-logo.jpg',
     featured: true
   },
   {
     title: 'Gold Brand Piece',
     category: 'Brand Identity',
     description: 'Premium gold-toned brand asset — rich palette with editorial structure.',
-    image: '/portfolio/images/design/brand-identity/gold-brand-piece.jpg',
+    image: '/images/design/brand-identity/gold-brand-piece.jpg',
     featured: true
   },
   {
     title: 'Logo Design',
     category: 'Logo',
     description: 'Custom logomark — geometric precision meets bold visual identity.',
-    image: '/portfolio/images/design/logo/logo-design.jpg',
+    image: '/images/design/logo/logo-design.jpg',
     featured: true
   },
 ];
@@ -78,7 +78,7 @@ export default function Work() {
   useEffect(() => {
     const fetchDesign = async () => {
       try {
-        const res = await fetch('/portfolio/design-projects.json');
+        const res = await fetch('/design-projects.json');
         if (res.ok) {
           const data = await res.json();
           if (data.projects?.length) setDesignProjects(data.projects);
@@ -94,7 +94,7 @@ export default function Work() {
       try {
         let repos;
         try {
-          const jsonRes = await fetch('/portfolio/projects.json');
+          const jsonRes = await fetch('/projects.json');
           if (jsonRes.ok) {
             const data = await jsonRes.json();
             repos = data.repos || data;

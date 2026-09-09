@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       {!loaded && <LoadingScreen onComplete={handleLoad} />}
-      <BrowserRouter basename="/portfolio/">
+      <BrowserRouter basename="/">
         <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
