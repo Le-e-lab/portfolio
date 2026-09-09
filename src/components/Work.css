@@ -1,7 +1,8 @@
 /* ═══ Work Section ═══ */
 .work-section {
   position: relative;
-  overflow: visible;
+  overflow-y: visible;
+  overflow-x: clip; /* keep the grid-layer bleed from creating page-wide scroll */
   padding-bottom: var(--space-4xl);
 }
 
