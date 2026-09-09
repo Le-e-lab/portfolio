@@ -1,19 +1,7 @@
-import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { HiOutlineEnvelope, HiOutlineMapPin } from 'react-icons/hi2';
-import { HiDownload } from 'react-icons/hi';
-import { FaGithub, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
+import Icon from './Icon';
+import useReveal from '../hooks/useReveal';
 import './Contact.css';
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.06 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 25, filter: 'blur(4px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
-};
 
 const reasons = [
   {
@@ -72,14 +60,18 @@ const reasons = [
 ];
 
 const socials = [
-  { icon: FaGithub, href: 'https://github.com/Le-e-lab', label: 'GitHub' },
-  { icon: FaLinkedinIn, href: 'https://www.linkedin.com/in/lesley-mutsambiwa/', label: 'LinkedIn' },
-  { icon: FaXTwitter, href: 'https://x.com', label: 'X' },
-  { icon: HiOutlineEnvelope, href: 'https://mail.google.com/mail/?view=cm&fs=1&to=lesleymutsambiwa@gmail.com', label: 'Email' },
+  { icon: 'github', href: 'https://github.com/Le-e-lab', label: 'GitHub' },
+  { icon: 'linkedin', href: 'https://www.linkedin.com/in/lesley-mutsambiwa/', label: 'LinkedIn' },
+  { icon: 'x', href: 'https://x.com', label: 'X' },
+  { icon: 'envelope', href: 'https://mail.google.com/mail/?view=cm&fs=1&to=lesleymutsambiwa@gmail.com', label: 'Email' },
 ];
 
 export default function Contact() {
   const [formState, setFormState] = useState('idle'); // 'idle', 'sending', 'sent'
+  const infoRef = useReveal();
+  const formRef = useReveal();
+  const reasonsRef = useReveal();
+  const socialsRef = useReveal();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -93,55 +85,49 @@ export default function Contact() {
     <section className="section contact-section">
       <div className="contact-grid-container">
         {/* LEFT COLUMN: dossier, details, resume ticket */}
-        <motion.div 
-          className="contact-info-col" 
-          variants={stagger} 
-          initial="hidden" 
-          whileInView="visible" 
-          viewport={{ once: true }}
-        >
-          <motion.span className="section-number" variants={fadeUp}>04</motion.span>
-          <motion.span className="section-label" variants={fadeUp}>Contact</motion.span>
+        <div ref={infoRef} className="reveal contact-info-col">
+          <span className="section-number">04</span>
+          <span className="section-label">Contact</span>
 
-          <motion.h2 className="contact-heading" variants={fadeUp}>
+          <h2 className="contact-heading">
             Let&apos;s build <span className="text-gradient">something</span><br />together.
-          </motion.h2>
+          </h2>
 
-          <motion.p className="contact-desc" variants={fadeUp}>
-            I&apos;m always down to collaborate on open-source tools, full-stack systems, or visual design work. If you want to talk systems, Linux configs, or have an interesting role, drop me a line.
-          </motion.p>
+          <p className="contact-desc">
+            I&apos;m always down to collaborate on brand identities, visual design, or full-stack systems. If you want to talk design, systems, Linux configs, or have an interesting project, drop me a line.
+          </p>
 
-          <motion.div className="freelance-badge" variants={fadeUp}>
+          <div className="freelance-badge">
             <span className="freelance-dot" />
             <span>Available for work</span>
-          </motion.div>
+          </div>
 
-          <motion.div className="location-block" variants={fadeUp}>
+          <div className="location-block">
             <h3 className="location-title font-mono">/ PRIMARY_LOCATION</h3>
             <div className="location-details">
               <div className="loc-item">
-                <HiOutlineMapPin size={15} />
+                <Icon name="map-pin" size={15} />
                 <span>Harare, Zimbabwe</span>
               </div>
               <div className="loc-item">
-                <HiOutlineEnvelope size={15} />
+                <Icon name="envelope" size={15} />
                 <span>lesleymutsambiwa@gmail.com</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Dossier Ticket for Resume Download */}
-          <motion.div 
+          <a
             className="resume-dossier-ticket interactive"
-            variants={fadeUp}
-            whileHover={{ y: -3 }}
-            transition={{ duration: 0.3 }}
+            href="/portfolio/Lesley_Mutsambiwa_Resume.docx"
+            download="Lesley_Mutsambiwa_CV.docx"
+            title="Download CV"
           >
             <div className="ticket-header">
               <span className="ticket-label font-mono">DOC_RELEASE // v6.0</span>
               <span className="ticket-status font-mono">APPROVED</span>
             </div>
-            
+
             <div className="ticket-body">
               <div className="ticket-details">
                 <h4 className="ticket-title">Lesley_Mutsambiwa_Resume.docx</h4>
@@ -151,15 +137,10 @@ export default function Contact() {
                   <span className="font-mono">LOC: ZW.HRE</span>
                 </div>
               </div>
-              
-              <a 
-                href="/portfolio/Lesley_Mutsambiwa_Resume.docx"
-                download="Lesley_Mutsambiwa_CV.docx"
-                className="ticket-download-btn interactive"
-                title="Download CV"
-              >
-                <HiDownload size={18} />
-              </a>
+
+              <span className="ticket-download-btn interactive">
+                <Icon name="download" size={18} />
+              </span>
             </div>
 
             <div className="ticket-barcode-wrap">
@@ -178,49 +159,40 @@ export default function Contact() {
               </div>
               <span className="barcode-text font-mono">*LESLEY-MUTSAMBIWA-RESUME*</span>
             </div>
-          </motion.div>
-        </motion.div>
+          </a>
+        </div>
 
         {/* RIGHT COLUMN: Minimal form in glass container */}
-        <motion.div 
-          className="contact-form-col"
-          initial={{ opacity: 0, x: 25 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <div ref={formRef} className="reveal contact-form-col">
           <div className="contact-glass-form-container">
             <h3 className="glass-form-title font-mono">{'// INITIATE_CONTACT_PROTOCOL'}</h3>
-            
+
             {formState === 'sent' ? (
-              <motion.div 
-                className="contact-success-screen"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              >
+              <div className="contact-success-screen">
                 <div className="success-icon-wrap">
                   <svg viewBox="0 0 50 50" className="success-svg-check">
-                    <motion.circle 
-                      cx="25" cy="25" r="20" 
-                      stroke="var(--tangerine)" 
-                      strokeWidth="2" 
+                    <circle
+                      cx="25" cy="25" r="20"
+                      stroke="var(--tangerine)"
+                      strokeWidth="2"
                       fill="none"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.8, ease: "easeInOut" }}
-                    />
-                    <motion.path 
-                      d="M 15 25 L 22 32 L 35 18" 
-                      stroke="var(--tangerine)" 
-                      strokeWidth="3" 
-                      strokeLinecap="round" 
+                      strokeDasharray="126"
+                      strokeDashoffset="126"
+                    >
+                      <animate attributeName="stroke-dashoffset" from="126" to="0" dur="0.8s" fill="freeze" />
+                    </circle>
+                    <path
+                      d="M 15 25 L 22 32 L 35 18"
+                      stroke="var(--tangerine)"
+                      strokeWidth="3"
+                      strokeLinecap="round"
                       strokeLinejoin="round"
                       fill="none"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.6, delay: 0.6, ease: "easeInOut" }}
-                    />
+                      strokeDasharray="30"
+                      strokeDashoffset="30"
+                    >
+                      <animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.6s" begin="0.6s" fill="freeze" />
+                    </path>
                   </svg>
                 </div>
                 <h4 className="success-title font-mono">TRANSMISSION_SECURED</h4>
@@ -233,21 +205,21 @@ export default function Contact() {
                   <span className="log-line">&gt; DISPATCHING_ENCRYPTED_PACKET... OK</span>
                   <span className="log-line">&gt; STATUS: PENDING_RESPONSE</span>
                 </div>
-                <button 
-                  onClick={() => setFormState('idle')} 
+                <button
+                  onClick={() => setFormState('idle')}
                   className="success-reset-btn interactive font-mono"
                 >
                   RE-OPEN_CHANNEL
                 </button>
-              </motion.div>
+              </div>
             ) : (
               <form className="contact-glass-form" onSubmit={handleSubmit}>
                 <div className="input-group">
-                  <input 
-                    type="text" 
-                    id="form-name" 
-                    required 
-                    placeholder=" " 
+                  <input
+                    type="text"
+                    id="form-name"
+                    required
+                    placeholder=" "
                     className="glass-input"
                     disabled={formState === 'sending'}
                   />
@@ -256,11 +228,11 @@ export default function Contact() {
                 </div>
 
                 <div className="input-group">
-                  <input 
-                    type="email" 
-                    id="form-email" 
-                    required 
-                    placeholder=" " 
+                  <input
+                    type="email"
+                    id="form-email"
+                    required
+                    placeholder=" "
                     className="glass-input"
                     disabled={formState === 'sending'}
                   />
@@ -269,11 +241,11 @@ export default function Contact() {
                 </div>
 
                 <div className="input-group">
-                  <input 
-                    type="text" 
-                    id="form-subject" 
-                    required 
-                    placeholder=" " 
+                  <input
+                    type="text"
+                    id="form-subject"
+                    required
+                    placeholder=" "
                     className="glass-input"
                     disabled={formState === 'sending'}
                   />
@@ -282,10 +254,10 @@ export default function Contact() {
                 </div>
 
                 <div className="input-group textarea-group">
-                  <textarea 
-                    id="form-message" 
-                    required 
-                    placeholder=" " 
+                  <textarea
+                    id="form-message"
+                    required
+                    placeholder=" "
                     className="glass-input"
                     rows={5}
                     disabled={formState === 'sending'}
@@ -295,23 +267,21 @@ export default function Contact() {
                 </div>
 
                 <div className="form-submit-row">
-                  <motion.button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="glass-submit-btn interactive"
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.99 }}
                     disabled={formState === 'sending'}
                   >
                     <span className="btn-text">
                       {formState === 'sending' ? 'TRANSMITTING...' : 'SEND PROTOCOL'}
                     </span>
-                    <HiOutlineEnvelope size={14} className="btn-icon" />
-                  </motion.button>
+                    <Icon name="envelope" size={14} className="btn-icon" />
+                  </button>
                 </div>
               </form>
             )}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* WHY WORK WITH ME */}
@@ -319,51 +289,35 @@ export default function Contact() {
         <div className="block-header-wrap">
           <h3 className="contact-subtitle">{'// PERF_CAPABILITIES'}</h3>
         </div>
-        
-        <div className="reasons-grid">
-          {reasons.map((r, i) => (
-            <motion.div
-              key={r.title}
-              className="reason-card interactive"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06, duration: 0.6 }}
-              whileHover={{ y: -3 }}
-            >
+
+        <div ref={reasonsRef} className="reveal reasons-grid">
+          {reasons.map((r) => (
+            <div key={r.title} className="reason-card interactive">
               <div className="reason-svg-wrapper">
                 {r.svg}
               </div>
               <h4 className="reason-title">{r.title}</h4>
               <p className="reason-desc">{r.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
 
       {/* Social links circles */}
       <div className="contact-footer-wrap">
-        <div className="contact-socials">
-          {socials.map((s, i) => {
-            const Icon = s.icon;
-            return (
-              <motion.a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-                className="social-circle interactive"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                whileHover={{ y: -3, scale: 1.08 }}
-                title={s.label}
-              >
-                <Icon size={16} />
-              </motion.a>
-            );
-          })}
+        <div ref={socialsRef} className="reveal contact-socials">
+          {socials.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              className="social-circle interactive"
+              title={s.label}
+            >
+              <Icon name={s.icon} size={16} />
+            </a>
+          ))}
         </div>
 
         <footer className="site-footer">

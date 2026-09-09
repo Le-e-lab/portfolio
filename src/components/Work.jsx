@@ -1,9 +1,34 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { HiOutlineArrowUpRight } from 'react-icons/hi2';
+import { useState, useEffect, useCallback } from 'react';
+import Icon from './Icon';
+import useReveal from '../hooks/useReveal';
 import './Work.css';
 
-/* ─── Curated "big" projects shown first ─── */
+/* ─── Fallback design projects (used if JSON fetch fails) ─── */
+const fallbackDesign = [
+  {
+    title: 'Studio Logo',
+    category: 'Logo',
+    description: 'Black and white minimal studio identity — clean geometry, timeless type.',
+    image: '/portfolio/images/studio-logo.jpg',
+    featured: true
+  },
+  {
+    title: 'Gold Brand Piece',
+    category: 'Brand Identity',
+    description: 'Premium gold-toned brand asset — rich palette with editorial structure.',
+    image: '/portfolio/images/gold.jpg',
+    featured: true
+  },
+  {
+    title: 'Logo Design',
+    category: 'Logo',
+    description: 'Custom logomark — geometric precision meets bold visual identity.',
+    image: '/portfolio/images/logo.jpg',
+    featured: true
+  },
+];
+
+/* ─── Curated "big" software projects ─── */
 const curatedProjects = [
   {
     tag: 'Developer',
@@ -34,51 +59,36 @@ const curatedProjects = [
   },
 ];
 
-/* ─── Design projects with actual images ─── */
-const designProjects = [
-  {
-    title: 'Studio Logo',
-    description: 'Black and white minimal studio identity — clean geometry, timeless type.',
-    image: '/portfolio/images/studio-logo.jpg',
-    color: '#E8650A',
-    category: 'design'
-  },
-  {
-    title: 'Gold Brand Piece',
-    description: 'Premium gold-toned brand asset — rich palette with editorial structure.',
-    image: '/portfolio/images/gold.jpg',
-    color: '#FF8C38',
-    category: 'design'
-  },
-  {
-    title: 'Logo Design',
-    description: 'Custom logomark — geometric precision meets bold visual identity.',
-    image: '/portfolio/images/logo.jpg',
-    color: '#E8650A',
-    category: 'design'
-  },
-];
-
 const filterOptions = [
-  { key: 'all', label: 'All' },
-  { key: 'software', label: 'Software Engineering' },
   { key: 'design', label: 'Graphic Design' },
+  { key: 'software', label: 'Software' },
+  { key: 'all', label: 'All' },
 ];
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 25, filter: 'blur(4px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
-};
 
 export default function Work() {
   const [githubProjects, setGithubProjects] = useState([]);
-  const [filter, setFilter] = useState('all');
+  const [designProjects, setDesignProjects] = useState(fallbackDesign);
+  const [filter, setFilter] = useState('design'); // design-first default
+  const [lightbox, setLightbox] = useState(null);
+  const headingRef = useReveal();
+  const designRef = useReveal();
+  const softwareRef = useReveal();
 
+  /* Fetch design projects from static JSON */
+  useEffect(() => {
+    const fetchDesign = async () => {
+      try {
+        const res = await fetch('/portfolio/design-projects.json');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.projects?.length) setDesignProjects(data.projects);
+        }
+      } catch { /* fallback already set */ }
+    };
+    fetchDesign();
+  }, []);
+
+  /* Fetch GitHub repos for software projects */
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -126,7 +136,6 @@ export default function Work() {
             category: 'software'
           }));
 
-          /* Merge: curated first, then GitHub extras (skip duplicates) */
           const merged = [...curatedProjects];
           formatted.forEach(fetched => {
             const isDuplicate = curatedProjects.some(
@@ -142,30 +151,34 @@ export default function Work() {
     fetchProjects();
   }, []);
 
+  /* Lightbox keyboard dismiss */
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e) => { if (e.key === 'Escape') setLightbox(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightbox]);
+
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+
   const softwareProjects = (githubProjects.length > 0 ? githubProjects : curatedProjects)
     .filter(p => p.category === 'software');
-  const filteredDesign = filter === 'all' || filter === 'design' ? designProjects : [];
-  const filteredSoftware = filter === 'all' || filter === 'software' ? softwareProjects : [];
+  const showDesign = filter === 'all' || filter === 'design';
+  const showSoftware = filter === 'all' || filter === 'software';
 
   return (
     <section className="section work-section">
       <div className="work-intro-wrapper">
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="work-heading-block"
-        >
+        <div ref={headingRef} className="reveal work-heading-block">
           <span className="section-number">02</span>
           <span className="section-label">Work</span>
           <h2 className="work-heading font-heading">
-            Selected <span className="text-gradient">Projects</span>
+            Selected <span className="text-gradient">Design Work</span>
           </h2>
           <p className="work-desc">
-            Real projects, real problems, real solutions. From full-stack apps to brand design — each built with intention.
+            Brand identities and visual systems first — then the applications that power them.
           </p>
-        </motion.div>
+        </div>
 
         <div className="filter-wrapper">
           {filterOptions.map(opt => (
@@ -180,25 +193,56 @@ export default function Work() {
         </div>
       </div>
 
-      {/* ══════ SOFTWARE PROJECTS ══════ */}
-      {filteredSoftware.length > 0 && (
+      {/* ══════ GRAPHIC DESIGN SHOWCASE ══════ */}
+      {showDesign && designProjects.length > 0 && (
+        <div id="design" className="work-category-block">
+          <div ref={designRef} className="reveal design-masonry">
+            {designProjects.map((project, i) => (
+              <button
+                key={project.title}
+                className={`design-tile interactive ${project.featured ? 'design-tile--featured' : ''}`}
+                onClick={() => setLightbox(project)}
+                aria-label={`View ${project.title}`}
+              >
+                <div className="design-tile-thumb">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="design-tile-img"
+                    loading="lazy"
+                    width={800}
+                    height={i === 0 ? 1000 : 800}
+                  />
+                  <div className="design-tile-overlay">
+                    <div className="design-tile-meta">
+                      <span className="design-tile-cat font-mono">{project.category}</span>
+                      <h3 className="design-tile-title">{project.title}</h3>
+                    </div>
+                    <Icon name="arrow-up-right" size={18} className="design-tile-arrow" />
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ══════ SOFTWARE PROJECTS (secondary) ══════ */}
+      {showSoftware && softwareProjects.length > 0 && (
         <div id="software" className="work-category-block">
-          <motion.div
-            className="work-grid"
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {filteredSoftware.map((project) => (
-              <motion.a
+          <div className="software-subhead">
+            <span className="software-subhead-line" />
+            <span className="software-subhead-label font-mono">Software Engineering</span>
+            <span className="software-subhead-line" />
+          </div>
+          <div ref={softwareRef} className="reveal work-grid">
+            {softwareProjects.map((project) => (
+              <a
                 key={project.link}
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="work-card interactive"
-                variants={fadeUp}
-                whileHover={{ y: -6, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } }}
               >
                 <div className="work-card-accent" style={{ background: `linear-gradient(135deg, ${project.color}22, transparent)` }} />
                 <div className="work-card-body">
@@ -206,7 +250,7 @@ export default function Work() {
                     <span className="work-card-tag font-mono" style={{ color: project.color, borderColor: `${project.color}33` }}>
                       {project.tag}
                     </span>
-                    <HiOutlineArrowUpRight size={16} className="work-card-arrow" />
+                    <Icon name="arrow-up-right" size={16} className="work-card-arrow" />
                   </div>
                   <h3 className="work-card-title">{project.title}</h3>
                   <p className="work-card-desc">{project.description}</p>
@@ -216,40 +260,36 @@ export default function Work() {
                     ))}
                   </div>
                 </div>
-              </motion.a>
+              </a>
             ))}
-          </motion.div>
+          </div>
         </div>
       )}
 
-      {/* ══════ DESIGN PROJECTS ══════ */}
-      {filteredDesign.length > 0 && (
-        <div id="design" className="work-category-block">
-          <div className="design-grid">
-            {filteredDesign.map((project, i) => (
-              <motion.div
-                key={project.title}
-                className="design-card interactive"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -6, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } }}
-              >
-                <div className="design-thumb">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="design-thumb-img"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="design-card-body">
-                  <h3 className="design-card-title">{project.title}</h3>
-                  <p className="design-card-desc">{project.description}</p>
-                </div>
-              </motion.div>
-            ))}
+      {/* ══════ LIGHTBOX MODAL ══════ */}
+      {lightbox && (
+        <div
+          className="lightbox-backdrop"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label={lightbox.title}
+        >
+          <div
+            className="lightbox-card lightbox-card-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="lightbox-close interactive" onClick={closeLightbox} aria-label="Close">
+              <Icon name="x" size={18} />
+            </button>
+            <div className="lightbox-image-wrap">
+              <img src={lightbox.image} alt={lightbox.title} className="lightbox-image" />
+            </div>
+            <div className="lightbox-meta">
+              <span className="lightbox-cat font-mono">{lightbox.category}</span>
+              <h3 className="lightbox-title">{lightbox.title}</h3>
+              <p className="lightbox-desc">{lightbox.description}</p>
+            </div>
           </div>
         </div>
       )}

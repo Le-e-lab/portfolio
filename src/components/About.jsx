@@ -1,27 +1,27 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import {
-  FaReact, FaNodeJs, FaLinux, FaPython, FaGitAlt
-} from 'react-icons/fa6';
-import {
-  SiJavascript, SiTypescript, SiTailwindcss, SiMongodb, SiFedora
-} from 'react-icons/si';
+import useReveal from '../hooks/useReveal';
 import './About.css';
 
 const techStack = [
-  { icon: FaReact, name: 'React', color: '#61dafb' },
-  { icon: SiJavascript, name: 'JavaScript', color: '#f7df1e' },
-  { icon: FaNodeJs, name: 'Node.js', color: '#68a063' },
-  { icon: FaPython, name: 'Python', color: '#3776ab' },
-  { icon: FaLinux, name: 'Linux', color: '#fcc624' },
-  { icon: SiFedora, name: 'Fedora', color: '#51a2da' },
-  { icon: FaGitAlt, name: 'Git', color: '#f05032' },
-  { icon: SiMongodb, name: 'MongoDB', color: '#47a248' },
-  { icon: SiTailwindcss, name: 'Tailwind', color: '#38bdf8' },
-  { icon: SiTypescript, name: 'TypeScript', color: '#3178c6' },
+  { name: 'React', mono: 'Re', color: '#61dafb' },
+  { name: 'JavaScript', mono: 'JS', color: '#f7df1e' },
+  { name: 'Node.js', mono: 'No', color: '#68a063' },
+  { name: 'Python', mono: 'Py', color: '#3776ab' },
+  { name: 'Linux', mono: 'Lx', color: '#fcc624' },
+  { name: 'Fedora', mono: 'Fe', color: '#51a2da' },
+  { name: 'Git', mono: 'Gi', color: '#f05032' },
+  { name: 'MongoDB', mono: 'Mo', color: '#47a248' },
+  { name: 'Tailwind', mono: 'Tw', color: '#38bdf8' },
+  { name: 'TypeScript', mono: 'TS', color: '#3178c6' },
 ];
 
 const timeline = [
+  {
+    year: '2025 — Present',
+    role: 'Graphic Designer',
+    company: 'Studio & Freelance',
+    desc: 'Crafting premium brand identities, logos, and visual systems. Design-first thinking applied to every pixel.',
+  },
   {
     year: '2025 — Present',
     role: 'Developer',
@@ -44,62 +44,38 @@ const timeline = [
     company: 'Freelance & Open Source',
     desc: 'Designing and deploying web applications with React, Node.js, and Python.'
   },
-  {
-    year: '2025 — Present',
-    role: 'Graphic Designer',
-    company: 'Freelance Design Studio',
-    desc: 'Crafting premium UI layouts, logos, and brand identity systems.'
-  }
 ];
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 25, filter: 'blur(4px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
-};
 
 export default function About() {
   const [activeTab, setActiveTab] = useState(null);
+  const headerRef = useReveal();
+  const timelineRef = useReveal();
+  const asideRef = useReveal();
+  const techRef = useReveal();
 
   return (
     <section className="section about-section">
       <div className="about-container">
         {/* Header */}
-        <motion.div
-          className="about-header"
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <motion.span className="section-number" variants={fadeUp}>03</motion.span>
-          <motion.span className="section-label" variants={fadeUp}>About</motion.span>
-          <motion.h2 className="about-heading" variants={fadeUp}>
-            A developer who cares about <span className="text-gradient">design.</span>
-          </motion.h2>
-          <motion.p className="about-bio" variants={fadeUp}>
-            CS student at Africa University. I build full-stack applications with clean code and pixel-perfect interfaces. When I&apos;m not coding, I&apos;m designing brand identities or configuring my Linux setup.
-          </motion.p>
-        </motion.div>
+        <div ref={headerRef} className="reveal about-header">
+          <span className="section-number">03</span>
+          <span className="section-label">About</span>
+          <h2 className="about-heading">
+            A designer who can build <span className="text-gradient">what they draw.</span>
+          </h2>
+          <p className="about-bio">
+            CS student at Africa University. I design brand identities and build full-stack applications — the visual and the technical, working as one. When I&apos;m not designing, I&apos;m shipping products or configuring my Linux setup.
+          </p>
+        </div>
 
         {/* Two-column content */}
         <div className="about-grid">
           {/* Timeline */}
-          <motion.div
-            className="about-timeline"
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
+          <div ref={timelineRef} className="reveal about-timeline">
             <h3 className="timeline-title">Experience</h3>
             <div className="timeline-items">
               {timeline.map((item, idx) => (
-                <motion.div key={idx} className="timeline-item" variants={fadeUp}>
+                <div key={idx} className="timeline-item">
                   <div className="timeline-dot-connector">
                     <div className="timeline-dot" />
                     {idx < timeline.length - 1 && <div className="timeline-connector" />}
@@ -121,24 +97,18 @@ export default function About() {
                     </span>
                     <p className="timeline-desc">{item.desc}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Quote + Terminal */}
-          <motion.div
-            className="about-aside"
-            initial={{ opacity: 0, x: 25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <div ref={asideRef} className="reveal about-aside">
             <div className="about-quote interactive">
               <div className="quote-accent" />
               <div className="quote-body">
-                <p className="quote-text">&quot;You have to believe in yourself when no one else does — that makes you a winner right there.&quot;</p>
-                <span className="quote-attr font-mono">— Lewis Hamilton</span>
+                <p className="quote-text">&quot;Design is not just what it looks like and feels like. Design is how it works.&quot;</p>
+                <span className="quote-attr font-mono">— Steve Jobs</span>
               </div>
             </div>
 
@@ -176,27 +146,20 @@ export default function About() {
                 )}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Tech stack */}
-        <motion.div
-          className="tech-grid"
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {techStack.map((tech) => {
-            const Icon = tech.icon;
-            return (
-              <motion.div key={tech.name} className="tech-item" variants={fadeUp}>
-                <Icon size={22} style={{ color: tech.color }} />
-                <span className="tech-name font-mono">{tech.name}</span>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+        <div ref={techRef} className="reveal tech-grid">
+          {techStack.map((tech) => (
+            <div key={tech.name} className="tech-item">
+              <span className="tech-mono" style={{ backgroundColor: `${tech.color}1f`, color: tech.color, borderColor: `${tech.color}44` }}>
+                {tech.mono}
+              </span>
+              <span className="tech-name font-mono">{tech.name}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

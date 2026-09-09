@@ -110,6 +110,18 @@ a:hover { color: var(--text); }
   background-clip: text;
 }
 
+/* ── Scroll reveal (native, replaces framer-motion whileInView) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .section {
   padding: var(--space-4xl) 0;
   position: relative;

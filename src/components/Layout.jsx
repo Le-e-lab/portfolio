@@ -1,81 +1,27 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Sidebar from './Sidebar';
 import MobileNav from './MobileNav';
-import usePaintBrush from '../hooks/usePaintBrush';
 import './Layout.css';
 
-// Dynamic transition variants based on route pathname
-const getTransitionStyle = (path, isSecondary = false) => {
-  const delay = isSecondary ? 0.08 : 0;
-  
+// Route → curtain direction class (CSS keyframes handle the wipe)
+const curtainClass = (path) => {
   switch (path) {
-    case '/work':
-      // Vertical Blind (Top-to-Bottom Shutter)
-      return {
-        initial: { y: '-100%', x: '0%', scale: 1, rotate: 0, borderRadius: '0%' },
-        animate: { 
-          y: ['-100%', '0%', '100%'],
-          x: '0%',
-          scale: 1,
-          rotate: 0,
-          borderRadius: '0%',
-          transition: { duration: 1.1, times: [0, 0.45, 1], ease: [0.76, 0, 0.24, 1], delay }
-        }
-      };
-    case '/about':
-      // Diagonal Shutter (Slide from top-left to bottom-right)
-      return {
-        initial: { x: '-130%', y: '-130%', scale: 1.5, rotate: -25, borderRadius: '0%' },
-        animate: { 
-          x: ['-130%', '0%', '130%'],
-          y: ['-130%', '0%', '130%'],
-          scale: 1.5,
-          rotate: -25,
-          borderRadius: '0%',
-          transition: { duration: 1.25, times: [0, 0.45, 1], ease: [0.76, 0, 0.24, 1], delay }
-        }
-      };
-    case '/contact':
-      // Scale-up Iris Circle Cover
-      return {
-        initial: { scale: 0, opacity: 1, x: '0%', y: '0%', rotate: 0, borderRadius: '50%' },
-        animate: { 
-          scale: [0, 2.2, 3.5],
-          opacity: [1, 1, 0],
-          x: '0%',
-          y: '0%',
-          rotate: 0,
-          borderRadius: '50%',
-          transition: { duration: 1.2, times: [0, 0.5, 1], ease: [0.76, 0, 0.24, 1], delay }
-        }
-      };
-    default:
-      // Horizontal Sweep (Left-to-Right) for Home (/)
-      return {
-        initial: { x: '-100%', y: '0%', scale: 1, rotate: 0, borderRadius: '0%' },
-        animate: { 
-          x: ['-100%', '0%', '100%'],
-          y: '0%',
-          scale: 1,
-          rotate: 0,
-          borderRadius: '0%',
-          transition: { duration: 1.1, times: [0, 0.45, 1], ease: [0.76, 0, 0.24, 1], delay }
-        }
-      };
+    case '/work': return 'curtain--vertical';
+    case '/about': return 'curtain--diagonal';
+    case '/contact': return 'curtain--iris';
+    default: return 'curtain--horizontal';
   }
 };
 
 export default function Layout() {
   const location = useLocation();
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  usePaintBrush();
 
-  // Trigger transitions on pathname change (state is reset by curtain onAnimationComplete)
+  // Freeze body scroll while the route curtain sweeps (~1.1s)
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- deliberate route-change trigger, not a render cascade
-    setIsTransitioning(true);
+    document.body.style.overflow = 'hidden';
+    const t = setTimeout(() => { document.body.style.overflow = ''; }, 1150);
+    return () => { clearTimeout(t); document.body.style.overflow = ''; };
   }, [location.pathname]);
 
   return (
@@ -83,54 +29,16 @@ export default function Layout() {
       <Sidebar />
       <MobileNav />
 
-      {/* Sliding Transition Curtain Overlay - dynamically unmounted once finished */}
-      <AnimatePresence>
-        {isTransitioning && (
-          <motion.div
-            key={`curtain-${location.pathname}`}
-            className="curtain-overlay"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.2 } }}
-          >
-            {/* Primary curtain (tangerine) */}
-            <motion.div 
-              className="curtain-panel primary-curtain" 
-              initial="initial"
-              animate="animate"
-              variants={getTransitionStyle(location.pathname, false)}
-            />
-            {/* Secondary curtain (carbon black) */}
-            <motion.div 
-              className="curtain-panel secondary-curtain"
-              initial="initial"
-              animate="animate"
-              variants={getTransitionStyle(location.pathname, true)}
-              onAnimationComplete={() => {
-                // Secondary curtain delay represents full transition cover duration
-                setIsTransitioning(false);
-              }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Sliding Transition Curtain — pure CSS, keyed by route so it replays */}
+      <div key={`curtain-${location.pathname}`} className={`curtain-overlay ${curtainClass(location.pathname)}`} aria-hidden="true">
+        <div className="curtain-panel primary-curtain" />
+        <div className="curtain-panel secondary-curtain" />
+      </div>
 
       <main className="main-content">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            className="page-wrapper"
-            variants={{
-              initial: { opacity: 0, y: 15 },
-              enter: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] } },
-              exit: { opacity: 0, y: -10, transition: { duration: 0.35, ease: [0.76, 0, 0.24, 1] } }
-            }}
-            initial="initial"
-            animate="enter"
-            exit="exit"
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+        <div key={location.pathname} className="page-wrapper">
+          <Outlet />
+        </div>
       </main>
     </div>
   );

@@ -1,58 +1,48 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './LoadingScreen.css';
+
+function prefersNoLoader() {
+  if (typeof window === 'undefined') return true;
+  // Skip brand loader on small screens / slow networks / reduced motion — content first.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const small = window.matchMedia('(max-width: 768px)').matches;
+  const slow = navigator.connection && navigator.connection.effectiveType
+    && ['slow-2g', '2g', '3g'].includes(navigator.connection.effectiveType);
+  return reduced || small || slow;
+}
 
 export default function LoadingScreen({ onComplete }) {
   const [phase, setPhase] = useState(0);
+  const [skip] = useState(prefersNoLoader);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 400);
-    const t2 = setTimeout(() => setPhase(2), 1200);
-    const t3 = setTimeout(() => onComplete(), 1800);
+    if (skip) {
+      onComplete();
+      return;
+    }
+    const t1 = setTimeout(() => setPhase(1), 300);
+    const t2 = setTimeout(() => setPhase(2), 900);
+    const t3 = setTimeout(() => onComplete(), 1300);
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, [onComplete]);
+  }, [skip, onComplete]);
+
+  if (skip) return null;
 
   return (
-    <AnimatePresence>
-      {phase < 2 && (
-        <motion.div
-          className="loader"
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <motion.div
-            className="loader-logo"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <motion.circle
-                cx="32" cy="32" r="32"
-                fill="#0c0c0c"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              />
-              <motion.path
-                d="M 18 18 L 18 46 L 24 46 L 24 32 L 34 46 L 42 46 L 32 30 L 42 18 L 34 18 L 24 30 L 24 18 Z"
-                fill="#E8650A"
-                fillRule="evenodd"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-              />
-            </svg>
-          </motion.div>
-
-          <motion.div
-            className="loader-line"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: phase >= 1 ? 1 : 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+    <div className={`loader ${phase >= 1 ? 'loader--ready' : ''} ${phase >= 2 ? 'loader--out' : ''}`}>
+      <div className="loader-logo">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="32" fill="#0c0c0c" className="loader-circle" />
+          <path
+            d="M 18 18 L 18 46 L 24 46 L 24 32 L 34 46 L 42 46 L 32 30 L 42 18 L 34 18 L 24 30 L 24 18 Z"
+            fill="#E8650A"
+            fillRule="evenodd"
+            className="loader-mark"
           />
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </svg>
+      </div>
+
+      <div className="loader-line" />
+    </div>
   );
 }

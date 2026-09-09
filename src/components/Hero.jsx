@@ -1,23 +1,6 @@
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { HiOutlineEnvelope } from 'react-icons/hi2';
-import { FaGithub, FaLinkedinIn } from 'react-icons/fa6';
+import Icon from './Icon';
 import './Hero.css';
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
-};
-
-const imageReveal = {
-  hidden: { opacity: 0, scale: 0.95, x: 30 },
-  visible: { opacity: 1, scale: 1, x: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 } },
-};
 
 export default function Hero() {
   const navigate = useNavigate();
@@ -26,72 +9,65 @@ export default function Hero() {
     <section className="hero">
       <div className="hero-grid">
         {/* Left: Text content */}
-        <motion.div
-          className="hero-text-col"
-          variants={stagger}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div className="hero-status" variants={fadeUp}>
+        <div className="hero-text-col">
+          <div className="hero-status hero-anim" style={{ animationDelay: '0.05s' }}>
             <span className="hero-dot" />Available for work
-          </motion.div>
+          </div>
 
-          <motion.h1 className="hero-name" variants={fadeUp}>
+          <h1 className="hero-name hero-anim" style={{ animationDelay: '0.12s' }}>
             Lesley
-          </motion.h1>
+          </h1>
 
-          <motion.p className="hero-role" variants={fadeUp}>
-            Developer <span className="hero-amp">&</span> Designer
-          </motion.p>
+          <p className="hero-role hero-anim" style={{ animationDelay: '0.2s' }}>
+            Designer <span className="hero-amp">&</span> Developer
+          </p>
 
-          <motion.p className="hero-desc" variants={fadeUp}>
-            Full-stack applications with type safety and visual design. CS student at Africa University, building from Harare to the world.
-          </motion.p>
+          <p className="hero-desc hero-anim" style={{ animationDelay: '0.28s' }}>
+            Brand identity, visual design, and full-stack applications — from concept to shipped product. CS student at Africa University, building from Harare to the world.
+          </p>
 
-          <motion.div className="hero-pills" variants={fadeUp}>
-            {['React', 'Node.js', 'Python', 'Linux'].map((t) => (
+          <div className="hero-pills hero-anim" style={{ animationDelay: '0.36s' }}>
+            {['Brand Identity', 'UI Design', 'React', 'Node.js'].map((t) => (
               <span key={t} className="hero-pill">{t}</span>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div className="hero-ctas" variants={fadeUp}>
+          <div className="hero-ctas hero-anim" style={{ animationDelay: '0.44s' }}>
             <button className="cta-primary" onClick={() => navigate('/work')}>
-              View Work
+              View Design Work
             </button>
             <button className="cta-secondary" onClick={() => navigate('/contact')}>
               Let&apos;s Talk
             </button>
-          </motion.div>
+          </div>
 
-          <motion.div className="hero-socials" variants={fadeUp}>
+          <div className="hero-socials hero-anim" style={{ animationDelay: '0.52s' }}>
             <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lesleymutsambiwa@gmail.com" className="hero-social interactive">
-              <HiOutlineEnvelope size={14} /> <span>Email</span>
+              <Icon name="envelope" size={14} /> <span>Email</span>
             </a>
             <a href="https://github.com/Le-e-lab" target="_blank" rel="noreferrer" className="hero-social interactive">
-              <FaGithub size={14} /> <span>GitHub</span>
+              <Icon name="github" size={14} /> <span>GitHub</span>
             </a>
             <a href="https://www.linkedin.com/in/lesley-mutsambiwa/" target="_blank" rel="noreferrer" className="hero-social interactive">
-              <FaLinkedinIn size={14} /> <span>LinkedIn</span>
+              <Icon name="linkedin" size={14} /> <span>LinkedIn</span>
             </a>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Right: Portrait image */}
-        <motion.div
-          className="hero-image-col"
-          variants={imageReveal}
-          initial="hidden"
-          animate="visible"
-        >
+        <div className="hero-image-col hero-image-anim">
           <div className="hero-portrait-frame">
             <img
               src="/portfolio/images/hero-portrait.jpg"
               alt="Lesley Mutsambiwa at his desk"
               className="hero-portrait-img"
+              width={1200}
+              height={1609}
+              fetchPriority="high"
             />
             <div className="hero-portrait-glow" />
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

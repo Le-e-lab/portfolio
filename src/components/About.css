@@ -291,6 +291,25 @@
   color: var(--text-dim);
 }
 
+.tech-mono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  border: 1px solid;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 300ms var(--ease-out);
+}
+
+.tech-item:hover .tech-mono {
+  transform: translateY(-3px) scale(1.05);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .about-grid {
