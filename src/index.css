@@ -70,10 +70,7 @@ body {
   overflow-x: hidden;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  body { cursor: none; }
-  a, button, [role="button"], .interactive { cursor: none; }
-}
+/* System cursor everywhere — no custom cursor hiding */
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);

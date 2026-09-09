@@ -1,24 +1,24 @@
 {
   "projects": [
     {
-      "title": "Studio Logo",
-      "category": "Logo",
-      "description": "Black and white minimal studio identity — clean geometry, timeless type.",
-      "image": "/portfolio/images/studio-logo.jpg",
-      "featured": true
-    },
-    {
       "title": "Gold Brand Piece",
       "category": "Brand Identity",
       "description": "Premium gold-toned brand asset — rich palette with editorial structure.",
-      "image": "/portfolio/images/gold.jpg",
+      "image": "/portfolio/images/design/brand-identity/gold-brand-piece.jpg",
       "featured": true
     },
     {
       "title": "Logo Design",
       "category": "Logo",
       "description": "Custom logomark — geometric precision meets bold visual identity.",
-      "image": "/portfolio/images/logo.jpg",
+      "image": "/portfolio/images/design/logo/logo-design.jpg",
+      "featured": true
+    },
+    {
+      "title": "Studio Logo",
+      "category": "Logo",
+      "description": "Black and white minimal studio identity — clean geometry, timeless type.",
+      "image": "/portfolio/images/design/logo/studio-logo.jpg",
       "featured": true
     }
   ]

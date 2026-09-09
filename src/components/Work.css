@@ -70,7 +70,30 @@
 }
 
 /* ═══ GRAPHIC DESIGN MASONRY ═══ */
+.design-showcase {
+  position: relative;
+}
+
+/* Cool gridded layer — faint blueprint grid behind the tiles */
+.design-showcase::before {
+  content: '';
+  position: absolute;
+  inset: -40px;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: var(--radius-xl);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(232, 101, 10, 0.045) 0px, rgba(232, 101, 10, 0.045) 1px, transparent 1px, transparent 44px),
+    repeating-linear-gradient(90deg, rgba(232, 101, 10, 0.045) 0px, rgba(232, 101, 10, 0.045) 1px, transparent 1px, transparent 44px),
+    repeating-linear-gradient(0deg, rgba(232, 101, 10, 0.08) 0px, rgba(232, 101, 10, 0.08) 1px, transparent 1px, transparent 220px),
+    repeating-linear-gradient(90deg, rgba(232, 101, 10, 0.08) 0px, rgba(232, 101, 10, 0.08) 1px, transparent 1px, transparent 220px);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 78%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 78%);
+}
+
 .design-masonry {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-xl);

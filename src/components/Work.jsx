@@ -195,7 +195,7 @@ export default function Work() {
 
       {/* ══════ GRAPHIC DESIGN SHOWCASE ══════ */}
       {showDesign && designProjects.length > 0 && (
-        <div id="design" className="work-category-block">
+        <div id="design" className="design-showcase">
           <div ref={designRef} className="reveal design-masonry">
             {designProjects.map((project, i) => (
               <button
