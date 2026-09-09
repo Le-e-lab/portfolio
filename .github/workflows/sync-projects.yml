@@ -25,17 +25,20 @@ jobs:
           # Public endpoint (repo-scoped token can read it; no user PAT needed)
           gh api '/users/Le-e-lab/repos?sort=updated&per_page=100' \
             --paginate \
-            --jq '[.[] | {
-              name: .name,
-              description: .description,
-              html_url: .html_url,
-              language: .language,
-              topics: (.topics // []),
-              private: .private,
-              fork: .fork,
-              stargazers_count: .stargazers_count,
-              updated_at: .updated_at
-            }]' > /tmp/repos.json
+            --jq '[.[] |
+              select(.fork == false) |
+              select(.name | test("portfolio|runs-on\\.dev|group|gdg|gym|introduction|copilot|skills|learning|test|config|settings|dotfiles|\\.github|private|secret|^Le-e-lab$"; "i") | not) |
+              {
+                name: .name,
+                description: .description,
+                html_url: .html_url,
+                language: .language,
+                topics: (.topics // []),
+                private: .private,
+                fork: .fork,
+                stargazers_count: .stargazers_count,
+                updated_at: .updated_at
+              }]' > /tmp/repos.json
 
           # Wrap in a root object with metadata
           echo "{\"repos\": $(cat /tmp/repos.json), \"generated_at\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" > public/projects.json

@@ -9,21 +9,21 @@ const fallbackDesign = [
     title: 'Studio Logo',
     category: 'Logo',
     description: 'Black and white minimal studio identity — clean geometry, timeless type.',
-    image: '/portfolio/images/studio-logo.jpg',
+    image: '/portfolio/images/design/logo/studio-logo.jpg',
     featured: true
   },
   {
     title: 'Gold Brand Piece',
     category: 'Brand Identity',
     description: 'Premium gold-toned brand asset — rich palette with editorial structure.',
-    image: '/portfolio/images/gold.jpg',
+    image: '/portfolio/images/design/brand-identity/gold-brand-piece.jpg',
     featured: true
   },
   {
     title: 'Logo Design',
     category: 'Logo',
     description: 'Custom logomark — geometric precision meets bold visual identity.',
-    image: '/portfolio/images/logo.jpg',
+    image: '/portfolio/images/design/logo/logo-design.jpg',
     featured: true
   },
 ];
@@ -60,15 +60,15 @@ const curatedProjects = [
 ];
 
 const filterOptions = [
+  { key: 'all', label: 'All' },
   { key: 'design', label: 'Graphic Design' },
   { key: 'software', label: 'Software' },
-  { key: 'all', label: 'All' },
 ];
 
 export default function Work() {
   const [githubProjects, setGithubProjects] = useState([]);
   const [designProjects, setDesignProjects] = useState(fallbackDesign);
-  const [filter, setFilter] = useState('design'); // design-first default
+  const [filter, setFilter] = useState('all'); // show everything by default
   const [lightbox, setLightbox] = useState(null);
   const headingRef = useReveal();
   const designRef = useReveal();
@@ -137,10 +137,11 @@ export default function Work() {
           }));
 
           const merged = [...curatedProjects];
+          const norm = (t) => t.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/^the/, '');
           formatted.forEach(fetched => {
             const isDuplicate = curatedProjects.some(
-              fp => fp.link.toLowerCase() === fetched.link.toLowerCase() ||
-                    fp.title.toLowerCase().replace(/\s+/g, '') === fetched.title.toLowerCase().replace(/\s+/g, '')
+              fp => norm(fp.link) === norm(fetched.link) ||
+                    norm(fp.title) === norm(fetched.title)
             );
             if (!isDuplicate) merged.push(fetched);
           });
