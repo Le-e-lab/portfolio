@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Sidebar from './Sidebar';
 import MobileNav from './MobileNav';
 import './Layout.css';
@@ -16,12 +16,26 @@ const curtainClass = (path) => {
 
 export default function Layout() {
   const location = useLocation();
+  const [curtain, setCurtain] = useState(false);
+  const reducedRef = useRef(false);
 
-  // Freeze body scroll while the route curtain sweeps (~1.1s)
+  // Respect prefers-reduced-motion: no sweeping curtain at all
   useEffect(() => {
+    reducedRef.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }, []);
+
+  // Mount the curtain on route change, then unmount it once the wipe settles
+  // (kept mounted => full-screen black overlay at base state — the blank-screen bug)
+  useEffect(() => {
+    if (reducedRef.current) {
+      document.body.style.overflow = '';
+      return;
+    }
+    setCurtain(true);
     document.body.style.overflow = 'hidden';
-    const t = setTimeout(() => { document.body.style.overflow = ''; }, 1150);
-    return () => { clearTimeout(t); document.body.style.overflow = ''; };
+    const unlock = setTimeout(() => { document.body.style.overflow = ''; }, 1150);
+    const hide = setTimeout(() => setCurtain(false), 1350);
+    return () => { clearTimeout(unlock); clearTimeout(hide); document.body.style.overflow = ''; };
   }, [location.pathname]);
 
   return (
@@ -29,11 +43,13 @@ export default function Layout() {
       <Sidebar />
       <MobileNav />
 
-      {/* Sliding Transition Curtain — pure CSS, keyed by route so it replays */}
-      <div key={`curtain-${location.pathname}`} className={`curtain-overlay ${curtainClass(location.pathname)}`} aria-hidden="true">
-        <div className="curtain-panel primary-curtain" />
-        <div className="curtain-panel secondary-curtain" />
-      </div>
+      {/* Sliding Transition Curtain — unmounts after the wipe */}
+      {curtain && (
+        <div className={`curtain-overlay ${curtainClass(location.pathname)}`} aria-hidden="true">
+          <div className="curtain-panel primary-curtain" />
+          <div className="curtain-panel secondary-curtain" />
+        </div>
+      )}
 
       <main className="main-content">
         <div key={location.pathname} className="page-wrapper">

@@ -42,6 +42,14 @@
   inset: 0;
   pointer-events: none;
   z-index: 99999;
+  /* Fade the whole overlay out by ~1.3s regardless of variant; JS unmounts
+     afterwards. Without this, panel base state covers the viewport black. */
+  animation: curtain-fade-out 0.25s var(--ease-out) 1.1s forwards;
+}
+
+@keyframes curtain-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; visibility: hidden; }
 }
 
 .curtain-panel {
@@ -65,10 +73,10 @@
 
 /* Horizontal sweep (Home) */
 .curtain--horizontal .primary-curtain {
-  animation: sweep-x 1.1s var(--ease-in-out);
+  animation: sweep-x 1.1s var(--ease-in-out) forwards;
 }
 .curtain--horizontal .secondary-curtain {
-  animation: sweep-x 1.1s var(--ease-in-out) 0.08s;
+  animation: sweep-x 1.1s var(--ease-in-out) 0.08s forwards;
 }
 @keyframes sweep-x {
   0% { transform: translateX(-100%); }
@@ -78,10 +86,10 @@
 
 /* Vertical sweep (Work) */
 .curtain--vertical .primary-curtain {
-  animation: sweep-y 1.1s var(--ease-in-out);
+  animation: sweep-y 1.1s var(--ease-in-out) forwards;
 }
 .curtain--vertical .secondary-curtain {
-  animation: sweep-y 1.1s var(--ease-in-out) 0.08s;
+  animation: sweep-y 1.1s var(--ease-in-out) 0.08s forwards;
 }
 @keyframes sweep-y {
   0% { transform: translateY(-100%); }
@@ -91,11 +99,11 @@
 
 /* Diagonal sweep (About) */
 .curtain--diagonal .primary-curtain {
-  animation: sweep-d 1.25s var(--ease-in-out);
+  animation: sweep-d 1.25s var(--ease-in-out) forwards;
   transform: scale(1.5);
 }
 .curtain--diagonal .secondary-curtain {
-  animation: sweep-d 1.25s var(--ease-in-out) 0.08s;
+  animation: sweep-d 1.25s var(--ease-in-out) 0.08s forwards;
   transform: scale(1.5);
 }
 @keyframes sweep-d {
@@ -116,10 +124,10 @@
   border-radius: 50%;
 }
 .curtain--iris .primary-curtain {
-  animation: iris 1.2s var(--ease-in-out);
+  animation: iris 1.2s var(--ease-in-out) forwards;
 }
 .curtain--iris .secondary-curtain {
-  animation: iris 1.2s var(--ease-in-out) 0.12s;
+  animation: iris 1.2s var(--ease-in-out) 0.12s forwards;
 }
 @keyframes iris {
   0% { transform: translate(-50%, -50%) scale(0); }
