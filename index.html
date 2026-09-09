@@ -32,6 +32,22 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Self-heal: if a stale cached index.html references purged bundle hashes,
+      // React never mounts (#root stays empty). Force one cache-busting reload.
+      (function () {
+        if (sessionStorage.getItem('lsl-self-healed')) return;
+        var check = function () {
+          var root = document.getElementById('root');
+          if (root && root.children.length === 0 && !document.querySelector('.loader')) {
+            sessionStorage.setItem('lsl-self-healed', '1');
+            location.replace(location.pathname + '?v=' + Date.now());
+          }
+        };
+        if (document.readyState === 'complete') setTimeout(check, 3500);
+        else window.addEventListener('load', function () { setTimeout(check, 3500); });
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
