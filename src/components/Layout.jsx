@@ -33,8 +33,8 @@ export default function Layout() {
     }
     setCurtain(true);
     document.body.style.overflow = 'hidden';
-    const unlock = setTimeout(() => { document.body.style.overflow = ''; }, 1150);
-    const hide = setTimeout(() => setCurtain(false), 1350);
+    const unlock = setTimeout(() => { document.body.style.overflow = ''; }, 950);
+    const hide = setTimeout(() => setCurtain(false), 1150);
     return () => { clearTimeout(unlock); clearTimeout(hide); document.body.style.overflow = ''; };
   }, [location.pathname]);
 

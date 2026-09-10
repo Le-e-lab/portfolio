@@ -1,6 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <!-- Carbon black circle background -->
-  <circle cx="32" cy="32" r="32" fill="#0c0c0c"/>
-  <!-- Tangerine LM monogram -->
-  <path d="M 18 18 L 18 46 L 24 46 L 24 32 L 34 46 L 42 46 L 32 30 L 42 18 L 34 18 L 24 30 L 24 18 Z" fill="#E8650A" fill-rule="evenodd"/>
+  <!-- Carbon black rounded-square background -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#0c0c0c"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="13.5" stroke="#E8650A" stroke-opacity="0.35" stroke-width="1"/>
+
+  <!-- L — clean vertical bar + foot -->
+  <path d="M16 14 H23 V42 H31 V49 H16 Z" fill="#E8650A"/>
+
+  <!-- M — two stems + center valley, clearly separate from the L -->
+  <path d="M37 14 H43 L50.5 49 L58 14 H64 V49 L37 49 Z" fill="#E8650A" fill-rule="evenodd"/>
 </svg>
