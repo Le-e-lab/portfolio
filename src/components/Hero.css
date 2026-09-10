@@ -206,41 +206,45 @@
   color: var(--tangerine);
 }
 
-/* ── Right: Portrait ── */
+/* ── Right: Honeycomb ── */
 .hero-image-col {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.hero-portrait-frame {
+.hero-image-col .hexcomb {
+  padding: var(--space-xl) 0;
+}
+
+/* ═══ Featured Work (honeycomb section below services) ═══ */
+.featured-section {
   position: relative;
-  width: 100%;
-  max-width: 480px;
-  aspect-ratio: 3 / 4;
-  border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid var(--border);
 }
 
-.hero-portrait-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
+.featured-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
 }
 
-.hero-portrait-glow {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(12, 12, 12, 0.7) 0%,
-    rgba(12, 12, 12, 0.1) 40%,
-    transparent 60%
-  );
-  pointer-events: none;
+.featured-header {
+  margin-bottom: var(--space-2xl);
+  max-width: 640px;
+}
+
+.featured-heading {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  margin-bottom: var(--space-md);
+}
+
+.featured-sub {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--text-dim);
 }
 
 /* ── Responsive ── */
@@ -261,10 +265,6 @@
     order: 1;
   }
 
-  .hero-portrait-frame {
-    max-width: 320px;
-  }
-
   .hero-pills {
     justify-content: center;
   }
@@ -281,10 +281,6 @@
 
   .hero-grid {
     padding: 0 var(--space-lg);
-  }
-
-  .hero-portrait-frame {
-    max-width: 260px;
   }
 
   .hero-ctas {

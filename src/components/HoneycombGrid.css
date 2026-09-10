@@ -1,0 +1,162 @@
+/* ═══ Honeycomb (interlocking hexagon) grid ═══ */
+
+.hexcomb {
+  --hex: clamp(130px, 16vw, 190px);
+  --hex-gap: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-lg) 0;
+}
+
+/* Variants */
+.hexcomb--hero {
+  --hex: clamp(96px, 15vw, 150px);
+}
+
+.hexcomb--featured {
+  --hex: clamp(120px, 17vw, 200px);
+}
+
+.hexcomb-row {
+  display: flex;
+  gap: var(--hex-gap);
+  position: relative;
+}
+
+/* Interlock: pull each new row up so peaks nest into previous row's notch */
+.hexcomb-row + .hexcomb-row {
+  margin-top: calc(var(--hex) * -0.29);
+}
+
+/* Alternate rows shift half a hex sideways */
+.hexcomb-row--offset {
+  transform: translateX(calc(var(--hex) / 2 + var(--hex-gap)));
+}
+
+/* Shell holds the glow (not clipped) + the clipped hex button */
+.hex-shell {
+  position: relative;
+  width: var(--hex);
+  aspect-ratio: 1 / 1.1547;
+  flex-shrink: 0;
+  z-index: 1;
+  transition: z-index 0s;
+}
+
+.hex-shell:hover {
+  z-index: 10;
+}
+
+/* Radial "light" glow behind the hex that turns on when hovered */
+.hex-glow {
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 101, 10, 0.4) 0%, rgba(232, 101, 10, 0.15) 40%, transparent 70%);
+  filter: blur(10px);
+  opacity: 0;
+  transform: scale(0.85);
+  pointer-events: none;
+  transition: opacity 350ms cubic-bezier(0.23, 1, 0.32, 1), transform 350ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hex-shell:hover .hex-glow {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* The actual hexagon (pointy-top) */
+.hex-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: var(--bg-raised);
+  cursor: pointer;
+  overflow: hidden;
+  text-align: left;
+  -webkit-user-select: none;
+  user-select: none;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hex-shell:hover .hex-btn {
+  transform: scale(1.06);
+}
+
+.hex-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 550ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hex-shell:hover .hex-img {
+  transform: scale(1.12);
+}
+
+/* Label overlay — fades in on hover */
+.hex-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  padding: 0 var(--space-sm) var(--space-sm);
+  background: linear-gradient(to top, rgba(12, 12, 12, 0.85) 0%, rgba(12, 12, 12, 0.25) 55%, transparent 75%);
+  opacity: 0;
+  transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hex-shell:hover .hex-label {
+  opacity: 1;
+}
+
+.hex-cat {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--tangerine);
+}
+
+.hex-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  line-height: 1.05;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Mobile — trendy 2-up clipped hexes, smaller and centered */
+@media (max-width: 768px) {
+  .hexcomb--featured {
+    --hex: clamp(110px, 40vw, 170px);
+  }
+  .hexcomb--hero {
+    --hex: clamp(92px, 38vw, 130px);
+  }
+  .hexcomb-row--offset {
+    transform: translateX(calc(var(--hex) / 2 + var(--hex-gap)));
+  }
+  .hex-title {
+    font-size: 0.85rem;
+  }
+  .hex-cat {
+    font-size: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hex-shell:hover .hex-btn,
+  .hex-shell:hover .hex-img {
+    transform: none;
+  }
+}

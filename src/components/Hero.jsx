@@ -1,11 +1,19 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from './Icon';
 import DotGrid from './DotGrid';
 import ServicesSection from './ServicesSection';
+import HoneycombGrid from './HoneycombGrid';
+import ProjectWindow from './ProjectWindow';
+import useDesignProjects from '../hooks/useDesignProjects';
+import useReveal from '../hooks/useReveal';
 import './Hero.css';
 
 export default function Hero() {
   const navigate = useNavigate();
+  const designProjects = useDesignProjects();
+  const [selectedProject, setSelectedProject] = useState(null);
+  const featuredRef = useReveal();
 
   return (
     <>
@@ -65,23 +73,50 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right: Portrait image */}
+          {/* Right: Honeycomb hex cluster of design work */}
           <div className="hero-image-col hero-image-anim">
-            <div className="hero-portrait-frame">
-              <img
-                src="/images/hero-portrait.jpg"
-                alt="Lesley Mutsambiwa at his desk"
-                className="hero-portrait-img"
-                width={1200}
-                height={1609}
-                fetchPriority="high"
-              />
-              <div className="hero-portrait-glow" />
-            </div>
+            <HoneycombGrid
+              variant="hero"
+              cols={2}
+              projects={designProjects.slice(0, 3)}
+              onOpen={setSelectedProject}
+            />
           </div>
         </div>
       </section>
+
       <ServicesSection />
+
+      {/* ══════ FEATURED WORK — honeycomb below services ══════ */}
+      <section className="section section--dark featured-section">
+        <DotGrid
+          dotColor="#E8650A"
+          dotSize={2}
+          dotSpacing={44}
+          orbitSpeed={0.8}
+          impactRadius={140}
+          scaleOnHover={1.4}
+        />
+        <div className="featured-container">
+          <div ref={featuredRef} className="reveal featured-header">
+            <span className="section-number">Featured Work</span>
+            <h2 className="featured-heading">
+              Selected <span className="text-gradient">Design Work</span>
+            </h2>
+            <p className="featured-sub">
+              A taste of the brand identities and visual systems — hover to explore, click to see the story behind each piece.
+            </p>
+          </div>
+          <HoneycombGrid
+            variant="featured"
+            cols={3}
+            projects={designProjects.slice(0, 6)}
+            onOpen={setSelectedProject}
+          />
+        </div>
+      </section>
+
+      <ProjectWindow project={selectedProject} onClose={() => setSelectedProject(null)} />
     </>
   );
 }
