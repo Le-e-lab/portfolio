@@ -50,8 +50,8 @@
 }
 
 .service-num {
-  font-size: 0.6rem;
-  color: var(--tangerine);
+  font-size: 0.7rem;
+  color: var(--tangerine-dark);
   letter-spacing: 0.1em;
   display: block;
   margin-bottom: var(--space-md);
@@ -78,7 +78,7 @@
 }
 
 .service-tag {
-  font-size: 0.55rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-muted-dark);

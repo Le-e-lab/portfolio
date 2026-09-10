@@ -32,13 +32,16 @@ export default function DotGrid({
     impactRadius, scaleOnHover, enableRevolve,
   });
 
-  cfgRef.current.dotColor = dotColor;
-  cfgRef.current.dotSize = dotSize;
-  cfgRef.current.dotSpacing = dotSpacing;
-  cfgRef.current.orbitSpeed = orbitSpeed;
-  cfgRef.current.impactRadius = impactRadius;
-  cfgRef.current.scaleOnHover = scaleOnHover;
-  cfgRef.current.enableRevolve = enableRevolve;
+  // Sync config without touching refs during render (react-hooks/refs)
+  useEffect(() => {
+    cfgRef.current.dotColor = dotColor;
+    cfgRef.current.dotSize = dotSize;
+    cfgRef.current.dotSpacing = dotSpacing;
+    cfgRef.current.orbitSpeed = orbitSpeed;
+    cfgRef.current.impactRadius = impactRadius;
+    cfgRef.current.scaleOnHover = scaleOnHover;
+    cfgRef.current.enableRevolve = enableRevolve;
+  }, [dotColor, dotSize, dotSpacing, orbitSpeed, impactRadius, scaleOnHover, enableRevolve]);
 
   const dotsRef = useRef([]);
   const spacingSnapRef = useRef(dotSpacing);

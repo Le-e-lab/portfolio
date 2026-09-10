@@ -64,7 +64,7 @@
 
 .sidenav-num {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: var(--text-dim);
   letter-spacing: 0.1em;
   transition: color 400ms var(--ease-out);
@@ -72,7 +72,7 @@
 
 .sidenav-label {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: var(--text-dim);

@@ -11,11 +11,13 @@
   --tangerine-light: #FF8C38;
   --tangerine-dim: rgba(232, 101, 10, 0.1);
   --tangerine-glow: rgba(232, 101, 10, 0.2);
+  /* Darker tangerine for use on light backgrounds (passes AA contrast) */
+  --tangerine-dark: #B35008;
 
   /* Text — warm tones */
   --text: #F5F0EB;
-  --text-dim: #A89F97;
-  --text-muted: #5C5650;
+  --text-dim: #B8B0A8;
+  --text-muted: #7A726A;
 
   /* Borders */
   --border: rgba(255, 255, 255, 0.06);
@@ -26,8 +28,8 @@
   --bg-light-raised: #EDE8E2;
   --bg-light-card: #E5E0DA;
   --text-dark: #1a1714;
-  --text-dim-dark: #5C5650;
-  --text-muted-dark: #9A9189;
+  --text-dim-dark: #4A4540;
+  --text-muted-dark: #7A726A;
   --border-dark: rgba(0, 0, 0, 0.08);
   --border-dark-hover: rgba(232, 101, 10, 0.3);
 
@@ -170,7 +172,7 @@ a:hover { color: var(--text); }
 
 .section-label {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: var(--tangerine);
   text-transform: uppercase;
   letter-spacing: 0.25em;
@@ -189,7 +191,7 @@ a:hover { color: var(--text); }
 
 .section-number {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
   letter-spacing: 0.15em;
   margin-bottom: var(--space-xs);

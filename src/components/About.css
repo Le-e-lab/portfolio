@@ -91,7 +91,7 @@
 }
 
 .timeline-year {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: var(--tangerine-light);
   letter-spacing: 0.05em;
   display: block;
@@ -169,7 +169,7 @@
 .quote-attr {
   display: block;
   margin-top: var(--space-md);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-muted);
@@ -212,7 +212,7 @@
 
 .terminal-title {
   margin: 0 auto;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
 }
 
@@ -285,7 +285,7 @@
 }
 
 .tech-name {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-dim);

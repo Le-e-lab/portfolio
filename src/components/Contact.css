@@ -42,7 +42,7 @@
   border: 1px solid rgba(232, 101, 10, 0.18);
   border-radius: var(--radius-full);
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--tangerine);
@@ -69,7 +69,7 @@
 }
 
 .location-title {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   letter-spacing: 0.15em;
   color: var(--text-muted);
   margin-bottom: var(--space-md);
@@ -128,13 +128,13 @@
 }
 
 .ticket-label {
-  font-size: 0.58rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
   letter-spacing: 0.1em;
 }
 
 .ticket-status {
-  font-size: 0.58rem;
+  font-size: 0.72rem;
   color: var(--tangerine);
   font-weight: bold;
   letter-spacing: 0.1em;
@@ -169,7 +169,7 @@
 }
 
 .ticket-meta span {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
   letter-spacing: 0.05em;
 }
@@ -226,7 +226,7 @@
 .bar.thick { width: 5px; }
 
 .barcode-text {
-  font-size: 0.55rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
   letter-spacing: 0.25em;
 }
@@ -243,7 +243,7 @@
 }
 
 .glass-form-title {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   letter-spacing: 0.12em;
   color: var(--text-muted);
   margin-bottom: var(--space-2xl);
@@ -469,7 +469,7 @@
 
 .footer-text {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-muted);
@@ -477,9 +477,9 @@
 }
 
 .footer-sub {
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
-  opacity: 0.55;
+  opacity: 0.7;
   letter-spacing: 0.05em;
 }
 
@@ -642,7 +642,7 @@
 
 .service-options-label {
   display: block;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-muted-dark);
@@ -657,7 +657,7 @@
 
 .service-chip {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 0.5rem 1rem;
