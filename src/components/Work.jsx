@@ -1,8 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Icon from './Icon';
 import useReveal from '../hooks/useReveal';
-import useDesignProjects from '../hooks/useDesignProjects';
-import ProjectWindow from './ProjectWindow';
 import LiquidDivider from './LiquidDivider';
 import './Work.css';
 
@@ -43,21 +41,12 @@ const curatedProjects = [
   },
 ];
 
-const filterOptions = [
-  { key: 'all', label: 'All' },
-  { key: 'design', label: 'Graphic Design' },
-  { key: 'software', label: 'Software' },
-];
-
 export default function Work() {
   const [githubProjects, setGithubProjects] = useState([]);
-  const designProjects = useDesignProjects();
-  const [filter, setFilter] = useState('all');
-  const [lightbox, setLightbox] = useState(null);
   const headingRef = useReveal();
-  const softwareRef = useReveal();
+  const projectsRef = useReveal();
 
-  /* Fetch GitHub repos for software projects */
+  /* Fetch GitHub repos for software projects (coding-only) */
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -124,146 +113,68 @@ export default function Work() {
     fetchProjects();
   }, []);
 
-  /* Lightbox keyboard dismiss */
-  useEffect(() => {
-    if (!lightbox) return;
-    const onKey = (e) => { if (e.key === 'Escape') setLightbox(null); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [lightbox]);
-
-  const closeLightbox = useCallback(() => setLightbox(null), []);
-
-  const softwareProjects = (githubProjects.length > 0 ? githubProjects : curatedProjects)
-    .filter(p => p.category === 'software');
-  const showDesign = filter === 'all' || filter === 'design';
-  const showSoftware = filter === 'all' || filter === 'software';
+  const softwareProjects = githubProjects.length > 0 ? githubProjects : curatedProjects;
 
   return (
     <section className="work-section">
       {/* ══════ CREAM INTRO ZONE ══════ */}
       <div className="section--light work-zone work-zone--intro">
         <div className="work-zone-inner">
-          <div className="work-intro-wrapper">
-            <div ref={headingRef} className="reveal work-heading-block">
-              <span className="section-number">02</span>
-              <span className="section-label">Work</span>
-              <h2 className="work-heading font-heading">
-                Selected <span className="text-gradient">Design Work</span>
-              </h2>
-              <p className="work-desc">
-                Brand identities and visual systems first — then the applications that power them.
-              </p>
-            </div>
-
-            <div className="filter-wrapper">
-              {filterOptions.map(opt => (
-                <button
-                  key={opt.key}
-                  onClick={() => setFilter(opt.key)}
-                  className={`filter-btn font-mono interactive ${filter === opt.key ? 'active' : ''}`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
+          <div ref={headingRef} className="reveal work-heading-block">
+            <span className="section-number">02</span>
+            <span className="section-label">Projects</span>
+            <h2 className="work-heading font-heading">
+              Projects <span className="text-gradient">& Builds</span>
+            </h2>
+            <p className="work-desc">
+              The applications and systems I design, build, and ship — full-stack work from concept to production.
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Liquid blend into dark design zone */}
+      {/* Liquid blend into the dark projects zone */}
       <LiquidDivider fill="var(--bg)" variant={0} />
 
-      {/* ══════ DARK DESIGN GRID ZONE ══════ */}
-      <div className="section--dark work-zone work-zone--design">
+      {/* ══════ DARK PROJECTS ZONE ══════ */}
+      <div className="section--dark work-zone work-zone--projects">
         <div className="work-zone-inner">
-          {/* GRAPHIC DESIGN SHOWCASE */}
-          {showDesign && designProjects.length > 0 && (
-            <div id="design" className="design-showcase">
-              <div className="design-masonry">
-                {designProjects.map((project) => (
-                  <button
-                    key={project.title}
-                    className={`design-tile interactive ${project.featured ? 'design-tile--featured' : ''}`}
-                    onClick={() => setLightbox(project)}
-                    aria-label={`View ${project.title}`}
-                  >
-                <div className="design-tile-thumb">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="design-tile-img"
-                    loading="lazy"
-                    width={800}
-                    height={project.featured ? 1000 : 800}
-                  />
-                  <div className="design-tile-overlay">
-                    <div className="design-tile-meta">
-                      <span className="design-tile-cat font-mono">{project.category}</span>
-                      <h3 className="design-tile-title">{project.title}</h3>
+          {softwareProjects.length > 0 && (
+            <div ref={projectsRef} className="reveal work-grid">
+              {softwareProjects.map((project) => (
+                <a
+                  key={project.link}
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="work-card interactive"
+                >
+                  <div className="work-card-accent" style={{ background: `linear-gradient(135deg, ${project.color}22, transparent)` }} />
+                  <div className="work-card-body">
+                    <div className="work-card-top">
+                      <span className="work-card-tag font-mono" style={{ color: project.color, borderColor: `${project.color}33` }}>
+                        {project.tag}
+                      </span>
+                      <Icon name="arrow-up-right" size={16} className="work-card-arrow" />
                     </div>
-                    <Icon name="arrow-up-right" size={18} className="design-tile-arrow" />
+                    <h3 className="work-card-title">{project.title}</h3>
+                    <p className="work-card-desc">{project.description}</p>
+                    <div className="work-card-meta">
+                      <span className="work-card-client">{project.client}</span>
+                      {project.year && <span className="work-card-year font-mono">{project.year}</span>}
+                    </div>
+                    <div className="work-card-tech">
+                      {project.tech.map(t => (
+                        <span key={t} className="work-tech-pill font-mono">{t}</span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-        </div>
-      </div>
-
-      {/* Liquid blend into cream software zone */}
-      <LiquidDivider fill="var(--bg-light)" variant={1} />
-
-      {/* ══════ CREAM SOFTWARE ZONE ══════ */}
-      <div className="section--light work-zone work-zone--software">
-        <div className="work-zone-inner">
-          {showSoftware && softwareProjects.length > 0 && (
-            <div id="software" className="work-category-block">
-              <div className="software-subhead">
-                <span className="software-subhead-line" />
-                <span className="software-subhead-label font-mono">Software Engineering</span>
-                <span className="software-subhead-line" />
-              </div>
-              <div ref={softwareRef} className="reveal work-grid">
-                {softwareProjects.map((project) => (
-                  <a
-                    key={project.link}
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="work-card interactive"
-                  >
-                    <div className="work-card-accent" style={{ background: `linear-gradient(135deg, ${project.color}22, transparent)` }} />
-                    <div className="work-card-body">
-                      <div className="work-card-top">
-                        <span className="work-card-tag font-mono" style={{ color: project.color, borderColor: `${project.color}33` }}>
-                          {project.tag}
-                        </span>
-                        <Icon name="arrow-up-right" size={16} className="work-card-arrow" />
-                      </div>
-                      <h3 className="work-card-title">{project.title}</h3>
-                      <p className="work-card-desc">{project.description}</p>
-                      <div className="work-card-tech">
-                        {project.tech.map(t => (
-                          <span key={t} className="work-tech-pill font-mono">{t}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
+                </a>
+              ))}
             </div>
           )}
         </div>
       </div>
-
-      {/* Liquid blend back to the dark page end */}
-      <LiquidDivider fill="var(--bg)" variant={2} />
-
-      {/* ══════ PROJECT WINDOW MODAL ══════ */}
-      <ProjectWindow project={lightbox} onClose={closeLightbox} />
     </section>
   );
 }

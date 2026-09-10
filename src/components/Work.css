@@ -1,17 +1,13 @@
-/* ═══ Work Section ═══ */
+/* ═══ Work Section (Projects & Builds) ═══ */
 .work-section {
   position: relative;
   overflow-y: visible;
-  overflow-x: clip; /* keep the grid-layer bleed from creating page-wide scroll */
+  overflow-x: clip; /* keep any bleed from creating page-wide scroll */
 }
 
 /* Alternating zones (Switchboard) */
 .work-zone {
   padding: 8rem 0;
-}
-
-.work-zone--design {
-  position: relative;
 }
 
 .work-zone-inner {
@@ -29,70 +25,6 @@
   }
 }
 
-/* Filter buttons — light-theme aware */
-.work-zone--intro .filter-wrapper {
-  background: rgba(0, 0, 0, 0.02);
-  border: 1px solid var(--border-dark);
-}
-
-.work-zone--intro .filter-btn {
-  color: var(--text-dim-dark);
-}
-
-.work-zone--intro .filter-btn:hover {
-  color: var(--text-dark);
-}
-
-.work-zone--intro .filter-btn.active {
-  background: var(--tangerine);
-  color: #fff;
-}
-
-/* Software cards on cream */
-.work-zone--software .work-card {
-  background: var(--bg-light-card);
-  border: 1px solid var(--border-dark);
-}
-
-.work-zone--software .work-card:hover {
-  border-color: var(--tangerine);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-
-.work-zone--software .work-card-title {
-  color: var(--text-dark);
-}
-
-.work-zone--software .work-card-desc {
-  color: var(--text-dim-dark);
-}
-
-.work-zone--software .work-card-arrow {
-  color: var(--text-muted-dark);
-}
-
-.work-zone--software .work-tech-pill {
-  color: var(--text-muted-dark);
-  border: 1px solid var(--border-dark);
-}
-
-.work-zone--software .software-subhead-line {
-  background: var(--border-dark);
-}
-
-.work-zone--software .software-subhead-label {
-  color: var(--text-muted-dark);
-}
-
-.work-intro-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: var(--space-3xl);
-  flex-wrap: wrap;
-  gap: var(--space-lg);
-}
-
 .work-heading-block {
   max-width: 600px;
 }
@@ -106,207 +38,7 @@
   line-height: 1.75;
 }
 
-/* Filter Buttons */
-.filter-wrapper {
-  display: inline-flex;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  padding: 3px;
-  backdrop-filter: blur(8px);
-}
-
-.filter-btn {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 0.5rem 1.2rem;
-  border: none;
-  background: transparent;
-  color: var(--text-dim);
-  border-radius: var(--radius-full);
-  transition: background 250ms var(--ease-out), color 250ms var(--ease-out);
-}
-
-.filter-btn:hover {
-  color: var(--text);
-}
-
-.filter-btn.active {
-  background: var(--tangerine);
-  color: #fff;
-}
-
-/* Category Block */
-.work-category-block {
-  margin-bottom: var(--space-2xl);
-}
-
-.work-category-block:last-child {
-  margin-bottom: 0;
-}
-
-/* ═══ GRAPHIC DESIGN MASONRY ═══ */
-.design-showcase {
-  position: relative;
-}
-
-/* Cool gridded layer — faint blueprint grid behind the tiles */
-.design-showcase::before {
-  content: '';
-  position: absolute;
-  inset: -40px;
-  z-index: 0;
-  pointer-events: none;
-  border-radius: var(--radius-xl);
-  background-image:
-    repeating-linear-gradient(0deg, rgba(232, 101, 10, 0.045) 0px, rgba(232, 101, 10, 0.045) 1px, transparent 1px, transparent 44px),
-    repeating-linear-gradient(90deg, rgba(232, 101, 10, 0.045) 0px, rgba(232, 101, 10, 0.045) 1px, transparent 1px, transparent 44px),
-    repeating-linear-gradient(0deg, rgba(232, 101, 10, 0.08) 0px, rgba(232, 101, 10, 0.08) 1px, transparent 1px, transparent 220px),
-    repeating-linear-gradient(90deg, rgba(232, 101, 10, 0.08) 0px, rgba(232, 101, 10, 0.08) 1px, transparent 1px, transparent 220px);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 78%);
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 78%);
-}
-
-.design-masonry {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-xl);
-}
-
-.design-tile {
-  position: relative;
-  display: block;
-  padding: 0;
-  border: none;
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-  -webkit-user-select: none;
-  user-select: none;
-  min-width: 0;
-}
-
-/* Featured tiles span 2 rows for masonry rhythm */
-.design-tile--featured {
-  grid-row: span 2;
-}
-
-.design-tile-thumb {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  background: var(--bg-raised);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-}
-
-.design-tile--featured .design-tile-thumb {
-  aspect-ratio: 3 / 4.2;
-}
-
-.design-tile-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 600ms var(--ease-out);
-}
-
-.design-tile:hover .design-tile-img {
-  transform: scale(1.05);
-}
-
-/* Overlay on hover */
-.design-tile-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: var(--space-lg);
-  background: linear-gradient(
-    to top,
-    rgba(12, 12, 12, 0.85) 0%,
-    rgba(12, 12, 12, 0.35) 45%,
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 350ms var(--ease-out);
-}
-
-.design-tile:hover .design-tile-overlay {
-  opacity: 1;
-}
-
-.design-tile-meta {
-  transform: translateY(8px);
-  transition: transform 350ms var(--ease-out);
-}
-
-.design-tile:hover .design-tile-meta {
-  transform: translateY(0);
-}
-
-.design-tile-cat {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--tangerine);
-  margin-bottom: var(--space-xs);
-  display: block;
-}
-
-.design-tile-title {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  color: var(--text);
-  margin-bottom: 0;
-}
-
-.design-tile-arrow {
-  position: absolute;
-  top: var(--space-lg);
-  right: var(--space-lg);
-  color: var(--text);
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 350ms var(--ease-out), transform 350ms var(--ease-out);
-}
-
-.design-tile:hover .design-tile-arrow {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ═══ SOFTWARE SUBHEAD ═══ */
-.software-subhead {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-2xl);
-}
-
-.software-subhead-line {
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-.software-subhead-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-/* ═══ SOFTWARE GRID ═══ */
+/* ═══ PROJECTS GRID ═══ */
 .work-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -322,12 +54,13 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   text-decoration: none;
-  transition: border-color 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
+  transition: border-color 400ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1), transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .work-card:hover {
   border-color: var(--tangerine);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
 }
 
 .work-card-accent {
@@ -360,7 +93,7 @@
 
 .work-card-arrow {
   color: var(--text-muted);
-  transition: transform 300ms var(--ease-out), color 300ms var(--ease-out);
+  transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), color 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .work-card:hover .work-card-arrow {
@@ -379,8 +112,30 @@
   font-size: 0.93rem;
   color: var(--text-dim);
   line-height: 1.6;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
   flex: 1;
+}
+
+.work-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border);
+  margin-bottom: var(--space-md);
+}
+
+.work-card-client {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.work-card-year {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
 }
 
 .work-card-tech {
@@ -396,46 +151,4 @@
   border: 1px solid var(--border);
   padding: 0.2em 0.6em;
   border-radius: var(--radius-sm);
-}
-
-/* ═══ SOFTWARE SUBHEAD ═══ */
-@media (max-width: 768px) {
-  .work-intro-wrapper {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .filter-wrapper {
-    width: 100%;
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .filter-wrapper::-webkit-scrollbar { display: none; }
-  .filter-btn {
-    flex-shrink: 0;
-    padding: 0.5rem 0.9rem;
-    font-size: 0.6rem;
-  }
-  .design-masonry {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-  }
-  .design-tile--featured .design-tile-thumb,
-  .design-tile-thumb {
-    aspect-ratio: 4 / 3;
-  }
-  .design-tile-overlay {
-    opacity: 1;
-    background: linear-gradient(
-      to top,
-      rgba(12, 12, 12, 0.8) 0%,
-      rgba(12, 12, 12, 0.25) 50%,
-      transparent 72%
-    );
-  }
-  .design-tile-meta { transform: translateY(0); }
-  .work-grid {
-    grid-template-columns: 1fr;
-  }
 }
