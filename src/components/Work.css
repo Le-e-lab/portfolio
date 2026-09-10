@@ -75,6 +75,36 @@
   position: relative;
 }
 
+/* Design group headers */
+.design-group {
+  margin-bottom: var(--space-3xl);
+}
+
+.design-group:last-child {
+  margin-bottom: 0;
+}
+
+.design-group-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.design-group-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.design-group-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 /* Cool gridded layer — faint blueprint grid behind the tiles */
 .design-showcase::before {
   content: '';

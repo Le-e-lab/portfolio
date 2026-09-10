@@ -87,8 +87,21 @@ export default function Work() {
   const [filter, setFilter] = useState('all'); // show everything by default
   const [lightbox, setLightbox] = useState(null);
   const headingRef = useReveal();
-  const designRef = useReveal();
   const softwareRef = useReveal();
+
+  /* Group design projects by type */
+  const groupedDesign = designProjects.reduce((acc, p) => {
+    const group = p.group || 'other';
+    if (!acc[group]) acc[group] = [];
+    acc[group].push(p);
+    return acc;
+  }, {});
+
+  const groupLabels = {
+    'logo': 'Logo Design',
+    'brand-identity': 'Brand Identity',
+    'other': 'Other Work',
+  };
 
   /* Fetch design projects from static JSON */
   useEffect(() => {
@@ -212,37 +225,46 @@ export default function Work() {
         </div>
       </div>
 
-      {/* ══════ GRAPHIC DESIGN SHOWCASE ══════ */}
+      {/* ══════ GRAPHIC DESIGN SHOWCASE (GROUPED) ══════ */}
       {showDesign && designProjects.length > 0 && (
         <div id="design" className="design-showcase">
-          <div ref={designRef} className="reveal design-masonry">
-            {designProjects.map((project, i) => (
-              <button
-                key={project.title}
-                className={`design-tile interactive ${project.featured ? 'design-tile--featured' : ''}`}
-                onClick={() => setLightbox(project)}
-                aria-label={`View ${project.title}`}
-              >
-                <div className="design-tile-thumb">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="design-tile-img"
-                    loading="lazy"
-                    width={800}
-                    height={i === 0 ? 1000 : 800}
-                  />
-                  <div className="design-tile-overlay">
-                    <div className="design-tile-meta">
-                      <span className="design-tile-cat font-mono">{project.category}</span>
-                      <h3 className="design-tile-title">{project.title}</h3>
+          {Object.entries(groupedDesign).map(([groupKey, projects]) => (
+            <div key={groupKey} className="design-group">
+              <div className="design-group-header">
+                <span className="design-group-line" />
+                <span className="design-group-label font-mono">{groupLabels[groupKey] || groupKey}</span>
+                <span className="design-group-line" />
+              </div>
+              <div className="design-masonry">
+                {projects.map((project, i) => (
+                  <button
+                    key={project.title}
+                    className={`design-tile interactive ${project.featured ? 'design-tile--featured' : ''}`}
+                    onClick={() => setLightbox(project)}
+                    aria-label={`View ${project.title}`}
+                  >
+                    <div className="design-tile-thumb">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="design-tile-img"
+                        loading="lazy"
+                        width={800}
+                        height={project.featured ? 1000 : 800}
+                      />
+                      <div className="design-tile-overlay">
+                        <div className="design-tile-meta">
+                          <span className="design-tile-cat font-mono">{project.category}</span>
+                          <h3 className="design-tile-title">{project.title}</h3>
+                        </div>
+                        <Icon name="arrow-up-right" size={18} className="design-tile-arrow" />
+                      </div>
                     </div>
-                    <Icon name="arrow-up-right" size={18} className="design-tile-arrow" />
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
