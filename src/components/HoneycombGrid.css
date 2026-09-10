@@ -120,7 +120,7 @@
 
 .hex-cat {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--tangerine);
@@ -150,7 +150,15 @@
     font-size: 0.85rem;
   }
   .hex-cat {
-    font-size: 0.5rem;
+    font-size: 0.65rem;
+  }
+  /* No hover on touch — keep labels always visible on mobile */
+  .hex-label {
+    opacity: 0.9;
+    background: linear-gradient(to top, rgba(12, 12, 12, 0.9) 0%, rgba(12, 12, 12, 0.35) 60%, transparent 80%);
+  }
+  .hex-glow {
+    display: none;
   }
 }
 
