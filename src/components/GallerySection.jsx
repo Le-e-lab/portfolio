@@ -14,7 +14,7 @@ export default function GallerySection({ onOpen }) {
 
   return (
     <section className="section section--dark gallery-section">
-      <HexGlowPattern stroke="#E8650A" glowColor="#e8703a" idleOpacity={0.18} glowRadius={200} />
+      <HexGlowPattern stroke="#E8650A" glowColor="#e8703a" idleOpacity={0.18} glowRadius={110} />
       <div className="gallery-container">
         <div ref={headerRef} className="reveal gallery-header">
           <span className="section-number">Gallery</span>

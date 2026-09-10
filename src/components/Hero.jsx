@@ -30,7 +30,7 @@ export default function Hero() {
     <>
       {/* ═══ HERO — photo + intro over hexagon pattern ═══ */}
       <section className="hero section--dark">
-        <HexGlowPattern stroke="#E8650A" glowColor="#e8703a" idleOpacity={0.24} glowRadius={230} />
+        <HexGlowPattern stroke="#E8650A" glowColor="#e8703a" idleOpacity={0.24} glowRadius={130} />
         <div className="hero-grid">
           {/* Left: Text content */}
           <div className="hero-text-col">
