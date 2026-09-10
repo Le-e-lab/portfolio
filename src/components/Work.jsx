@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Icon from './Icon';
 import useReveal from '../hooks/useReveal';
+import ProjectWindow from './ProjectWindow';
 import './Work.css';
 
 /* ─── Fallback design projects (used if JSON fetch fails) ─── */
@@ -284,33 +285,8 @@ export default function Work() {
         </div>
       )}
 
-      {/* ══════ LIGHTBOX MODAL ══════ */}
-      {lightbox && (
-        <div
-          className="lightbox-backdrop"
-          onClick={closeLightbox}
-          role="dialog"
-          aria-modal="true"
-          aria-label={lightbox.title}
-        >
-          <div
-            className="lightbox-card lightbox-card-in"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className="lightbox-close interactive" onClick={closeLightbox} aria-label="Close">
-              <Icon name="x" size={18} />
-            </button>
-            <div className="lightbox-image-wrap">
-              <img src={lightbox.image} alt={lightbox.title} className="lightbox-image" />
-            </div>
-            <div className="lightbox-meta">
-              <span className="lightbox-cat font-mono">{lightbox.category}</span>
-              <h3 className="lightbox-title">{lightbox.title}</h3>
-              <p className="lightbox-desc">{lightbox.description}</p>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ══════ PROJECT WINDOW MODAL ══════ */}
+      <ProjectWindow project={lightbox} onClose={closeLightbox} />
     </section>
   );
 }
