@@ -625,3 +625,57 @@
     gap: var(--space-md);
   }
 }
+
+/* ═══ Switchboard: Light zone ═══ */
+.contact-light-zone {
+  padding: var(--space-4xl) 0;
+}
+
+.contact-dark-zone {
+  padding: var(--space-4xl) 0 0 0;
+}
+
+/* ═══ Service Chips ═══ */
+.service-options {
+  margin-bottom: var(--space-2xl);
+}
+
+.service-options-label {
+  display: block;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted-dark);
+  margin-bottom: var(--space-md);
+}
+
+.service-chips {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.service-chip {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-dim-dark);
+  cursor: pointer;
+  transition: border-color 250ms var(--ease-out), color 250ms var(--ease-out), background 250ms var(--ease-out);
+}
+
+.service-chip:hover {
+  border-color: var(--tangerine);
+  color: var(--tangerine);
+}
+
+.service-chip.active {
+  background: var(--tangerine);
+  border-color: var(--tangerine);
+  color: #fff;
+}
