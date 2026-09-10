@@ -3,23 +3,32 @@
     {
       "title": "Gold Brand Piece",
       "category": "Brand Identity",
-      "description": "Premium gold-toned brand asset — rich palette with editorial structure.",
+      "group": "brand-identity",
+      "description": "Premium gold-toned brand asset for a luxury client — rich palette with editorial structure and refined typography that commands attention.",
+      "client": "Private Client",
+      "year": "2025",
       "image": "/images/design/brand-identity/gold-brand-piece.jpg",
       "featured": true
     },
     {
       "title": "Logo Design",
       "category": "Logo",
-      "description": "Custom logomark — geometric precision meets bold visual identity.",
+      "group": "logo",
+      "description": "Custom logomark — geometric precision meets bold visual identity. Designed for a tech startup seeking a modern, memorable mark.",
+      "client": "Startup Client",
+      "year": "2025",
       "image": "/images/design/logo/logo-design.jpg",
-      "featured": true
+      "featured": false
     },
     {
       "title": "Studio Logo",
       "category": "Logo",
-      "description": "Black and white minimal studio identity — clean geometry, timeless type.",
+      "group": "logo",
+      "description": "Black and white minimal studio identity — clean geometry, timeless type. Built for a creative studio focused on simplicity.",
+      "client": "Creative Studio",
+      "year": "2025",
       "image": "/images/design/logo/studio-logo.jpg",
-      "featured": true
+      "featured": false
     }
   ]
 }

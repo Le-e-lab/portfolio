@@ -8,21 +8,30 @@ const fallbackDesign = [
   {
     title: 'Studio Logo',
     category: 'Logo',
+    group: 'logo',
     description: 'Black and white minimal studio identity — clean geometry, timeless type.',
+    client: 'Creative Studio',
+    year: '2025',
     image: '/images/design/logo/studio-logo.jpg',
     featured: true
   },
   {
     title: 'Gold Brand Piece',
     category: 'Brand Identity',
+    group: 'brand-identity',
     description: 'Premium gold-toned brand asset — rich palette with editorial structure.',
+    client: 'Private Client',
+    year: '2025',
     image: '/images/design/brand-identity/gold-brand-piece.jpg',
     featured: true
   },
   {
     title: 'Logo Design',
     category: 'Logo',
+    group: 'logo',
     description: 'Custom logomark — geometric precision meets bold visual identity.',
+    client: 'Startup Client',
+    year: '2025',
     image: '/images/design/logo/logo-design.jpg',
     featured: true
   },
@@ -33,7 +42,9 @@ const curatedProjects = [
   {
     tag: 'Developer',
     title: 'Tarisai Portal',
-    description: 'Enterprise ERP and visual scaling portal. Secure routing, dashboards, and API integrations.',
+    description: 'Enterprise ERP and visual scaling portal. Secure routing, dashboards, and API integrations for a Zimbabwean tech company.',
+    client: 'Tarisai',
+    year: '2025',
     tech: ['React', 'Node.js', 'PostgreSQL', 'Security'],
     color: '#E8650A',
     link: 'https://www.tarisai.co.zw/',
@@ -42,7 +53,9 @@ const curatedProjects = [
   {
     tag: 'Developer',
     title: 'Elevate Partners',
-    description: 'Business management system and analytics suite built for enterprise scalability.',
+    description: 'Business management system and analytics suite built for enterprise scalability and strategic decision-making.',
+    client: 'Elevate Value Partners',
+    year: '2025',
     tech: ['Next.js', 'Tailwind', 'Node.js', 'Analytics'],
     color: '#FF8C38',
     link: 'https://www.elevatevaluepartners.co.zw/',
@@ -51,7 +64,9 @@ const curatedProjects = [
   {
     tag: 'Project',
     title: "The Chef's Muse",
-    description: 'AI-powered recipe generator with calorie scanning via Gemini Vision.',
+    description: 'AI-powered recipe generator with calorie scanning via Gemini Vision. A personal project exploring AI in everyday tools.',
+    client: 'Personal Project',
+    year: '2025',
     tech: ['React', 'Tailwind', 'Gemini API'],
     color: '#E8650A',
     link: 'https://le-e-lab.github.io/chefs-muse/',
@@ -130,6 +145,8 @@ export default function Work() {
             tag: repo.language || 'Repository',
             title: repo.name.replace(/-/g, ' ').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
             description: repo.description || 'GitHub public repository.',
+            client: 'Open Source',
+            year: new Date(repo.updated_at || Date.now()).getFullYear().toString(),
             tech: repo.topics?.length > 0 ? repo.topics.slice(0, 3) : (repo.language ? [repo.language] : ['Code']),
             color: ['#E8650A', '#FF8C38', '#E8650A', '#FF8C38'][i % 4],
             link: repo.html_url,
