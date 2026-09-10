@@ -136,6 +136,10 @@ export default function HexGlowPattern({
       targetX = x;
       targetY = y;
     };
+    const onLeave = () => {
+      targetX = -9999;
+      targetY = -9999;
+    };
 
     interactive = !reduced && !isMobile;
     if (interactive) {
