@@ -129,7 +129,7 @@
 
 .ticket-label {
   font-size: 0.72rem;
-  color: var(--text-muted);
+  color: var(--text-dim);
   letter-spacing: 0.1em;
 }
 
@@ -170,7 +170,7 @@
 
 .ticket-meta span {
   font-size: 0.7rem;
-  color: var(--text-muted);
+  color: var(--text-dim);
   letter-spacing: 0.05em;
 }
 
@@ -245,7 +245,7 @@
 .glass-form-title {
   font-size: 0.75rem;
   letter-spacing: 0.12em;
-  color: var(--text-muted);
+  color: var(--text-dim);
   margin-bottom: var(--space-2xl);
   display: block;
 }
@@ -284,7 +284,7 @@
   left: 0;
   top: 8px;
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-dim);
   letter-spacing: 0.1em;
   pointer-events: none;
   transform-origin: left top;
@@ -531,7 +531,7 @@
   gap: 6px;
   font-size: 0.65rem;
   letter-spacing: 0.05em;
-  color: var(--text-muted);
+  color: var(--text-dim);
   margin-bottom: var(--space-xl);
   backdrop-filter: blur(4px);
 }
