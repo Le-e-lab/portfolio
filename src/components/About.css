@@ -1,7 +1,13 @@
 /* ═══ About Section ═══ */
-.about-section {
-  padding-top: var(--space-4xl);
+.about-zone {
+  padding: var(--space-4xl) 0;
   overflow: visible;
+}
+
+@media (max-width: 768px) {
+  .about-zone {
+    padding: var(--space-3xl) 0;
+  }
 }
 
 .about-container {
@@ -356,4 +362,26 @@
   .testimonials-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Light-zone overrides (tech grid + testimonials sit on cream) */
+section.about-zone:last-of-type .tech-grid {
+  border-top: 1px solid var(--border-dark);
+}
+
+section.about-zone:last-of-type .tech-item {
+  border: 1px solid var(--border-dark);
+  background: var(--bg-light-card);
+}
+
+section.about-zone:last-of-type .tech-name {
+  color: var(--text-dim-dark);
+}
+
+section.about-zone:last-of-type .testimonials-section {
+  border-top: 1px solid var(--border-dark);
+}
+
+section.about-zone:last-of-type .testimonials-title {
+  color: var(--text-muted-dark);
 }

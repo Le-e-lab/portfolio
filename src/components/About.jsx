@@ -70,123 +70,129 @@ export default function About() {
   const techRef = useReveal();
 
   return (
-    <section className="section about-section">
-      <div className="about-container">
-        {/* Header */}
-        <div ref={headerRef} className="reveal about-header">
-          <span className="section-number">03</span>
-          <span className="section-label">About</span>
-          <h2 className="about-heading">
-            A designer who can build <span className="text-gradient">what they draw.</span>
-          </h2>
-          <p className="about-bio">
-            CS student at Africa University. I design brand identities and build full-stack applications — the visual and the technical, working as one. When I&apos;m not designing, I&apos;m shipping products or configuring my Linux setup.
-          </p>
+    <>
+      {/* ═══ CREAM HEADER ZONE ═══ */}
+      <section className="section--light about-zone">
+        <div className="about-container">
+          <div ref={headerRef} className="reveal about-header">
+            <span className="section-number">03</span>
+            <span className="section-label">About</span>
+            <h2 className="about-heading">
+              A designer who can build <span className="text-gradient">what they draw.</span>
+            </h2>
+            <p className="about-bio">
+              CS student at Africa University. I design brand identities and build full-stack applications — the visual and the technical, working as one. When I&apos;m not designing, I&apos;m shipping products or configuring my Linux setup.
+            </p>
+          </div>
         </div>
+      </section>
 
-        {/* Two-column content */}
-        <div className="about-grid">
-          {/* Timeline */}
-          <div ref={timelineRef} className="reveal about-timeline">
-            <h3 className="timeline-title">Experience</h3>
-            <div className="timeline-items">
-              {timeline.map((item, idx) => (
-                <div key={idx} className="timeline-item">
-                  <div className="timeline-dot-connector">
-                    <div className="timeline-dot" />
-                    {idx < timeline.length - 1 && <div className="timeline-connector" />}
+      {/* ═══ DARK EXPERIENCE ZONE ═══ */}
+      <section className="section--dark about-zone">
+        <div className="about-container">
+          <div className="about-grid">
+            <div ref={timelineRef} className="reveal about-timeline">
+              <h3 className="timeline-title">Experience</h3>
+              <div className="timeline-items">
+                {timeline.map((item, idx) => (
+                  <div key={idx} className="timeline-item">
+                    <div className="timeline-dot-connector">
+                      <div className="timeline-dot" />
+                      {idx < timeline.length - 1 && <div className="timeline-connector" />}
+                    </div>
+                    <div className="timeline-content">
+                      <span className="timeline-year font-mono">{item.year}</span>
+                      <h4 className="timeline-role">{item.role}</h4>
+                      <span className="timeline-company">
+                        {item.links ? (
+                          item.links.map((link, lIdx) => (
+                            <span key={link.url}>
+                              <a href={link.url} target="_blank" rel="noreferrer" className="timeline-link interactive">
+                                {link.label}
+                              </a>
+                              {lIdx < item.links.length - 1 && ' & '}
+                            </span>
+                          ))
+                        ) : item.company}
+                      </span>
+                      <p className="timeline-desc">{item.desc}</p>
+                    </div>
                   </div>
-                  <div className="timeline-content">
-                    <span className="timeline-year font-mono">{item.year}</span>
-                    <h4 className="timeline-role">{item.role}</h4>
-                    <span className="timeline-company">
-                      {item.links ? (
-                        item.links.map((link, lIdx) => (
-                          <span key={link.url}>
-                            <a href={link.url} target="_blank" rel="noreferrer" className="timeline-link interactive">
-                              {link.label}
-                            </a>
-                            {lIdx < item.links.length - 1 && ' & '}
-                          </span>
-                        ))
-                      ) : item.company}
-                    </span>
-                    <p className="timeline-desc">{item.desc}</p>
-                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div ref={asideRef} className="reveal about-aside">
+              <div className="about-quote interactive">
+                <div className="quote-accent" />
+                <div className="quote-body">
+                  <p className="quote-text">&quot;Design is not just what it looks like and feels like. Design is how it works.&quot;</p>
+                  <span className="quote-attr font-mono">— Steve Jobs</span>
                 </div>
+              </div>
+
+              <div className="mini-terminal">
+                <div className="terminal-header">
+                  <div className="terminal-dots">
+                    <span className="dot red"></span>
+                    <span className="dot yellow"></span>
+                    <span className="dot green"></span>
+                  </div>
+                  <span className="terminal-title font-mono">mutsambiwa@fedora:~</span>
+                </div>
+                <div className="terminal-body font-mono">
+                  <div className="terminal-line">
+                    <span className="t-prompt">$</span> <button className="t-cmd interactive" onClick={() => setActiveTab(activeTab === 'neofetch' ? null : 'neofetch')}>neofetch</button>
+                  </div>
+                  {activeTab === 'neofetch' && (
+                    <div className="terminal-output">
+                      <span className="text-tangerine">mutsambiwa@fedora</span>
+                      <span>OS: Fedora Linux 40</span>
+                      <span>WM: bspwm (Night Rain)</span>
+                      <span>Shell: zsh 5.9</span>
+                      <span>Memory: 4892MiB / 16000MiB</span>
+                    </div>
+                  )}
+                  <div className="terminal-line">
+                    <span className="t-prompt">$</span> <button className="t-cmd interactive" onClick={() => setActiveTab(activeTab === 'status' ? null : 'status')}>git status</button>
+                  </div>
+                  {activeTab === 'status' && (
+                    <div className="terminal-output">
+                      <span>Active Projects: 6</span>
+                      <span>Availability: <span className="text-tangerine">Available for work</span></span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ CREAM TECH + TESTIMONIALS ZONE ═══ */}
+      <section className="section--light about-zone">
+        <div className="about-container">
+          <div ref={techRef} className="reveal tech-grid">
+            {techStack.map((tech) => (
+              <div key={tech.name} className="tech-item">
+                <span className="tech-mono" style={{ backgroundColor: `${tech.color}1f`, color: tech.color, borderColor: `${tech.color}44` }}>
+                  {tech.mono}
+                </span>
+                <span className="tech-name font-mono">{tech.name}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="testimonials-section">
+            <h3 className="testimonials-title">What Clients Say</h3>
+            <div className="testimonials-grid">
+              {testimonials.map((t, i) => (
+                <TestimonialCard key={i} {...t} />
               ))}
             </div>
           </div>
-
-          {/* Quote + Terminal */}
-          <div ref={asideRef} className="reveal about-aside">
-            <div className="about-quote interactive">
-              <div className="quote-accent" />
-              <div className="quote-body">
-                <p className="quote-text">&quot;Design is not just what it looks like and feels like. Design is how it works.&quot;</p>
-                <span className="quote-attr font-mono">— Steve Jobs</span>
-              </div>
-            </div>
-
-            {/* Mini terminal */}
-            <div className="mini-terminal">
-              <div className="terminal-header">
-                <div className="terminal-dots">
-                  <span className="dot red"></span>
-                  <span className="dot yellow"></span>
-                  <span className="dot green"></span>
-                </div>
-                <span className="terminal-title font-mono">mutsambiwa@fedora:~</span>
-              </div>
-              <div className="terminal-body font-mono">
-                <div className="terminal-line">
-                  <span className="t-prompt">$</span> <button className="t-cmd interactive" onClick={() => setActiveTab(activeTab === 'neofetch' ? null : 'neofetch')}>neofetch</button>
-                </div>
-                {activeTab === 'neofetch' && (
-                  <div className="terminal-output">
-                    <span className="text-tangerine">mutsambiwa@fedora</span>
-                    <span>OS: Fedora Linux 40</span>
-                    <span>WM: bspwm (Night Rain)</span>
-                    <span>Shell: zsh 5.9</span>
-                    <span>Memory: 4892MiB / 16000MiB</span>
-                  </div>
-                )}
-                <div className="terminal-line">
-                  <span className="t-prompt">$</span> <button className="t-cmd interactive" onClick={() => setActiveTab(activeTab === 'status' ? null : 'status')}>git status</button>
-                </div>
-                {activeTab === 'status' && (
-                  <div className="terminal-output">
-                    <span>Active Projects: 6</span>
-                    <span>Availability: <span className="text-tangerine">Available for work</span></span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
         </div>
-
-        {/* Tech stack */}
-        <div ref={techRef} className="reveal tech-grid">
-          {techStack.map((tech) => (
-            <div key={tech.name} className="tech-item">
-              <span className="tech-mono" style={{ backgroundColor: `${tech.color}1f`, color: tech.color, borderColor: `${tech.color}44` }}>
-                {tech.mono}
-              </span>
-              <span className="tech-name font-mono">{tech.name}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Testimonials */}
-        <div className="testimonials-section">
-          <h3 className="testimonials-title">What Clients Say</h3>
-          <div className="testimonials-grid">
-            {testimonials.map((t, i) => (
-              <TestimonialCard key={i} {...t} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
