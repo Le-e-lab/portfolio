@@ -106,6 +106,22 @@
   object-fit: contain;
 }
 
+.pw-image-placeholder {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pw-placeholder-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  letter-spacing: 0.04em;
+  color: rgba(245, 240, 235, 0.9);
+  text-transform: uppercase;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
 .pw-meta {
   padding: var(--space-xl);
 }

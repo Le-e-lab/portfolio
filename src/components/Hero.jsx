@@ -1,31 +1,35 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from './Icon';
-import DotGrid from './DotGrid';
+import HexPattern from './HexPattern';
 import ServicesSection from './ServicesSection';
-import HoneycombGrid from './HoneycombGrid';
+import GallerySection from './GallerySection';
+import { galleryPlaceholders } from './galleryData';
 import ProjectWindow from './ProjectWindow';
-import useDesignProjects from '../hooks/useDesignProjects';
-import useReveal from '../hooks/useReveal';
 import './Hero.css';
 
 export default function Hero() {
   const navigate = useNavigate();
-  const designProjects = useDesignProjects();
   const [selectedProject, setSelectedProject] = useState(null);
-  const featuredRef = useReveal();
+
+  const openGalleryPlaceholder = (p) => {
+    const idx = galleryPlaceholders.findIndex((g) => g.id === p.id);
+    setSelectedProject({
+      title: p.title,
+      category: 'Coming Soon',
+      client: 'In progress',
+      year: '2026',
+      description: `This gallery slot (${idx + 1} of 10) is reserved for a new design piece. It will be filled with a real project image and story shortly.`,
+      image: null,
+      gradient: p.gradient,
+    });
+  };
 
   return (
     <>
+      {/* ═══ HERO — photo + intro over hexagon pattern ═══ */}
       <section className="hero section--dark">
-        <DotGrid
-          dotColor="#E8650A"
-          dotSize={2.5}
-          dotSpacing={30}
-          orbitSpeed={1.2}
-          impactRadius={120}
-          scaleOnHover={1.6}
-        />
+        <HexPattern stroke="#E8650A" opacity={0.14} />
         <div className="hero-grid">
           {/* Left: Text content */}
           <div className="hero-text-col">
@@ -73,48 +77,27 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right: Honeycomb hex cluster of design work */}
+          {/* Right: Portrait image */}
           <div className="hero-image-col hero-image-anim">
-            <HoneycombGrid
-              variant="hero"
-              cols={2}
-              projects={designProjects.slice(0, 3)}
-              onOpen={setSelectedProject}
-            />
+            <div className="hero-portrait-frame">
+              <img
+                src="/images/hero-portrait.jpg"
+                alt="Lesley Mutsambiwa at his desk"
+                className="hero-portrait-img"
+                width={1200}
+                height={1609}
+                fetchPriority="high"
+              />
+              <div className="hero-portrait-glow" />
+            </div>
           </div>
         </div>
       </section>
+
+      {/* ═══ GALLERY — 10 hexagon cells (placeholders for now) ═══ */}
+      <GallerySection onOpen={openGalleryPlaceholder} />
 
       <ServicesSection />
-
-      {/* ══════ FEATURED WORK — honeycomb below services ══════ */}
-      <section className="section section--dark featured-section">
-        <DotGrid
-          dotColor="#E8650A"
-          dotSize={2}
-          dotSpacing={44}
-          orbitSpeed={0.8}
-          impactRadius={140}
-          scaleOnHover={1.4}
-        />
-        <div className="featured-container">
-          <div ref={featuredRef} className="reveal featured-header">
-            <span className="section-number">Featured Work</span>
-            <h2 className="featured-heading">
-              Selected <span className="text-gradient">Design Work</span>
-            </h2>
-            <p className="featured-sub">
-              A taste of the brand identities and visual systems — hover to explore, click to see the story behind each piece.
-            </p>
-          </div>
-          <HoneycombGrid
-            variant="featured"
-            cols={3}
-            projects={designProjects.slice(0, 6)}
-            onOpen={setSelectedProject}
-          />
-        </div>
-      </section>
 
       <ProjectWindow project={selectedProject} onClose={() => setSelectedProject(null)} />
     </>

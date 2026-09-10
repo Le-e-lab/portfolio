@@ -4,7 +4,9 @@ import './HoneycombGrid.css';
    Pattern: pointy-top clip-path hexes in flex rows; alternate rows pull up by
    30% of hex width and shift half a hex sideways so peaks nest into the row
    above. A radial tangerine glow fades in behind the hovered hex — the
-   "light on" effect. Clicking a hex calls onOpen(project). */
+   "light on" effect. Clicking a hex calls onOpen(project).
+   Cells with image:null render a gradient placeholder with a visible number
+   (used until real images are added). */
 
 function chunk(projects, cols) {
   const rows = [];
@@ -32,25 +34,34 @@ export default function HoneycombGrid({
           className={`hexcomb-row ${ri % 2 === 1 ? 'hexcomb-row--offset' : ''}`}
           role="listitem"
         >
-          {row.map((project) => (
-            <div key={project.title} className="hex-shell">
+          {row.map((project, ci) => (
+            <div key={project.title || project.id} className="hex-shell">
               <span className="hex-glow" aria-hidden="true" />
               <button
                 type="button"
-                className="hex-btn"
+                className={`hex-btn ${project.image ? '' : 'hex-btn--placeholder'}`}
                 onClick={() => onOpen(project)}
                 aria-label={`View ${project.title}`}
               >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="hex-img"
-                  loading="lazy"
-                  width={600}
-                  height={600}
-                />
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="hex-img"
+                    loading="lazy"
+                    width={600}
+                    height={600}
+                  />
+                ) : (
+                  <span
+                    className="hex-placeholder"
+                    style={{ background: project.gradient }}
+                  >
+                    <span className="hex-placeholder-num">{(ci + 1).toString().padStart(2, '0')}</span>
+                  </span>
+                )}
                 <span className="hex-label">
-                  <span className="hex-cat">{project.category}</span>
+                  <span className="hex-cat">{project.category || 'Gallery'}</span>
                   <span className="hex-title">{project.title}</span>
                 </span>
               </button>

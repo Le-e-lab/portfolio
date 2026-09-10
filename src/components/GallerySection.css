@@ -1,0 +1,42 @@
+.gallery-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.gallery-header {
+  margin-bottom: var(--space-2xl);
+  max-width: 640px;
+}
+
+.gallery-heading {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  margin-bottom: var(--space-md);
+}
+
+.gallery-sub {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--text-dim);
+}
+
+/* Gallery honeycomb uses slightly larger hexes to fill the band */
+.hexcomb--gallery {
+  --hex: clamp(130px, 17vw, 200px);
+}
+
+@media (max-width: 768px) {
+  .gallery-container {
+    padding: 0 var(--space-lg);
+  }
+  .hexcomb--gallery {
+    --hex: clamp(110px, 40vw, 170px);
+  }
+}

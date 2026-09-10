@@ -37,8 +37,14 @@ export default function ProjectWindow({ project, onClose }) {
 
         {/* Content */}
         <div className="pw-body">
-          <div className="pw-image-wrap">
-            <img src={project.image} alt={project.title} className="pw-image" />
+          <div className="pw-image-wrap" style={!project.image && project.gradient ? { background: project.gradient } : undefined}>
+            {project.image ? (
+              <img src={project.image} alt={project.title} className="pw-image" />
+            ) : (
+              <div className="pw-image-placeholder">
+                <span className="pw-placeholder-title">{project.title}</span>
+              </div>
+            )}
           </div>
           <div className="pw-meta">
             <div className="pw-meta-row">
