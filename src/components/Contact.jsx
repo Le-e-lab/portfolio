@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Icon from './Icon';
 import useReveal from '../hooks/useReveal';
+import LiquidDivider from './LiquidDivider';
 import './Contact.css';
 
 const reasons = [
@@ -236,6 +237,9 @@ export default function Contact() {
           </div>
         </div>
       </div>
+
+      {/* Liquid blend into dark capabilities + footer zone */}
+      <LiquidDivider fill="var(--bg)" variant={2} />
 
       {/* Dark zone: capabilities + footer */}
       <div className="section--dark contact-dark-zone">

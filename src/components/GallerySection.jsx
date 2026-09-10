@@ -10,6 +10,7 @@ import './GallerySection.css';
 
 export default function GallerySection({ onOpen }) {
   const headerRef = useReveal();
+  const combRef = useReveal();
 
   return (
     <section className="section section--dark gallery-section">
@@ -24,12 +25,14 @@ export default function GallerySection({ onOpen }) {
             A growing collection of brand, logo, and visual work — more pieces landing soon.
           </p>
         </div>
-        <HoneycombGrid
-          variant="gallery"
-          cols={4}
-          projects={galleryPlaceholders}
-          onOpen={onOpen}
-        />
+        <div ref={combRef} className="reveal">
+          <HoneycombGrid
+            variant="gallery"
+            cols={4}
+            projects={galleryPlaceholders}
+            onOpen={onOpen}
+          />
+        </div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import useReveal from '../hooks/useReveal';
 import TestimonialCard from './TestimonialCard';
+import LiquidDivider from './LiquidDivider';
 import './About.css';
 
 const techStack = [
@@ -87,6 +88,9 @@ export default function About() {
         </div>
       </section>
 
+      {/* Liquid blend into dark experience zone */}
+      <LiquidDivider fill="var(--bg)" variant={0} />
+
       {/* ═══ DARK EXPERIENCE ZONE ═══ */}
       <section className="section--dark about-zone">
         <div className="about-container">
@@ -169,6 +173,9 @@ export default function About() {
         </div>
       </section>
 
+      {/* Liquid blend into cream tech + testimonials zone */}
+      <LiquidDivider fill="var(--bg-light)" variant={1} />
+
       {/* ═══ CREAM TECH + TESTIMONIALS ZONE ═══ */}
       <section className="section--light about-zone">
         <div className="about-container">
@@ -193,6 +200,9 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* Liquid blend back to the dark page end */}
+      <LiquidDivider fill="var(--bg)" variant={2} />
     </>
   );
 }

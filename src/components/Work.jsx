@@ -3,6 +3,7 @@ import Icon from './Icon';
 import useReveal from '../hooks/useReveal';
 import useDesignProjects from '../hooks/useDesignProjects';
 import ProjectWindow from './ProjectWindow';
+import LiquidDivider from './LiquidDivider';
 import './Work.css';
 
 /* ─── Curated "big" software projects ─── */
@@ -75,6 +76,7 @@ export default function Work() {
             const allRepos = await response.json();
             repos = allRepos.filter(r =>
               !r.fork &&
+              r.language !== null && /* coding-only: skip docs/config/markdown-only repos */
               !r.name.includes('.github') &&
               !r.name.toLowerCase().includes('dotfiles') &&
               !r.name.toLowerCase().includes('config') &&
@@ -169,6 +171,9 @@ export default function Work() {
         </div>
       </div>
 
+      {/* Liquid blend into dark design zone */}
+      <LiquidDivider fill="var(--bg)" variant={0} />
+
       {/* ══════ DARK DESIGN GRID ZONE ══════ */}
       <div className="section--dark work-zone work-zone--design">
         <div className="work-zone-inner">
@@ -207,6 +212,9 @@ export default function Work() {
       )}
         </div>
       </div>
+
+      {/* Liquid blend into cream software zone */}
+      <LiquidDivider fill="var(--bg-light)" variant={1} />
 
       {/* ══════ CREAM SOFTWARE ZONE ══════ */}
       <div className="section--light work-zone work-zone--software">
@@ -250,6 +258,9 @@ export default function Work() {
           )}
         </div>
       </div>
+
+      {/* Liquid blend back to the dark page end */}
+      <LiquidDivider fill="var(--bg)" variant={2} />
 
       {/* ══════ PROJECT WINDOW MODAL ══════ */}
       <ProjectWindow project={lightbox} onClose={closeLightbox} />

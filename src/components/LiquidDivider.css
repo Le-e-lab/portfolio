@@ -1,0 +1,46 @@
+/* ═══ Liquid blend dividers ═══ */
+
+.liquid-divider {
+  position: relative;
+  height: 96px;
+  margin-top: -64px; /* pull up into the previous section so colors bleed */
+  margin-bottom: -14px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.liquid-divider svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Soft blurred duplicate of the blob = the "paint bleeding" edge */
+.liquid-bleed {
+  filter: blur(16px);
+  opacity: 0.55;
+  transform: translateY(18px);
+}
+
+.liquid-divider--flip svg {
+  transform: scaleX(-1);
+}
+
+@media (max-width: 768px) {
+  .liquid-divider {
+    height: 72px;
+    margin-top: -48px;
+    margin-bottom: -10px;
+  }
+  .liquid-bleed {
+    filter: blur(10px);
+    transform: translateY(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-bleed {
+    filter: none;
+    transform: none;
+  }
+}

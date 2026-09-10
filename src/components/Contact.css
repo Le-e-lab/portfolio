@@ -628,11 +628,11 @@
 
 /* ═══ Switchboard: Light zone ═══ */
 .contact-light-zone {
-  padding: var(--space-4xl) 0;
+  padding: 8rem 0;
 }
 
 .contact-dark-zone {
-  padding: var(--space-4xl) 0 0 0;
+  padding: 8rem 0 0 0;
 }
 
 /* ═══ Service Chips ═══ */

@@ -5,6 +5,7 @@ import HexPattern from './HexPattern';
 import ServicesSection from './ServicesSection';
 import GallerySection from './GallerySection';
 import { galleryPlaceholders } from './galleryData';
+import LiquidDivider from './LiquidDivider';
 import ProjectWindow from './ProjectWindow';
 import './Hero.css';
 
@@ -97,7 +98,13 @@ export default function Hero() {
       {/* ═══ GALLERY — 10 hexagon cells (placeholders for now) ═══ */}
       <GallerySection onOpen={openGalleryPlaceholder} />
 
+      {/* Liquid blend into cream services */}
+      <LiquidDivider fill="var(--bg-light)" variant={1} />
+
       <ServicesSection />
+
+      {/* Liquid blend back to the dark page end */}
+      <LiquidDivider fill="var(--bg)" variant={2} />
 
       <ProjectWindow project={selectedProject} onClose={() => setSelectedProject(null)} />
     </>
