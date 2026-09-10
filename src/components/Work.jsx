@@ -168,7 +168,7 @@ export default function Work() {
   const showSoftware = filter === 'all' || filter === 'software';
 
   return (
-    <section className="section work-section">
+    <section className="section work-section section--dark">
       <div className="work-intro-wrapper">
         <div ref={headingRef} className="reveal work-heading-block">
           <span className="section-number">02</span>

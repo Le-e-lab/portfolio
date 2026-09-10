@@ -1,12 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import Icon from './Icon';
+import DotGrid from './DotGrid';
 import './Hero.css';
 
 export default function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="hero">
+    <section className="hero section--dark">
+      <DotGrid
+        dotColor="#E8650A"
+        dotSize={2.5}
+        dotSpacing={30}
+        orbitSpeed={1.2}
+        impactRadius={120}
+        scaleOnHover={1.6}
+      />
       <div className="hero-grid">
         {/* Left: Text content */}
         <div className="hero-text-col">
