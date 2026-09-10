@@ -122,22 +122,19 @@ a:hover { color: var(--text); }
 /* ── Scroll reveal (native, replaces framer-motion whileInView) ── */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  filter: blur(6px);
+  transform: translateY(20px);
   transition:
-    opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1),
-    transform 0.8s cubic-bezier(0.23, 1, 0.32, 1),
-    filter 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.is-revealed {
   opacity: 1;
   transform: translateY(0);
-  filter: blur(0);
 }
 
 .section {
-  padding: 8rem 0;
+  padding: 12rem 0;
   position: relative;
 }
 

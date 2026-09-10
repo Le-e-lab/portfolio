@@ -18,11 +18,13 @@ export default function LiquidDivider({
   flip = false,
   className = '',
 }) {
+  const blob = BLOBS[variant % BLOBS.length];
   return (
     <div className={`liquid-divider ${flip ? 'liquid-divider--flip' : ''} ${className}`} aria-hidden="true">
       <svg viewBox="0 0 1440 140" preserveAspectRatio="none">
-        <path className="liquid-bleed" d={BLOBS[variant % BLOBS.length]} fill={fill} />
-        <path d={BLOBS[variant % BLOBS.length]} fill={fill} />
+        <path className="liquid-blob liquid-blob--bleed-far" d={blob} fill={fill} />
+        <path className="liquid-blob liquid-blob--bleed-near" d={blob} fill={fill} />
+        <path className="liquid-blob liquid-blob--crisp" d={blob} fill={fill} />
       </svg>
     </div>
   );

@@ -15,11 +15,26 @@
   display: block;
 }
 
-/* Soft blurred duplicate of the blob = the "paint bleeding" edge */
-.liquid-bleed {
-  filter: blur(16px);
-  opacity: 0.55;
-  transform: translateY(18px);
+/* Layered blob fills — the layered blur + blend reads as paint mixing */
+
+/* Far bleed: heavily blurred + screen blend = luminous paint edge */
+.liquid-blob--bleed-far {
+  filter: blur(24px);
+  opacity: 0.3;
+  mix-blend-mode: screen;
+  transform: translateY(28px);
+}
+
+/* Near bleed: soft blur, normal blend — the color "melting" upward */
+.liquid-blob--bleed-near {
+  filter: blur(10px);
+  opacity: 0.5;
+  transform: translateY(14px);
+}
+
+/* Crisp edge anchors the boundary */
+.liquid-blob--crisp {
+  opacity: 1;
 }
 
 .liquid-divider--flip svg {
@@ -32,14 +47,19 @@
     margin-top: -48px;
     margin-bottom: -10px;
   }
-  .liquid-bleed {
-    filter: blur(10px);
-    transform: translateY(12px);
+  .liquid-blob--bleed-far {
+    filter: blur(14px);
+    transform: translateY(18px);
+  }
+  .liquid-blob--bleed-near {
+    filter: blur(6px);
+    transform: translateY(9px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .liquid-bleed {
+  .liquid-blob--bleed-far,
+  .liquid-blob--bleed-near {
     filter: none;
     transform: none;
   }

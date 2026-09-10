@@ -1,4 +1,4 @@
-import HexPattern from './HexPattern';
+import HexGlowPattern from './HexGlowPattern';
 import HoneycombGrid from './HoneycombGrid';
 import { galleryPlaceholders } from './galleryData';
 import useReveal from '../hooks/useReveal';
@@ -14,7 +14,7 @@ export default function GallerySection({ onOpen }) {
 
   return (
     <section className="section section--dark gallery-section">
-      <HexPattern stroke="#E8650A" opacity={0.08} />
+      <HexGlowPattern stroke="#E8650A" glowColor="#e8703a" idleOpacity={0.18} glowRadius={200} />
       <div className="gallery-container">
         <div ref={headerRef} className="reveal gallery-header">
           <span className="section-number">Gallery</span>

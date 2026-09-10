@@ -6,6 +6,7 @@
   background: var(--bg);
   position: relative;
   overflow: hidden;
+  padding: 6rem 0 12rem; /* extra bottom breathing into the first section */
 }
 
 /* Entrance animation (replaces framer-motion stagger) */

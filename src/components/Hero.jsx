@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from './Icon';
-import HexPattern from './HexPattern';
+import HexGlowPattern from './HexGlowPattern';
 import ServicesSection from './ServicesSection';
 import GallerySection from './GallerySection';
 import { galleryPlaceholders } from './galleryData';
@@ -30,7 +30,7 @@ export default function Hero() {
     <>
       {/* ═══ HERO — photo + intro over hexagon pattern ═══ */}
       <section className="hero section--dark">
-        <HexPattern stroke="#E8650A" opacity={0.14} />
+        <HexGlowPattern stroke="#E8650A" glowColor="#e8703a" idleOpacity={0.24} glowRadius={230} />
         <div className="hero-grid">
           {/* Left: Text content */}
           <div className="hero-text-col">
