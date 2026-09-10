@@ -61,10 +61,14 @@ export default function HexGlowPattern({
 }) {
   const canvasRef = useRef(null);
   const cfgRef = useRef({ stroke, glowColor, idleOpacity, glowRadius });
-  cfgRef.current.stroke = stroke;
-  cfgRef.current.glowColor = glowColor;
-  cfgRef.current.idleOpacity = idleOpacity;
-  cfgRef.current.glowRadius = glowRadius;
+
+  // Sync config in an effect — never touch refs during render (react-hooks/refs)
+  useEffect(() => {
+    cfgRef.current.stroke = stroke;
+    cfgRef.current.glowColor = glowColor;
+    cfgRef.current.idleOpacity = idleOpacity;
+    cfgRef.current.glowRadius = glowRadius;
+  }, [stroke, glowColor, idleOpacity, glowRadius]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
