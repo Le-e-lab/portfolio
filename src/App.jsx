@@ -1,7 +1,6 @@
-import { useState, useCallback, lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
-import LoadingScreen from './components/LoadingScreen';
 import ScrollToTop from './components/ScrollToTop';
 import './index.css';
 
@@ -16,52 +15,46 @@ function PageFallback() {
 }
 
 function App() {
-  const [loaded, setLoaded] = useState(false);
-  const handleLoad = useCallback(() => setLoaded(true), []);
-
   return (
-    <>
-      {!loaded && <LoadingScreen onComplete={handleLoad} />}
-      <BrowserRouter basename="/">
-        <ScrollToTop />
-        <Routes>
-          <Route element={<Layout />}>
-            <Route
-              path="/"
-              element={
-                <Suspense fallback={<PageFallback />}>
-                  <Hero />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/work"
-              element={
-                <Suspense fallback={<PageFallback />}>
-                  <Work />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/about"
-              element={
-                <Suspense fallback={<PageFallback />}>
-                  <About />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/contact"
-              element={
-                <Suspense fallback={<PageFallback />}>
-                  <Contact />
-                </Suspense>
-              }
-            />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter basename="/">
+      <ScrollToTop />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<PageFallback />}>
+                <Hero />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/work"
+            element={
+              <Suspense fallback={<PageFallback />}>
+                <Work />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <Suspense fallback={<PageFallback />}>
+                <About />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <Suspense fallback={<PageFallback />}>
+                <Contact />
+              </Suspense>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

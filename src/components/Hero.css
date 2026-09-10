@@ -17,7 +17,7 @@
 
 .hero-image-anim {
   opacity: 0;
-  animation: hero-image-in 0.9s var(--ease-out) 0.2s forwards;
+  animation: hero-image-in 0.5s var(--ease-out) 0.05s forwards;
 }
 
 @keyframes hero-fade-up {

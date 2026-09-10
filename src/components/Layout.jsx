@@ -18,6 +18,7 @@ export default function Layout() {
   const location = useLocation();
   const [curtain, setCurtain] = useState(false);
   const reducedRef = useRef(false);
+  const firstRender = useRef(true);
 
   // Respect prefers-reduced-motion: no sweeping curtain at all
   useEffect(() => {
@@ -26,7 +27,12 @@ export default function Layout() {
 
   // Mount the curtain on route change, then unmount it once the wipe settles
   // (kept mounted => full-screen black overlay at base state — the blank-screen bug)
+  // Skipped on the very first paint so the homepage content appears instantly.
   useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
     if (reducedRef.current) {
       document.body.style.overflow = '';
       return;
