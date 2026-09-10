@@ -3,7 +3,85 @@
   position: relative;
   overflow-y: visible;
   overflow-x: clip; /* keep the grid-layer bleed from creating page-wide scroll */
-  padding-bottom: var(--space-4xl);
+}
+
+/* Alternating zones (Switchboard) */
+.work-zone {
+  padding: var(--space-4xl) 0;
+}
+
+.work-zone--design {
+  position: relative;
+}
+
+.work-zone-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+@media (max-width: 768px) {
+  .work-zone {
+    padding: var(--space-3xl) 0;
+  }
+  .work-zone-inner {
+    padding: 0 var(--space-lg);
+  }
+}
+
+/* Filter buttons — light-theme aware */
+.work-zone--intro .filter-wrapper {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-dark);
+}
+
+.work-zone--intro .filter-btn {
+  color: var(--text-dim-dark);
+}
+
+.work-zone--intro .filter-btn:hover {
+  color: var(--text-dark);
+}
+
+.work-zone--intro .filter-btn.active {
+  background: var(--tangerine);
+  color: #fff;
+}
+
+/* Software cards on cream */
+.work-zone--software .work-card {
+  background: var(--bg-light-card);
+  border: 1px solid var(--border-dark);
+}
+
+.work-zone--software .work-card:hover {
+  border-color: var(--tangerine);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.work-zone--software .work-card-title {
+  color: var(--text-dark);
+}
+
+.work-zone--software .work-card-desc {
+  color: var(--text-dim-dark);
+}
+
+.work-zone--software .work-card-arrow {
+  color: var(--text-muted-dark);
+}
+
+.work-zone--software .work-tech-pill {
+  color: var(--text-muted-dark);
+  border: 1px solid var(--border-dark);
+}
+
+.work-zone--software .software-subhead-line {
+  background: var(--border-dark);
+}
+
+.work-zone--software .software-subhead-label {
+  color: var(--text-muted-dark);
 }
 
 .work-intro-wrapper {

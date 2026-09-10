@@ -1,42 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import Icon from './Icon';
 import useReveal from '../hooks/useReveal';
+import useDesignProjects from '../hooks/useDesignProjects';
 import ProjectWindow from './ProjectWindow';
 import './Work.css';
-
-/* ─── Fallback design projects (used if JSON fetch fails) ─── */
-const fallbackDesign = [
-  {
-    title: 'Studio Logo',
-    category: 'Logo',
-    group: 'logo',
-    description: 'Black and white minimal studio identity — clean geometry, timeless type.',
-    client: 'Creative Studio',
-    year: '2025',
-    image: '/images/design/logo/studio-logo.jpg',
-    featured: true
-  },
-  {
-    title: 'Gold Brand Piece',
-    category: 'Brand Identity',
-    group: 'brand-identity',
-    description: 'Premium gold-toned brand asset — rich palette with editorial structure.',
-    client: 'Private Client',
-    year: '2025',
-    image: '/images/design/brand-identity/gold-brand-piece.jpg',
-    featured: true
-  },
-  {
-    title: 'Logo Design',
-    category: 'Logo',
-    group: 'logo',
-    description: 'Custom logomark — geometric precision meets bold visual identity.',
-    client: 'Startup Client',
-    year: '2025',
-    image: '/images/design/logo/logo-design.jpg',
-    featured: true
-  },
-];
 
 /* ─── Curated "big" software projects ─── */
 const curatedProjects = [
@@ -83,25 +50,11 @@ const filterOptions = [
 
 export default function Work() {
   const [githubProjects, setGithubProjects] = useState([]);
-  const [designProjects, setDesignProjects] = useState(fallbackDesign);
+  const designProjects = useDesignProjects();
   const [filter, setFilter] = useState('all');
   const [lightbox, setLightbox] = useState(null);
   const headingRef = useReveal();
   const softwareRef = useReveal();
-
-  /* Fetch design projects from static JSON */
-  useEffect(() => {
-    const fetchDesign = async () => {
-      try {
-        const res = await fetch('/design-projects.json');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.projects?.length) setDesignProjects(data.projects);
-        }
-      } catch { /* fallback already set */ }
-    };
-    fetchDesign();
-  }, []);
 
   /* Fetch GitHub repos for software projects */
   useEffect(() => {
@@ -185,43 +138,51 @@ export default function Work() {
   const showSoftware = filter === 'all' || filter === 'software';
 
   return (
-    <section className="section work-section section--dark">
-      <div className="work-intro-wrapper">
-        <div ref={headingRef} className="reveal work-heading-block">
-          <span className="section-number">02</span>
-          <span className="section-label">Work</span>
-          <h2 className="work-heading font-heading">
-            Selected <span className="text-gradient">Design Work</span>
-          </h2>
-          <p className="work-desc">
-            Brand identities and visual systems first — then the applications that power them.
-          </p>
-        </div>
+    <section className="work-section">
+      {/* ══════ CREAM INTRO ZONE ══════ */}
+      <div className="section--light work-zone work-zone--intro">
+        <div className="work-zone-inner">
+          <div className="work-intro-wrapper">
+            <div ref={headingRef} className="reveal work-heading-block">
+              <span className="section-number">02</span>
+              <span className="section-label">Work</span>
+              <h2 className="work-heading font-heading">
+                Selected <span className="text-gradient">Design Work</span>
+              </h2>
+              <p className="work-desc">
+                Brand identities and visual systems first — then the applications that power them.
+              </p>
+            </div>
 
-        <div className="filter-wrapper">
-          {filterOptions.map(opt => (
-            <button
-              key={opt.key}
-              onClick={() => setFilter(opt.key)}
-              className={`filter-btn font-mono interactive ${filter === opt.key ? 'active' : ''}`}
-            >
-              {opt.label}
-            </button>
-          ))}
+            <div className="filter-wrapper">
+              {filterOptions.map(opt => (
+                <button
+                  key={opt.key}
+                  onClick={() => setFilter(opt.key)}
+                  className={`filter-btn font-mono interactive ${filter === opt.key ? 'active' : ''}`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* ══════ GRAPHIC DESIGN SHOWCASE ══════ */}
-      {showDesign && designProjects.length > 0 && (
-        <div id="design" className="design-showcase">
-          <div className="design-masonry">
-            {designProjects.map((project) => (
-              <button
-                key={project.title}
-                className={`design-tile interactive ${project.featured ? 'design-tile--featured' : ''}`}
-                onClick={() => setLightbox(project)}
-                aria-label={`View ${project.title}`}
-              >
+      {/* ══════ DARK DESIGN GRID ZONE ══════ */}
+      <div className="section--dark work-zone work-zone--design">
+        <div className="work-zone-inner">
+          {/* GRAPHIC DESIGN SHOWCASE */}
+          {showDesign && designProjects.length > 0 && (
+            <div id="design" className="design-showcase">
+              <div className="design-masonry">
+                {designProjects.map((project) => (
+                  <button
+                    key={project.title}
+                    className={`design-tile interactive ${project.featured ? 'design-tile--featured' : ''}`}
+                    onClick={() => setLightbox(project)}
+                    aria-label={`View ${project.title}`}
+                  >
                 <div className="design-tile-thumb">
                   <img
                     src={project.image}
@@ -244,45 +205,51 @@ export default function Work() {
           </div>
         </div>
       )}
-
-      {/* ══════ SOFTWARE PROJECTS (secondary) ══════ */}
-      {showSoftware && softwareProjects.length > 0 && (
-        <div id="software" className="work-category-block">
-          <div className="software-subhead">
-            <span className="software-subhead-line" />
-            <span className="software-subhead-label font-mono">Software Engineering</span>
-            <span className="software-subhead-line" />
-          </div>
-          <div ref={softwareRef} className="reveal work-grid">
-            {softwareProjects.map((project) => (
-              <a
-                key={project.link}
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="work-card interactive"
-              >
-                <div className="work-card-accent" style={{ background: `linear-gradient(135deg, ${project.color}22, transparent)` }} />
-                <div className="work-card-body">
-                  <div className="work-card-top">
-                    <span className="work-card-tag font-mono" style={{ color: project.color, borderColor: `${project.color}33` }}>
-                      {project.tag}
-                    </span>
-                    <Icon name="arrow-up-right" size={16} className="work-card-arrow" />
-                  </div>
-                  <h3 className="work-card-title">{project.title}</h3>
-                  <p className="work-card-desc">{project.description}</p>
-                  <div className="work-card-tech">
-                    {project.tech.map(t => (
-                      <span key={t} className="work-tech-pill font-mono">{t}</span>
-                    ))}
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
         </div>
-      )}
+      </div>
+
+      {/* ══════ CREAM SOFTWARE ZONE ══════ */}
+      <div className="section--light work-zone work-zone--software">
+        <div className="work-zone-inner">
+          {showSoftware && softwareProjects.length > 0 && (
+            <div id="software" className="work-category-block">
+              <div className="software-subhead">
+                <span className="software-subhead-line" />
+                <span className="software-subhead-label font-mono">Software Engineering</span>
+                <span className="software-subhead-line" />
+              </div>
+              <div ref={softwareRef} className="reveal work-grid">
+                {softwareProjects.map((project) => (
+                  <a
+                    key={project.link}
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="work-card interactive"
+                  >
+                    <div className="work-card-accent" style={{ background: `linear-gradient(135deg, ${project.color}22, transparent)` }} />
+                    <div className="work-card-body">
+                      <div className="work-card-top">
+                        <span className="work-card-tag font-mono" style={{ color: project.color, borderColor: `${project.color}33` }}>
+                          {project.tag}
+                        </span>
+                        <Icon name="arrow-up-right" size={16} className="work-card-arrow" />
+                      </div>
+                      <h3 className="work-card-title">{project.title}</h3>
+                      <p className="work-card-desc">{project.description}</p>
+                      <div className="work-card-tech">
+                        {project.tech.map(t => (
+                          <span key={t} className="work-tech-pill font-mono">{t}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* ══════ PROJECT WINDOW MODAL ══════ */}
       <ProjectWindow project={lightbox} onClose={closeLightbox} />
