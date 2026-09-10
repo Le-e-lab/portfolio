@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import useReveal from '../hooks/useReveal';
+import TestimonialCard from './TestimonialCard';
 import './About.css';
 
 const techStack = [
@@ -43,6 +44,21 @@ const timeline = [
     role: 'Full-Stack Developer',
     company: 'Freelance & Open Source',
     desc: 'Designing and deploying web applications with React, Node.js, and Python.'
+  },
+];
+
+const testimonials = [
+  {
+    quote: "Lesley didn't just build a website — he translated our vision into something we couldn't have articulated ourselves. The creative direction, the attention to detail, the way every pixel serves a purpose. Closest thing to having an in-house design team.",
+    name: "Tarisai Team",
+    role: "Tech Company",
+    company: "Zimbabwe",
+  },
+  {
+    quote: "We needed something that looked premium and actually worked. Lesley delivered both — a system our team uses daily and clients constantly compliment. It doesn't look like something from Zimbabwe. It looks like something from anywhere.",
+    name: "Elevate Value Partners",
+    role: "Enterprise Client",
+    company: "Zimbabwe",
   },
 ];
 
@@ -159,6 +175,16 @@ export default function About() {
               <span className="tech-name font-mono">{tech.name}</span>
             </div>
           ))}
+        </div>
+
+        {/* Testimonials */}
+        <div className="testimonials-section">
+          <h3 className="testimonials-title">What Clients Say</h3>
+          <div className="testimonials-grid">
+            {testimonials.map((t, i) => (
+              <TestimonialCard key={i} {...t} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
