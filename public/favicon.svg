@@ -1,11 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <!-- Carbon black rounded-square background -->
-  <rect x="2" y="2" width="60" height="60" rx="14" fill="#0c0c0c"/>
-  <rect x="2.5" y="2.5" width="59" height="59" rx="13.5" stroke="#E8650A" stroke-opacity="0.35" stroke-width="1"/>
+  <!-- LM monogram — transparent background -->
 
-  <!-- L — clean vertical bar + foot -->
-  <path d="M16 14 H23 V42 H31 V49 H16 Z" fill="#E8650A"/>
+  <!-- L — bold vertical bar + foot -->
+  <path d="M13 12 H22 V40 H31 V48 H13 Z" fill="#E8650A"/>
 
-  <!-- M — two stems + center valley, clearly separate from the L -->
-  <path d="M37 14 H43 L50.5 49 L58 14 H64 V49 L37 49 Z" fill="#E8650A" fill-rule="evenodd"/>
+  <!-- M — two bold stems + center valley -->
+  <path d="M35 12 H42 L49.5 48 L57 12 H64 V48 L35 48 Z" fill="#E8650A" fill-rule="evenodd"/>
 </svg>
