@@ -124,18 +124,23 @@ export default function HexGlowPattern({
 
     const onMove = (e) => {
       const rect = canvas.getBoundingClientRect();
-      targetX = e.clientX - rect.left;
-      targetY = e.clientY - rect.top;
-    };
-    const onLeave = () => {
-      targetX = -9999;
-      targetY = -9999;
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      // only glow while the cursor is over this canvas area (content overlays
+      // don't block it — we listen on window so the whole hero is reactive)
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+        targetX = -9999;
+        targetY = -9999;
+        return;
+      }
+      targetX = x;
+      targetY = y;
     };
 
     interactive = !reduced && !isMobile;
     if (interactive) {
-      canvas.addEventListener('mousemove', onMove);
-      canvas.addEventListener('mouseleave', onLeave);
+      window.addEventListener('mousemove', onMove, { passive: true });
+      window.addEventListener('mouseleave', onLeave);
     }
 
     function glowLoop() {
@@ -179,8 +184,8 @@ export default function HexGlowPattern({
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
-      canvas.removeEventListener('mousemove', onMove);
-      canvas.removeEventListener('mouseleave', onLeave);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseleave', onLeave);
     };
   }, []);
 
