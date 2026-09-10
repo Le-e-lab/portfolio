@@ -21,6 +21,16 @@
   --border: rgba(255, 255, 255, 0.06);
   --border-hover: rgba(232, 101, 10, 0.25);
 
+  /* Light section palette (Switchboard alternation) */
+  --bg-light: #F5F0EB;
+  --bg-light-raised: #EDE8E2;
+  --bg-light-card: #E5E0DA;
+  --text-dark: #1a1714;
+  --text-dim-dark: #5C5650;
+  --text-muted-dark: #9A9189;
+  --border-dark: rgba(0, 0, 0, 0.08);
+  --border-dark-hover: rgba(232, 101, 10, 0.3);
+
   /* Typography */
   --font-display: 'Playfair Display', Georgia, serif;
   --font-heading: 'Bebas Neue', 'Outfit', sans-serif;
@@ -122,6 +132,36 @@ a:hover { color: var(--text); }
 .section {
   padding: var(--space-4xl) 0;
   position: relative;
+}
+
+/* ═══ Switchboard: Alternating section themes ═══ */
+.section--light {
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+
+.section--light h1,
+.section--light h2,
+.section--light h3,
+.section--light h4 {
+  color: var(--text-dark);
+}
+
+.section--light p {
+  color: var(--text-dim-dark);
+}
+
+.section--light .section-label {
+  color: var(--tangerine);
+}
+
+.section--light .section-number {
+  color: var(--text-muted-dark);
+}
+
+.section--dark {
+  background: var(--bg);
+  color: var(--text);
 }
 
 @media (max-width: 768px) {
