@@ -1,31 +1,24 @@
-import { useState } from 'react';
 import useReveal from '../hooks/useReveal';
-import TestimonialCard from './TestimonialCard';
 import LiquidDivider from './LiquidDivider';
 import './About.css';
 
-const techStack = [
-  { name: 'React', mono: 'Re', color: '#61dafb' },
-  { name: 'JavaScript', mono: 'JS', color: '#f7df1e' },
-  { name: 'Node.js', mono: 'No', color: '#68a063' },
-  { name: 'Python', mono: 'Py', color: '#3776ab' },
-  { name: 'Linux', mono: 'Lx', color: '#fcc624' },
-  { name: 'Fedora', mono: 'Fe', color: '#51a2da' },
-  { name: 'Git', mono: 'Gi', color: '#f05032' },
-  { name: 'MongoDB', mono: 'Mo', color: '#47a248' },
-  { name: 'Tailwind', mono: 'Tw', color: '#38bdf8' },
-  { name: 'TypeScript', mono: 'TS', color: '#3178c6' },
-];
-
+/* Honest phase labels instead of invented dates. Order reads as a journey:
+   foundation, craft, client work, current focus. */
 const timeline = [
   {
-    year: '2025 — Present',
+    tag: '01 · Study',
+    role: 'Computer Science Student',
+    company: 'Africa University',
+    desc: 'Deepening understanding of software engineering, database architectures, and algorithms.',
+  },
+  {
+    tag: '02 · Design',
     role: 'Graphic Designer',
     company: 'Studio & Freelance',
     desc: 'Crafting premium brand identities, logos, and visual systems. Design-first thinking applied to every pixel.',
   },
   {
-    year: '2025 — Present',
+    tag: '03 · Client',
     role: 'Developer',
     company: 'Tarisai & Elevate Value Partners',
     desc: 'Directing system architectures and engineering pipelines. Architected client web portals, API routing layers, and secure databases.',
@@ -35,137 +28,129 @@ const timeline = [
     ]
   },
   {
-    year: '2025 — Present',
-    role: 'Computer Science Student',
-    company: 'Africa University',
-    desc: 'Deepening understanding of software engineering, database architectures, and algorithms.'
-  },
-  {
-    year: '2025 — Present',
+    tag: '04 · Now',
     role: 'Full-Stack Developer',
     company: 'Freelance & Open Source',
-    desc: 'Designing and deploying web applications with React, Node.js, and Python.'
+    desc: 'Designing and deploying web applications with React, Node.js, and Python.',
   },
 ];
 
-const testimonials = [
+const toolGroups = [
   {
-    quote: "Lesley didn't just build a website — he translated our vision into something we couldn't have articulated ourselves. The creative direction, the attention to detail, the way every pixel serves a purpose. Closest thing to having an in-house design team.",
-    name: "Tarisai Team",
-    role: "Tech Company",
-    company: "Zimbabwe",
+    title: 'Frontend Tools',
+    tools: ['React', 'Next.js', 'JavaScript (ES6+)', 'TypeScript', 'Tailwind CSS'],
   },
   {
-    quote: "We needed something that looked premium and actually worked. Lesley delivered both — a system our team uses daily and clients constantly compliment. It doesn't look like something from Zimbabwe. It looks like something from anywhere.",
-    name: "Elevate Value Partners",
-    role: "Enterprise Client",
-    company: "Zimbabwe",
+    title: 'Backend Tools',
+    tools: ['Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'REST APIs'],
+  },
+  {
+    title: 'Design & Platform',
+    tools: ['Linux (Fedora)', 'Git/GitHub', 'Vite'],
   },
 ];
+
+/* Editorial timeline row: phase tag rail + body. Each row owns its reveal
+   observer so entries enter one by one as they scroll into view. */
+function TimelineRow({ item }) {
+  const rowRef = useReveal();
+
+  return (
+    <div ref={rowRef} className="reveal about-row">
+      <span className="about-row-tag font-mono">{item.tag}</span>
+      <div className="about-row-body">
+        <h4 className="about-row-role font-heading">{item.role}</h4>
+        <span className="about-row-company">
+          {item.links ? (
+            item.links.map((link, lIdx) => (
+              <span key={link.url}>
+                <a href={link.url} target="_blank" rel="noreferrer" className="about-row-link interactive">
+                  {link.label}
+                </a>
+                {lIdx < item.links.length - 1 && ' & '}
+              </span>
+            ))
+          ) : item.company}
+        </span>
+        <p className="about-row-desc">{item.desc}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function About() {
-  const [activeTab, setActiveTab] = useState(null);
   const headerRef = useReveal();
+  const narrativeRef = useReveal();
   const timelineRef = useReveal();
-  const asideRef = useReveal();
-  const techRef = useReveal();
+  const toolsRef = useReveal();
 
   return (
     <>
       {/* ═══ CREAM HEADER ZONE ═══ */}
-      <section className="section--light about-zone">
+      <section className="section--light about-zone about-zone--header">
         <div className="about-container">
           <div ref={headerRef} className="reveal about-header">
             <span className="section-number">03</span>
             <span className="section-label">About</span>
-            <h2 className="about-heading">
-              A designer who can build <span className="text-gradient">what they draw.</span>
-            </h2>
-            <p className="about-bio">
-              CS student at Africa University. I design brand identities and build full-stack applications — the visual and the technical, working as one. When I&apos;m not designing, I&apos;m shipping products or configuring my Linux setup.
-            </p>
+            <h1 className="about-statement font-heading">
+              I design identities, build systems, ship experiences.
+            </h1>
           </div>
         </div>
       </section>
 
-      {/* Liquid blend into dark experience zone */}
+      {/* Liquid blend into dark narrative zone */}
       <LiquidDivider fill="var(--bg)" variant={0} />
 
-      {/* ═══ DARK EXPERIENCE ZONE ═══ */}
-      <section className="section--dark about-zone">
+      {/* ═══ DARK JOURNEY ZONE ═══ */}
+      <section className="section--dark about-zone about-zone--journey">
         <div className="about-container">
-          <div className="about-grid">
-            <div ref={timelineRef} className="reveal about-timeline">
-              <h3 className="timeline-title">Experience</h3>
-              <div className="timeline-items">
-                {timeline.map((item, idx) => (
-                  <div key={idx} className="timeline-item">
-                    <div className="timeline-dot-connector">
-                      <div className="timeline-dot" />
-                      {idx < timeline.length - 1 && <div className="timeline-connector" />}
-                    </div>
-                    <div className="timeline-content">
-                      <span className="timeline-year font-mono">{item.year}</span>
-                      <h4 className="timeline-role">{item.role}</h4>
-                      <span className="timeline-company">
-                        {item.links ? (
-                          item.links.map((link, lIdx) => (
-                            <span key={link.url}>
-                              <a href={link.url} target="_blank" rel="noreferrer" className="timeline-link interactive">
-                                {link.label}
-                              </a>
-                              {lIdx < item.links.length - 1 && ' & '}
-                            </span>
-                          ))
-                        ) : item.company}
-                      </span>
-                      <p className="timeline-desc">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="about-journey">
+            {/* Sticky chapter rail — decorative index of the journey */}
+            <aside className="about-rail" aria-hidden="true">
+              <span className="about-chapter">01 · Origin</span>
+              <span className="about-chapter">02 · Where I&apos;ve been</span>
+            </aside>
 
-            <div ref={asideRef} className="reveal about-aside">
-              <div className="about-quote interactive">
-                <div className="quote-accent" />
-                <div className="quote-body">
-                  <p className="quote-text">&quot;Design is not just what it looks like and feels like. Design is how it works.&quot;</p>
-                  <span className="quote-attr font-mono">— Steve Jobs</span>
+            <div className="about-journey-body">
+              {/* Chapter 01 — Origin: portrait + narrative */}
+              <div ref={narrativeRef} className="reveal about-origin">
+                <div className="about-portrait">
+                  <img
+                    src="/images/hero-portrait.jpg"
+                    alt="Portrait of Lesley Mutsambiwa"
+                    loading="lazy"
+                    className="about-portrait-img"
+                  />
+                  <span className="about-portrait-scrim" aria-hidden="true" />
+                </div>
+
+                <div className="about-narrative-copy">
+                  <p className="about-para about-para--lead">
+                    I&apos;m a Computer Science student at Africa University, based in Harare,
+                    Zimbabwe. I work across the full spectrum: brand identities on one end,
+                    full-stack applications on the other, and everything visual-technical in
+                    between.
+                  </p>
+                  <p className="about-para">
+                    Design is how I understand a problem; code is how I solve it. Most people
+                    pick one. I&apos;ve spent the last few years refusing to.
+                  </p>
+                  <p className="about-para about-para--life">
+                    When I&apos;m not designing or shipping, I&apos;m usually configuring my Linux
+                    setup (bspwm on Fedora, if you&apos;re curious), exploring why a tool works
+                    the way it does, or sketching ideas that never make it to production.
+                  </p>
                 </div>
               </div>
 
-              <div className="mini-terminal">
-                <div className="terminal-header">
-                  <div className="terminal-dots">
-                    <span className="dot red"></span>
-                    <span className="dot yellow"></span>
-                    <span className="dot green"></span>
-                  </div>
-                  <span className="terminal-title font-mono">mutsambiwa@fedora:~</span>
-                </div>
-                <div className="terminal-body font-mono">
-                  <div className="terminal-line">
-                    <span className="t-prompt">$</span> <button className="t-cmd interactive" onClick={() => setActiveTab(activeTab === 'neofetch' ? null : 'neofetch')}>neofetch</button>
-                  </div>
-                  {activeTab === 'neofetch' && (
-                    <div className="terminal-output">
-                      <span className="text-tangerine">mutsambiwa@fedora</span>
-                      <span>OS: Fedora Linux 40</span>
-                      <span>WM: bspwm (Night Rain)</span>
-                      <span>Shell: zsh 5.9</span>
-                      <span>Memory: 4892MiB / 16000MiB</span>
-                    </div>
-                  )}
-                  <div className="terminal-line">
-                    <span className="t-prompt">$</span> <button className="t-cmd interactive" onClick={() => setActiveTab(activeTab === 'status' ? null : 'status')}>git status</button>
-                  </div>
-                  {activeTab === 'status' && (
-                    <div className="terminal-output">
-                      <span>Active Projects: 6</span>
-                      <span>Availability: <span className="text-tangerine">Available for work</span></span>
-                    </div>
-                  )}
+              {/* Chapter 02 — Where I've been: editorial timeline rows */}
+              <div ref={timelineRef} className="reveal about-timeline">
+                <h3 className="timeline-kicker font-mono">The story so far</h3>
+                <div className="about-timeline-rows">
+                  {timeline.map((item) => (
+                    <TimelineRow key={item.tag} item={item} />
+                  ))}
                 </div>
               </div>
             </div>
@@ -173,30 +158,29 @@ export default function About() {
         </div>
       </section>
 
-      {/* Liquid blend into cream tech + testimonials zone */}
+      {/* Liquid blend into cream tools zone */}
       <LiquidDivider fill="var(--bg-light)" variant={1} />
 
-      {/* ═══ CREAM TECH + TESTIMONIALS ZONE ═══ */}
-      <section className="section--light about-zone">
+      {/* ═══ CREAM TOOLS ZONE (Chapter 03 — Toolbox) ═══ */}
+      <section className="section--light about-zone about-zone--tools">
         <div className="about-container">
-          <div ref={techRef} className="reveal tech-grid">
-            {techStack.map((tech) => (
-              <div key={tech.name} className="tech-item">
-                <span className="tech-mono" style={{ backgroundColor: `${tech.color}1f`, color: tech.color, borderColor: `${tech.color}44` }}>
-                  {tech.mono}
-                </span>
-                <span className="tech-name font-mono">{tech.name}</span>
+          <div ref={toolsRef} className="reveal about-tools">
+            <div className="about-tools-header">
+              <h3 className="about-tools-title font-heading">03 · Toolbox</h3>
+              <p className="about-tools-sub">
+                The stack I ship production work with.
+              </p>
+            </div>
+            {toolGroups.map((group) => (
+              <div key={group.title} className="tool-group">
+                <h4 className="tool-group-title font-heading">{group.title}</h4>
+                <div className="tool-chips">
+                  {group.tools.map((tool) => (
+                    <span key={tool} className="tool-chip">{tool}</span>
+                  ))}
+                </div>
               </div>
             ))}
-          </div>
-
-          <div className="testimonials-section">
-            <h3 className="testimonials-title">What Clients Say</h3>
-            <div className="testimonials-grid">
-              {testimonials.map((t, i) => (
-                <TestimonialCard key={i} {...t} />
-              ))}
-            </div>
           </div>
         </div>
       </section>

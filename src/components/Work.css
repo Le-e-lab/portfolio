@@ -2,10 +2,10 @@
 .work-section {
   position: relative;
   overflow-y: visible;
-  overflow-x: clip; /* keep any bleed from creating page-wide scroll */
+  overflow-x: clip;
 }
 
-/* Alternating zones (Switchboard) */
+/* ─── Alternating zone base ─── */
 .work-zone {
   padding: 12rem 0;
 }
@@ -16,12 +16,20 @@
   padding: 0 var(--space-xl);
 }
 
+/* ─── Cream intro zone: editorial vertical centering ─── */
+.work-zone--intro {
+  min-height: 62vh;
+  display: flex;
+  align-items: center;
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+}
+
 @media (max-width: 768px) {
-  .work-zone {
-    padding: var(--space-3xl) 0;
-  }
-  .work-zone-inner {
-    padding: 0 var(--space-lg);
+  .work-zone--intro {
+    min-height: auto;
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
   }
 }
 
@@ -36,119 +44,430 @@
 .work-desc {
   font-size: 1.05rem;
   line-height: 1.75;
+  color: var(--text);
 }
 
-/* ═══ PROJECTS GRID ═══ */
-.work-grid {
+/* ─── Dark projects zone: tight lead-in after the centered intro wave ─── */
+.work-zone--projects {
+  padding-top: var(--space-2xl);
+}
+
+/* Avoid double-stacking the zone padding with the first row's own padding */
+.work-zone--projects .project-card:first-child {
+  padding-top: 0;
+}
+
+/* ═══ PROJECTS STACK — editorial index rows ═══ */
+.work-projects {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Individual project row: numeral rail + media + body ─── */
+.project-card {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--space-xl);
+  grid-template-columns: 88px minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-areas: 'index media body';
+  gap: 0 var(--space-2xl);
+  padding: var(--space-2xl) 0;
+  align-items: start;
+  /* No card box, no shadow — pure editorial rows. */
 }
 
-.work-card {
+.project-card + .project-card {
+  border-top: 1px solid var(--border);
+}
+
+/* Software rows flip media to the right (body leads) */
+.project-card--flip {
+  grid-template-areas: 'index body media';
+}
+
+/* ─── Outlined numeral rail ─── */
+.work-card-index {
+  grid-area: index;
+  font-size: clamp(2rem, 3.4vw, 2.9rem);
+  line-height: 1;
+  padding-top: 2px;
+  color: transparent;
+  -webkit-text-stroke: 1.2px rgba(245, 240, 235, 0.65);
+  transition:
+    color 300ms var(--ease-out),
+    -webkit-text-stroke-color 300ms var(--ease-out);
+  user-select: none;
+  pointer-events: none;
+}
+
+.project-card:hover .work-card-index,
+.project-card:focus-within .work-card-index {
+  color: var(--tangerine);
+  -webkit-text-stroke-color: var(--tangerine);
+}
+
+/* ─── Media frame (image or typographic cover) ─── */
+.project-card-media {
+  grid-area: media;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sharp);
   overflow: hidden;
-  text-decoration: none;
-  transition: border-color 400ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1), transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  background: var(--bg-raised);
 }
 
-.work-card:hover {
-  border-color: var(--tangerine);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-  transform: translateY(-3px);
-}
-
-.work-card-accent {
-  height: 2px;
+.project-card-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.work-card-body {
-  padding: var(--space-xl);
+/* Design artifacts (posters/logos) get an editorial portrait frame —
+   avoids cover-cropping the top of portrait pieces like the Gold Brand Piece. */
+.project-card--design .project-card-media {
+  aspect-ratio: 4 / 5;
+  background: #fff;
+}
+
+/* Mount the artifact inside the frame (contain + top pad) so the top
+   headline never shears off the edge; print-piece presentation */
+.project-card--design .project-card-img {
+  object-fit: contain;
+  object-position: top center;
+  background: #fff;
+  padding-top: 14px;
+}
+
+.project-card--design:hover .project-card-img,
+.project-card--design:focus-within .project-card-img {
+  transform: none;
+}
+
+.project-card:hover .project-card-img,
+.project-card:focus-within .project-card-img {
+  transform: scale(1.06);
+}
+
+/* ─── Typographic cover for software cards (de-glow: hatch kept, wash removed) ─── */
+.project-cover {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  justify-content: flex-end;
+  padding: var(--space-xl);
+  background: #0e0e0e;
+  overflow: hidden;
 }
 
-.work-card-top {
+/* subtle diagonal hatch texture over the cover */
+.project-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0,
+    transparent 28px,
+    rgba(255, 255, 255, 0.012) 28px,
+    rgba(255, 255, 255, 0.012) 29px
+  );
+  pointer-events: none;
+}
+
+.cover-title {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-heading);
+  font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+  transition: color 300ms var(--ease-out);
+}
+
+.project-card:hover .cover-title,
+.project-card:focus-within .cover-title {
+  color: var(--cover-color, var(--tangerine));
+}
+
+.cover-tag {
+  position: relative;
+  z-index: 1;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.cover-year {
+  position: relative;
+  z-index: 1;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-top: var(--space-xs);
+}
+
+/* ─── Card body (text column) ─── */
+.project-card-body {
+  grid-area: body;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+}
+
+.project-card-top {
   margin-bottom: var(--space-md);
 }
 
 .work-card-tag {
+  display: inline-flex;
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 0.25em 0.75em;
-  border: 1px solid;
-  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sharp);
+  color: var(--text-dim);
 }
 
-.work-card-arrow {
-  color: var(--text-muted);
-  transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), color 300ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.work-card:hover .work-card-arrow {
-  transform: translate(2px, -2px);
-  color: var(--tangerine);
-}
-
-.work-card-title {
+.project-card-title {
   font-family: var(--font-heading);
-  font-size: 1.3rem;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
   color: var(--text);
   margin-bottom: var(--space-sm);
 }
 
-.work-card-desc {
-  font-size: 0.93rem;
+.project-card-desc {
+  font-size: 1rem;
+  line-height: 1.7;
   color: var(--text-dim);
-  line-height: 1.6;
-  margin-bottom: var(--space-md);
-  flex: 1;
+  margin-bottom: var(--space-lg);
 }
 
-.work-card-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-md);
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--border);
-  margin-bottom: var(--space-md);
-}
-
-.work-card-client {
-  font-size: 0.8rem;
-  color: var(--text-dim);
-}
-
-.work-card-year {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-}
-
-.work-card-tech {
+/* ─── Tech pills row ─── */
+.project-card-tech {
   display: flex;
   gap: var(--space-xs);
   flex-wrap: wrap;
+  margin-bottom: var(--space-lg);
 }
 
 .work-tech-pill {
   font-size: 0.7rem;
   text-transform: uppercase;
-  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
   border: 1px solid var(--border);
-  padding: 0.2em 0.6em;
-  border-radius: var(--radius-sm);
+  padding: 0.35em 0.65em;
+  border-radius: var(--radius-sharp);
+}
+
+/* ─── Link row ─── */
+.project-card-links {
+  display: flex;
+  gap: var(--space-xl);
+  margin-top: auto;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border);
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  font-size: 0.82rem;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 300ms var(--ease-out), transform 150ms var(--ease-out);
+}
+
+.project-link:active {
+  transform: scale(0.96);
+}
+
+.project-link:focus-visible {
+  outline: 2px solid var(--tangerine);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.project-link-text {
+  border-bottom: 1px solid transparent;
+  transition: border-color 300ms var(--ease-out);
+}
+
+.project-link:hover .project-link-text {
+  border-color: var(--tangerine);
+}
+
+.project-link:hover .project-link-arrow {
+  color: var(--tangerine);
+  transform: translate(2px, -2px);
+}
+
+.project-link-arrow {
+  color: var(--text-muted);
+  transition:
+    color 300ms var(--ease-out),
+    transform 300ms var(--ease-out);
+  flex-shrink: 0;
+}
+
+/* ─── Per-row entrance: row lifts; children stagger in ─── */
+.project-card.reveal > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-card.reveal.is-revealed > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card.reveal.is-revealed > *:nth-child(1) { transition-delay: 60ms; }
+.project-card.reveal.is-revealed > *:nth-child(2) { transition-delay: 140ms; }
+.project-card.reveal.is-revealed > *:nth-child(3) { transition-delay: 220ms; }
+
+/* ═══ MORE ON GITHUB BLOCK ═══ */
+.more-github {
+  margin-top: 5rem;
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-2xl);
+}
+
+.more-github-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.more-github-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.more-github-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: 52px;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: background 200ms var(--ease-out);
+}
+
+.more-github-row:active {
+  background: rgba(232, 101, 10, 0.08);
+}
+
+.more-github-row:focus-visible {
+  outline: 2px solid var(--tangerine);
+  outline-offset: -2px;
+}
+
+.more-github-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.more-github-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.more-github-name {
+  font-size: 0.92rem;
+  color: var(--text);
+  font-weight: 500;
+  min-width: 140px;
+}
+
+.more-github-desc {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.more-github-arrow {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: color 200ms var(--ease-out);
+}
+
+.more-github-row:hover .more-github-arrow {
+  color: var(--tangerine);
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 1024px) {
+  .project-card,
+  .project-card--flip {
+    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-areas:
+      'index body'
+      'media media';
+    gap: var(--space-lg) var(--space-lg);
+  }
+
+  .project-card-media {
+    aspect-ratio: 16 / 9;
+  }
+
+  .more-github-name {
+    min-width: 0;
+  }
+
+  .more-github-desc {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .work-zone {
+    padding: var(--space-3xl) 0;
+  }
+  .work-zone-inner {
+    padding: 0 var(--space-lg);
+  }
+  .work-projects {
+    gap: var(--space-lg);
+  }
+  .project-card,
+  .project-card--flip {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'index'
+      'media'
+      'body';
+    gap: var(--space-md) 0;
+    padding: var(--space-xl) 0;
+  }
+  .work-card-index {
+    font-size: clamp(1.6rem, 7vw, 2rem);
+    padding-top: 0;
+  }
+  .project-card-media {
+    aspect-ratio: 4 / 3;
+  }
+  .project-card-links {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
 }
