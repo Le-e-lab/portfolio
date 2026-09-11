@@ -1,0 +1,57 @@
+/* ═══ 404 — Custom Not Found Page ═══ */
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.not-found__code {
+  font-family: var(--font-heading);
+  font-size: clamp(7rem, 18vw, 14rem);
+  line-height: 0.85;
+  color: var(--tangerine);
+  opacity: 0.18;
+  letter-spacing: -0.02em;
+  user-select: none;
+  pointer-events: none;
+}
+
+.not-found__msg {
+  margin-top: var(--space-lg);
+  font-size: 1.15rem;
+  color: var(--text-dim);
+  letter-spacing: 0.01em;
+}
+
+.not-found__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-2xl);
+  padding: 0.7rem 1.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--tangerine);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-sm);
+  background: var(--tangerine-dim);
+  text-decoration: none;
+  transition: background var(--dur) var(--ease-out),
+              border-color var(--dur) var(--ease-out);
+}
+
+.not-found__cta:hover {
+  background: var(--tangerine-glow);
+  border-color: var(--tangerine);
+}
+
+.not-found__cta:active {
+  transform: scale(0.97);
+}

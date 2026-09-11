@@ -9,6 +9,7 @@ const Hero = lazy(() => import('./components/Hero'));
 const Work = lazy(() => import('./components/Work'));
 const About = lazy(() => import('./components/About'));
 const Contact = lazy(() => import('./components/Contact'));
+const NotFound = lazy(() => import('./components/NotFound'));
 
 function PageFallback() {
   return <div style={{ minHeight: '100vh' }} aria-hidden="true" />;
@@ -49,6 +50,14 @@ function App() {
             element={
               <Suspense fallback={<PageFallback />}>
                 <Contact />
+              </Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<PageFallback />}>
+                <NotFound />
               </Suspense>
             }
           />

@@ -1,0 +1,21 @@
+{
+  "name": "Lesley Mutsambiwa — Designer & Developer",
+  "short_name": "Lesley",
+  "description": "Portfolio of Lesley Mutsambiwa — brand identity designer and full-stack developer based in Harare, Zimbabwe.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c0c0c",
+  "theme_color": "#0c0c0c",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

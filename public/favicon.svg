@@ -1,4 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <!-- M monogram — transparent background, minimal -->
-  <path d="M12 12 H19 L32 48 L45 12 H52 V48 H45 L32 14 L19 48 H12 Z" fill="#E8650A" fill-rule="evenodd"/>
+  <!-- Hex badge — the site's defining motif -->
+  <path d="M32 2 L58 17 V47 L32 62 L6 47 V17 Z" fill="#141414" stroke="#E8650A" stroke-opacity="0.4" stroke-width="2" stroke-linejoin="round"/>
+  <!-- M monogram -->
+  <path d="M22 20 H25 L32 40 L39 20 H42 V40 H39 L32 24 L25 40 H22 Z" fill="#E8650A" fill-rule="evenodd"/>
 </svg>
