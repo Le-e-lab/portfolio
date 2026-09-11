@@ -145,6 +145,7 @@
   .main-content {
     padding: 0 var(--space-lg);
     padding-top: var(--space-2xl);
-    padding-bottom: 80px;
+    /* Clearance for the floating bottombar (~72px tall, 24px from bottom) */
+    padding-bottom: calc(112px + env(safe-area-inset-bottom));
   }
 }

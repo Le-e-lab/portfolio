@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Icon from './Icon';
 import useReveal from '../hooks/useReveal';
 import LiquidDivider from './LiquidDivider';
@@ -76,20 +76,71 @@ const serviceOptions = [
   'Other',
 ];
 
+// Public Web3Forms access key (forms.wtf-style spam-protected endpoint).
+// When unset, the form falls back to the visitor's mail client so it never
+// dead-ends during local development.
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
 export default function Contact() {
   const [formState, setFormState] = useState('idle');
+  const [sentVia, setSentVia] = useState('web3forms');
   const [subject, setSubject] = useState('');
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const msgRef = useRef(null);
   const infoRef = useReveal();
   const formRef = useReveal();
   const reasonsRef = useReveal();
   const socialsRef = useReveal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const name = nameRef.current?.value || '';
+    const email = emailRef.current?.value || '';
+    const message = msgRef.current?.value || '';
+    if (!name || !email || !message) return;
     setFormState('sending');
+
+    // Real async dispatch via Web3Forms when an access key is configured.
+    if (WEB3FORMS_KEY) {
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: subject || 'Portfolio inquiry',
+            from_name: name,
+            email,
+            message,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok || data.success === false) {
+          throw new Error(data.message || 'Submission failed');
+        }
+        setSentVia('web3forms');
+        setFormState('sent');
+      } catch {
+        setFormState('error');
+      }
+      return;
+    }
+
+    // No key configured (local dev) — fall back to the visitor's mail client.
+    // The success screen explicitly says nothing was sent, only that the
+    // client was asked to open with the message pre-filled.
+    setSentVia('mailto');
+    setFormState('sent');
     setTimeout(() => {
-      setFormState('sent');
-    }, 1500);
+      const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+      const a = document.createElement('a');
+      a.href = `mailto:lesleymutsambiwa@gmail.com?subject=${encodeURIComponent(subject || 'Portfolio inquiry')}&body=${encodeURIComponent(body)}`;
+      a.rel = 'noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }, 400);
   };
 
   return (
@@ -101,9 +152,9 @@ export default function Contact() {
           <div ref={infoRef} className="reveal contact-info-col">
             <span className="section-number">04</span>
             <span className="section-label">Contact</span>
-            <h2 className="contact-heading">
+            <h1 className="contact-heading">
               Let&apos;s build <span className="text-gradient">something</span><br />together.
-            </h2>
+            </h1>
             <p className="contact-desc">
               I&apos;m always down to collaborate on brand identities, visual design, or full-stack systems. If you want to talk design, systems, or have an interesting project, drop me a line.
             </p>
@@ -169,7 +220,7 @@ export default function Contact() {
           {/* RIGHT COLUMN */}
           <div ref={formRef} className="reveal contact-form-col">
             <div className="contact-glass-form-container">
-              <h3 className="glass-form-title font-mono">{'// INITIATE_CONTACT_PROTOCOL'}</h3>
+              <h3 className="glass-form-title font-mono">Send a message</h3>
 
               {formState === 'sent' ? (
                 <div className="contact-success-screen">
@@ -183,15 +234,26 @@ export default function Contact() {
                       </path>
                     </svg>
                   </div>
-                  <h4 className="success-title font-mono">TRANSMISSION_SECURED</h4>
-                  <p className="success-text">Protocol initiated successfully. Message encrypted and dispatched to Lesley.</p>
+                  <h4 className="success-title font-mono">{sentVia === 'mailto' ? 'Message ready' : 'Message sent'}</h4>
+                  <p className="success-text">{sentVia === 'mailto'
+                    ? 'Your mail client has opened with your message pre-filled. Hit send there to deliver it to Lesley.'
+                    : 'Protocol initiated successfully. Message encrypted and dispatched to Lesley.'}</p>
                   <div className="success-logs font-mono">
-                    <span className="log-line">&gt; CONNECTING_SECURE_SERVER... OK</span>
-                    <span className="log-line">&gt; ROTATING_CRYPT_KEYS... OK</span>
-                    <span className="log-line">&gt; DISPATCHING_ENCRYPTED_PACKET... OK</span>
-                    <span className="log-line">&gt; STATUS: PENDING_RESPONSE</span>
+                    {sentVia === 'mailto' ? (
+                      <>
+                        <span className="log-line">Mail client opened</span>
+                        <span className="log-line">Message pre-filled</span>
+                        <span className="log-line">Status: hit send to deliver</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="log-line">Connected securely</span>
+                        <span className="log-line">Message dispatched</span>
+                        <span className="log-line">Status: awaiting reply</span>
+                      </>
+                    )}
                   </div>
-                  <button onClick={() => setFormState('idle')} className="success-reset-btn interactive font-mono">RE-OPEN_CHANNEL</button>
+                  <button onClick={() => setFormState('idle')} className="success-reset-btn interactive font-mono">Send another</button>
                 </div>
               ) : (
                 <>
@@ -205,12 +267,12 @@ export default function Contact() {
                   </div>
                   <form className="contact-glass-form" onSubmit={handleSubmit}>
                     <div className="input-group">
-                      <input type="text" id="form-name" required placeholder=" " className="glass-input" disabled={formState === 'sending'} />
+                      <input ref={nameRef} type="text" id="form-name" required placeholder=" " className="glass-input" disabled={formState === 'sending'} />
                       <label htmlFor="form-name" className="glass-label font-mono">YOUR NAME</label>
                       <span className="input-line"></span>
                     </div>
                     <div className="input-group">
-                      <input type="email" id="form-email" required placeholder=" " className="glass-input" disabled={formState === 'sending'} />
+                      <input ref={emailRef} type="email" id="form-email" required placeholder=" " className="glass-input" disabled={formState === 'sending'} />
                       <label htmlFor="form-email" className="glass-label font-mono">EMAIL ADDRESS</label>
                       <span className="input-line"></span>
                     </div>
@@ -220,16 +282,25 @@ export default function Contact() {
                       <span className="input-line"></span>
                     </div>
                     <div className="input-group textarea-group">
-                      <textarea id="form-message" required placeholder=" " className="glass-input" rows={5} disabled={formState === 'sending'} />
+                      <textarea ref={msgRef} id="form-message" required placeholder=" " className="glass-input" rows={5} disabled={formState === 'sending'} />
                       <label htmlFor="form-message" className="glass-label font-mono">YOUR MESSAGE</label>
                       <span className="input-line"></span>
                     </div>
                     <div className="form-submit-row">
                       <button type="submit" className="glass-submit-btn interactive" disabled={formState === 'sending'}>
-                        <span className="btn-text">{formState === 'sending' ? 'TRANSMITTING...' : 'SEND PROTOCOL'}</span>
+                        <span className="btn-text">{formState === 'sending' ? 'Sending...' : formState === 'error' ? 'Try again' : 'Send message'}</span>
                         <Icon name="envelope" size={14} className="btn-icon" />
                       </button>
                     </div>
+                    {formState === 'error' && (
+                      <div className="contact-error-banner" role="alert">
+                        <span className="error-banner-symbol font-mono">!</span>
+                        <div className="error-banner-copy">
+                          <span className="error-banner-title font-mono">Something went wrong</span>
+                          <span className="error-banner-desc">Message failed to dispatch. Check your connection and try again.</span>
+                        </div>
+                      </div>
+                    )}
                   </form>
                 </>
               )}

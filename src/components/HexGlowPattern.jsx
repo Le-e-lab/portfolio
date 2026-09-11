@@ -55,7 +55,7 @@ function buildSegments(W, H) {
 export default function HexGlowPattern({
   stroke = '#E8650A',
   glowColor = '#e8703a',
-  idleOpacity = 0.24,
+  idleOpacity = 0.30,
   glowRadius = 230,
   className = '',
 }) {
@@ -161,11 +161,28 @@ export default function HexGlowPattern({
       if (dx < -500 || dy < -500) return;
       const r = cfg.glowRadius;
       const r2 = r * r;
+
+      // Atmospheric depth pool — a single soft gradient that unifies the lit
+      // cluster so hexagons read as lit surfaces, not floating line art.
+      // (Coupled to the tangerine palette; rgba fixed for glow falloff.)
+      const pool = ctx.createRadialGradient(dx, dy, 0, dx, dy, r * 0.75);
+      pool.addColorStop(0, 'rgba(255, 140, 56, 0.10)');
+      pool.addColorStop(1, 'rgba(255, 140, 56, 0)');
+      ctx.fillStyle = pool;
+      ctx.fillRect(dx - r, dy - r, r * 2, r * 2);
+
+      const coreR = r * 0.22;
+      const coreR2 = coreR * coreR;
+      // Facet joints — vertices of lit hexes get a tiny node highlight so the
+      // grid reads as beveled glass surfaces, not floating line art.
+      const nodes = new Set();
       for (const seg of segments) {
         const ddx = seg.mx - dx;
         const ddy = seg.my - dy;
         const d2 = ddx * ddx + ddy * ddy;
         if (d2 > r2) continue;
+        nodes.add(`${seg.x1.toFixed(1)},${seg.y1.toFixed(1)}`);
+        nodes.add(`${seg.x2.toFixed(1)},${seg.y2.toFixed(1)}`);
         const alpha = cfg.idleOpacity + (0.95 - cfg.idleOpacity) * smoothstep(1 - Math.sqrt(d2) / r);
         ctx.strokeStyle = cfg.glowColor;
         ctx.lineWidth = 1.6;
@@ -174,6 +191,28 @@ export default function HexGlowPattern({
         ctx.moveTo(seg.x1, seg.y1);
         ctx.lineTo(seg.x2, seg.y2);
         ctx.stroke();
+
+        // Core brightening — segments essentially under the cursor glow hotter,
+        // giving the illusion of raised bevel edges closest to the pointer.
+        if (d2 < coreR2) {
+          ctx.globalAlpha = Math.min(1, alpha + 0.25);
+          ctx.lineWidth = 2.2;
+          ctx.beginPath();
+          ctx.moveTo(seg.x1, seg.y1);
+          ctx.lineTo(seg.x2, seg.y2);
+          ctx.stroke();
+        }
+      }
+      // Stamp the facet joints — small dots where lit edges meet.
+      if (nodes.size) {
+        ctx.fillStyle = cfg.glowColor;
+        for (const key of nodes) {
+          const [nx, ny] = key.split(',').map(Number);
+          ctx.globalAlpha = 0.55;
+          ctx.beginPath();
+          ctx.arc(nx, ny, 0.9, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
       ctx.globalAlpha = 1;
     }

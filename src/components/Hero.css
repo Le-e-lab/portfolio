@@ -1,54 +1,29 @@
-/* ═══ Hero — Split Layout ═══ */
+/* ═══ Hero — Typography Overlap ═══ */
 .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   background: var(--bg);
   position: relative;
   overflow: hidden;
-  padding: 6rem 0 12rem; /* extra bottom breathing into the first section */
+  padding: 5rem 0 6rem;
 }
 
-/* Entrance animation (replaces framer-motion stagger) */
-.hero-anim {
-  opacity: 0;
-  animation: hero-fade-up 0.7s var(--ease-out) forwards;
-}
-
-.hero-image-anim {
-  opacity: 0;
-  animation: hero-image-in 0.5s var(--ease-out) 0.05s forwards;
-}
-
-@keyframes hero-fade-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes hero-image-in {
-  from { opacity: 0; transform: scale(0.96) translateX(30px); }
-  to { opacity: 1; transform: scale(1) translateX(0); }
-}
-
-.hero-grid {
+.hero-inner {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-3xl);
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 var(--space-4xl);
-  width: 100%;
-  align-items: center;
-}
-
-/* ── Left: Text ── */
-.hero-text-col {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  width: 100%;
 }
 
+/* ── Status pill ── */
 .hero-status {
   display: inline-flex;
   align-items: center;
@@ -63,7 +38,6 @@
   padding: 0.4em 1em;
   border-radius: var(--radius-full);
   border: 1px solid rgba(232, 101, 10, 0.15);
-  width: fit-content;
 }
 
 .hero-dot {
@@ -79,23 +53,91 @@
   50% { opacity: 0.3; transform: scale(0.9); }
 }
 
-.hero-name {
-  font-family: var(--font-display);
-  font-size: clamp(3.5rem, 8vw, 7rem);
-  font-weight: 400;
-  color: var(--text);
-  letter-spacing: -0.02em;
-  line-height: 1;
-  margin-bottom: var(--space-xs);
+/* ═══ Name stack — the hero centerpiece ═══ */
+.hero-name-stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-xl);
+  /* Enough height so portrait + overlapping names don't clip */
+  width: 100%;
 }
 
+/* First name: massive, full-bleed width */
+.hero-name-first,
+.hero-name-second {
+  font-family: var(--font-display-bold);
+  font-weight: 900;
+  color: var(--text);
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  /* Scale responsively: huge on desktop, readable on mobile */
+  font-size: clamp(3.5rem, 13vw, 10rem);
+}
+
+.hero-name-second {
+  font-size: clamp(2.8rem, 9vw, 7rem);
+  letter-spacing: -0.02em;
+  /* Tuck under the portrait slightly */
+  margin-top: -0.15em;
+}
+
+/* ═══ Circular portrait — overlaps the name ═══ */
+.hero-portrait {
+  position: relative;
+  z-index: 2;
+  /* Lift the portrait up into the first name line */
+  margin-top: -0.6em;
+  margin-bottom: -0.3em;
+}
+
+.hero-portrait-ring {
+  width: clamp(180px, 24vw, 300px);
+  height: clamp(180px, 24vw, 300px);
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  /* Double bezel: tangerine outer + subtle inner shadow */
+  border: 2.5px solid var(--tangerine);
+  box-shadow:
+    0 0 0 4px rgba(232, 101, 10, 0.12),
+    0 0 40px rgba(232, 101, 10, 0.15),
+    inset 0 0 20px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 400ms var(--ease-out), border-color 400ms var(--ease-out);
+}
+
+.hero-portrait-ring:hover {
+  border-color: var(--tangerine-light);
+  box-shadow:
+    0 0 0 4px rgba(232, 101, 10, 0.2),
+    0 0 60px rgba(232, 101, 10, 0.25),
+    inset 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.hero-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 700ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hero-portrait-ring:hover .hero-portrait-img {
+  transform: scale(1.06);
+}
+
+/* ── Subtitle ── */
 .hero-role {
   font-family: var(--font-heading);
   font-size: clamp(1.3rem, 3vw, 2rem);
   color: var(--text-dim);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-lg);
 }
 
 .hero-amp {
@@ -105,19 +147,22 @@
   text-transform: none;
 }
 
+/* ── Description ── */
 .hero-desc {
-  max-width: 480px;
+  max-width: 540px;
   font-size: 1.05rem;
   line-height: 1.75;
   color: var(--text-dim);
   margin-bottom: var(--space-xl);
 }
 
+/* ── Tech pills ── */
 .hero-pills {
   display: flex;
   gap: var(--space-sm);
   margin-bottom: var(--space-xl);
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .hero-pill {
@@ -137,6 +182,7 @@
   color: var(--tangerine);
 }
 
+/* ── CTAs ── */
 .hero-ctas {
   display: flex;
   gap: var(--space-md);
@@ -155,13 +201,18 @@
   font-weight: 500;
   border: none;
   text-decoration: none;
-  transition: all 300ms var(--ease-out);
+  transition: box-shadow 300ms var(--ease-out), transform 300ms var(--ease-out);
 }
 
 .cta-primary:hover {
   color: #fff;
   box-shadow: var(--shadow-glow);
   transform: translateY(-2px);
+}
+
+.cta-primary:active {
+  transform: scale(0.97);
+  transition: transform 100ms var(--ease-out);
 }
 
 .cta-secondary {
@@ -176,7 +227,7 @@
   font-size: 0.95rem;
   font-weight: 400;
   text-decoration: none;
-  transition: all 300ms var(--ease-out);
+  transition: border-color 300ms var(--ease-out), color 300ms var(--ease-out), transform 300ms var(--ease-out);
 }
 
 .cta-secondary:hover {
@@ -185,6 +236,12 @@
   transform: translateY(-2px);
 }
 
+.cta-secondary:active {
+  transform: scale(0.97);
+  transition: transform 100ms var(--ease-out);
+}
+
+/* ── Socials ── */
 .hero-socials {
   display: flex;
   gap: var(--space-lg);
@@ -207,90 +264,48 @@
   color: var(--tangerine);
 }
 
-/* ── Right: Portrait ── */
-.hero-image-col {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ═══ Entrance animations ═══ */
+.hero-anim {
+  opacity: 0;
+  animation: hero-fade-up 0.7s var(--ease-out) forwards;
 }
 
-.hero-portrait-frame {
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-  aspect-ratio: 3 / 4;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--border);
+.hero-image-anim {
+  opacity: 0;
+  animation: hero-portrait-in 0.8s var(--ease-out) 0.15s forwards;
 }
 
-.hero-portrait-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-  transition: transform 700ms cubic-bezier(0.23, 1, 0.32, 1);
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.hero-portrait-frame:hover .hero-portrait-img {
-  transform: scale(1.04);
+@keyframes hero-portrait-in {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-.hero-portrait-glow {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(12, 12, 12, 0.7) 0%,
-    rgba(12, 12, 12, 0.1) 40%,
-    transparent 60%
-  );
-  pointer-events: none;
-}
-
-/* ── Responsive ── */
-@media (max-width: 1024px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding: 0 var(--space-2xl);
-    gap: var(--space-2xl);
-  }
-
-  .hero-text-col {
-    align-items: center;
-    order: 2;
-  }
-
-  .hero-image-col {
-    order: 1;
-  }
-
-  .hero-portrait-frame {
-    max-width: 300px;
-  }
-
-  .hero-pills {
-    justify-content: center;
-  }
-
-  .hero-socials {
-    justify-content: center;
-  }
-}
-
+/* ═══ Responsive ═══ */
 @media (max-width: 768px) {
   .hero {
     padding-top: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
   }
 
-  .hero-grid {
-    padding: 0 var(--space-lg);
+  .hero-name-first,
+  .hero-name-second {
+    white-space: normal;
+    text-align: center;
   }
 
-  .hero-portrait-frame {
-    max-width: 250px;
+  .hero-portrait {
+    margin-top: -0.4em;
+    margin-bottom: -0.2em;
+  }
+
+  .hero-portrait-ring {
+    width: clamp(160px, 50vw, 240px);
+    height: clamp(160px, 50vw, 240px);
   }
 
   .hero-ctas {
@@ -299,8 +314,35 @@
     gap: var(--space-sm);
   }
 
-  .cta-primary, .cta-secondary {
+  .cta-primary,
+  .cta-secondary {
     width: 100%;
     justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-name-first,
+  .hero-name-second {
+    font-size: clamp(2.6rem, 14vw, 4rem);
+  }
+
+  .hero-name-second {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .hero-socials {
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim,
+  .hero-image-anim {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

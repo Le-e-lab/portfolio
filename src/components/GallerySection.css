@@ -27,16 +27,162 @@
   color: var(--text-dim);
 }
 
-/* Gallery honeycomb uses slightly larger hexes to fill the band */
-.hexcomb--gallery {
-  --hex: clamp(130px, 17vw, 200px);
+/* ═══ Scatter grid: editorial collage with alternating offsets ═══ */
+.scatter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 72px 56px;
+  align-items: start;
 }
 
+/* Per-cell scatter character (offsets handed to the card via CSS vars).
+   Percentages in `translate` resolve against the card's own size, so the
+   shifts stay proportional and never blow the container width. */
+.scatter-cell:nth-child(3n + 1) { --off-x: -5%; --off-r: -1.2deg; }
+.scatter-cell:nth-child(3n + 2) { --off-x: 4%;  --off-r:  1.4deg; }
+.scatter-cell:nth-child(3n)     { --off-x: -1%; --off-r: -0.6deg; }
+
+/* Scroll-scrub drift: native `animation-timeline: view()` moves each card
+   vertically as it crosses the viewport. Zero JS, zero deps; in browsers
+   without scroll timelines this simply never runs (no drift, cards static). */
+.scatter-cell {
+  animation: scatter-drift-a linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 35%;
+}
+
+.scatter-cell:nth-child(even) {
+  animation-name: scatter-drift-b;
+}
+
+@keyframes scatter-drift-a {
+  from { translate: 0 36px; }
+  to   { translate: 0 -36px; }
+}
+
+@keyframes scatter-drift-b {
+  from { translate: 0 -36px; }
+  to   { translate: 0 36px; }
+}
+
+/* ═══ Card ═══ */
+.scatter-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  /* reveal = Y lift on `translate`; scatter offset lives on --off-x;
+     rotation on `rotate`; press on `scale` — no property fights. */
+  translate: var(--off-x) 26px;
+  rotate: var(--off-r);
+  opacity: 0;
+  transition:
+    translate 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 300ms var(--ease-out);
+}
+
+.scatter-card.is-revealed {
+  translate: var(--off-x) 0;
+  opacity: 1;
+}
+
+/* Stagger ownership: two-class selectors out-specify the `transition`
+   shorthand above, so the global .reveal-delay-N utilities (equal specificity,
+   earlier in the cascade) don't get reset to 0s by it. */
+.scatter-card.reveal-delay-1 { transition-delay: 80ms; }
+.scatter-card.reveal-delay-2 { transition-delay: 160ms; }
+.scatter-card.reveal-delay-3 { transition-delay: 240ms; }
+.scatter-card.reveal-delay-4 { transition-delay: 320ms; }
+.scatter-card.reveal-delay-5 { transition-delay: 400ms; }
+.scatter-card.reveal-delay-6 { transition-delay: 480ms; }
+
+.scatter-card:active {
+  scale: 0.97;
+}
+
+.scatter-card:focus-visible {
+  outline: 2px solid var(--tangerine);
+  outline-offset: 4px;
+}
+
+/* Media frame */
+.scatter-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg, 14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.scatter-media img,
+.scatter-placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scatter-media img {
+  transform: scale(1.001);
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hover law: zoom the image inside the frame, never the card itself */
+.scatter-card:hover .scatter-media img,
+.scatter-card:focus-visible .scatter-media img {
+  transform: scale(1.06);
+}
+
+.scatter-card:hover .scatter-media {
+  border-color: rgba(232, 101, 10, 0.55);
+}
+
+/* Label row */
+.scatter-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-md) 2px 0;
+}
+
+.scatter-title {
+  font-size: 1.05rem;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+.scatter-category {
+  font-size: 0.72rem;
+  color: var(--tangerine);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+/* ═══ Responsive ═══ */
 @media (max-width: 768px) {
   .gallery-container {
     padding: 0 var(--space-lg);
   }
-  .hexcomb--gallery {
-    --hex: clamp(110px, 40vw, 170px);
+
+  .scatter-grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+
+  /* gentler offsets on narrow screens — no horizontal drift out of padding */
+  .scatter-cell:nth-child(3n + 1) { --off-x: -2.5%; }
+  .scatter-cell:nth-child(3n + 2) { --off-x:  2.5%; }
+  .scatter-cell:nth-child(3n)     { --off-x: -1%;  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scatter-cell {
+    animation: none !important;
   }
 }

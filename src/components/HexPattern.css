@@ -15,6 +15,10 @@
   height: 100%;
   pointer-events: auto;
   cursor: default;
+  /* Fade the pattern out toward the viewport edges so hexagons melt away
+     instead of clipping hard at the boundary. */
+  -webkit-mask-image: radial-gradient(ellipse 88% 82% at 50% 45%, black 52%, transparent 97%);
+  mask-image: radial-gradient(ellipse 88% 82% at 50% 45%, black 52%, transparent 97%);
 }
 
 /* Soften near the top so the pattern doesn't fight the text */
@@ -22,12 +26,31 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 90% 70% at 50% 30%, transparent 30%, rgba(12, 12, 12, 0.45) 100%);
+  background: radial-gradient(ellipse 90% 70% at 50% 30%, transparent 40%, rgba(12, 12, 12, 0.38) 100%);
   pointer-events: none;
 }
 
 @media (max-width: 768px) {
   .hex-pattern::after {
-    background: radial-gradient(ellipse 100% 80% at 50% 20%, transparent 25%, rgba(12, 12, 12, 0.6) 100%);
+    background: radial-gradient(ellipse 100% 80% at 50% 20%, transparent 35%, rgba(12, 12, 12, 0.5) 100%);
+  }
+}
+
+/* Law 01 — scroll storytelling: the hex layer lags behind page scroll
+   (background geometric lines travel slower than the foreground tiles).
+   Native CSS scroll-driven animation — no JS, no listeners. Degrades to a
+   static layer where animation-timeline is unsupported. */
+.hex-pattern--parallax {
+  animation: hex-parallax linear both;
+  animation-timeline: scroll(root);
+}
+
+@keyframes hex-parallax {
+  to { transform: translate3d(0, 180px, 0); }
+}
+
+@supports not (animation-timeline: scroll(root)) {
+  .hex-pattern--parallax {
+    animation: none;
   }
 }

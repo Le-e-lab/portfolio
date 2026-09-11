@@ -25,6 +25,17 @@ export default function Layout() {
     reducedRef.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }, []);
 
+  // Per-route document titles (SEO + tab clarity)
+  useEffect(() => {
+    const titles = {
+      '/': 'Lesley Mutsambiwa | Designer & Developer in Harare, Zimbabwe',
+      '/work': 'Work | Lesley Mutsambiwa',
+      '/about': 'About | Lesley Mutsambiwa',
+      '/contact': 'Contact | Lesley Mutsambiwa',
+    };
+    document.title = titles[location.pathname] || 'Page not found | Lesley Mutsambiwa';
+  }, [location.pathname]);
+
   // Mount the curtain on route change, then unmount it once the wipe settles
   // (kept mounted => full-screen black overlay at base state — the blank-screen bug)
   // Skipped on the very first paint so the homepage content appears instantly.

@@ -35,6 +35,7 @@
 
   /* Typography */
   --font-display: 'Playfair Display', Georgia, serif;
+  --font-display-bold: 'Inter', 'Outfit', sans-serif;
   --font-heading: 'Bebas Neue', 'Outfit', sans-serif;
   --font-body: 'Outfit', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -50,6 +51,7 @@
   --space-4xl: 6rem;
 
   /* Radius */
+  --radius-sharp: 4px;
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
@@ -79,7 +81,7 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* System cursor everywhere — no custom cursor hiding */
@@ -93,11 +95,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-family: var(--font-display);
+  font-family: var(--font-display-bold);
   font-size: clamp(3.5rem, 10vw, 8rem);
-  font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: -0.01em;
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
 }
 
 h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
@@ -132,6 +135,14 @@ a:hover { color: var(--text); }
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Stagger helpers — add alongside .reveal for sequential group entrances */
+.reveal-delay-1 { transition-delay: 80ms; }
+.reveal-delay-2 { transition-delay: 160ms; }
+.reveal-delay-3 { transition-delay: 240ms; }
+.reveal-delay-4 { transition-delay: 320ms; }
+.reveal-delay-5 { transition-delay: 400ms; }
+.reveal-delay-6 { transition-delay: 480ms; }
 
 .section {
   padding: 12rem 0;
@@ -200,23 +211,23 @@ a:hover { color: var(--text); }
   display: block;
 }
 
+/* Mono utility — the ticket/dossier components carry .font-mono classNames;
+   this guarantees the mono face even where no component-level rule sets it. */
+.font-mono {
+  font-family: var(--font-mono);
+}
+
 .magnetic-btn {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-}
-
-.magnetic-btn:active {
-  transform: scale(0.97);
-  transition: transform 100ms var(--ease-out);
-}
-
-.magnetic-btn-content {
-  display: inline-flex;
-  align-items: center;
-  gap: inherit;
+  /* Magnetic translate is set inline by JS; ease the return-to-rest so the
+     button glides back. Never carries hover/press transforms itself — the
+     inner button owns those (wrapper isolation). */
+  transition: transform 300ms var(--ease-out);
+  will-change: transform;
 }
 
 @media (max-width: 768px) {
