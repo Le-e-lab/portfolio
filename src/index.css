@@ -1,43 +1,46 @@
-/* ═══ Design System: Carbon Black + Tangerine Orange ═══ */
+/* ══════════════════════════════════════════════════════════════════
+   Design System: Carbon #18171B + Electric Violet Blue #1800AD
+   Source of truth: /home/lee/Downloads/Portfolio/*.png mockups
+   Aesthetic: single dark canvas, serif display (Playfair Display),
+   sans body (Outfit), mono labels (JetBrains Mono), hexagon linework,
+   hairline borders, sharp edges, no gradients-of-trope.
+   ══════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* ── Palette ── */
-  --bg: #0c0c0c;
-  --bg-raised: #141414;
-  --bg-card: #1a1a1a;
+  /* ── Palette (mockup-measured) ── */
+  --bg: #18171B;            /* page canvas */
+  --bg-raised: #0F0E10;     /* top pill / nav dock / raised panels */
+  --bg-card: #1E1D22;       /* cards lifted off canvas */
 
-  /* Primary Accent: Tangerine Orange */
-  --tangerine: #E8650A;
-  --tangerine-light: #FF8C38;
-  --tangerine-dim: rgba(232, 101, 10, 0.1);
-  --tangerine-glow: rgba(232, 101, 10, 0.2);
-  /* Darker tangerine for use on light backgrounds (passes AA contrast) */
-  --tangerine-dark: #B35008;
+  /* Primary Accent: electric violet-blue from mockup hex linework */
+  --accent: #1800AD;
+  /* Fills, borders and hover surfaces only. Measured 2.29:1 on the Carbon
+     canvas, so it is NOT legible as small text — use --accent-text for that. */
+  --accent-light: #2B1AFF;
+  /* AA-safe violet for small text on dark (6.0:1 on --bg). Same hue family as
+     --accent-light, lightened only as far as contrast demands. */
+  --accent-text: #8B7CFF;
+  --accent-dim: rgba(24, 0, 173, 0.32);
+  --accent-soft: rgba(24, 0, 173, 0.14);
+  --accent-line: rgba(43, 26, 255, 0.55);
 
-  /* Text — warm tones */
-  --text: #F5F0EB;
-  --text-dim: #B8B0A8;
-  --text-muted: #7A726A;
+  /* Text */
+  --text: #FFFFFF;
+  --text-dim: #C9CDD5;
+  --text-muted: #8B8F99;
+
+  /* Release-card fill (Contact mockup: mid-grey card, black ink) */
+  --release-fill: #737373;
+  --release-ink: #101014;
 
   /* Borders */
-  --border: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(232, 101, 10, 0.25);
-
-  /* Light section palette (Switchboard alternation) */
-  --bg-light: #F5F0EB;
-  --bg-light-raised: #EDE8E2;
-  --bg-light-card: #E5E0DA;
-  --text-dark: #1a1714;
-  --text-dim-dark: #4A4540;
-  --text-muted-dark: #7A726A;
-  --border-dark: rgba(0, 0, 0, 0.08);
-  --border-dark-hover: rgba(232, 101, 10, 0.3);
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --border-hover: rgba(43, 26, 255, 0.5);
 
   /* Typography */
   --font-display: 'Playfair Display', Georgia, serif;
-  --font-display-bold: 'Inter', 'Outfit', sans-serif;
-  --font-heading: 'Bebas Neue', 'Outfit', sans-serif;
-  --font-body: 'Outfit', sans-serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Spacing */
@@ -50,22 +53,22 @@
   --space-3xl: 4rem;
   --space-4xl: 6rem;
 
-  /* Radius */
-  --radius-sharp: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  /* Radius — sharp, editorial */
+  --radius-sharp: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
   --radius-full: 9999px;
 
-  /* Transitions */
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --dur: 250ms;
+  --dur: 280ms;
+  --dur-slow: 600ms;
 
-  /* Shadows */
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 24px var(--tangerine-glow);
+  /* Shadows (keyed to canvas, restrained) */
+  --shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -74,121 +77,79 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.65;
   overflow-x: clip;
 }
 
 /* System cursor everywhere — no custom cursor hiding */
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-h1 {
-  font-family: var(--font-display-bold);
-  font-size: clamp(3.5rem, 10vw, 8rem);
-  font-weight: 900;
-  line-height: 0.92;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-}
-
-h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
-
-p { color: var(--text-dim); line-height: 1.75; font-size: 1.05rem; }
-
-a { color: var(--tangerine); text-decoration: none; transition: color var(--dur) var(--ease-out); }
-a:hover { color: var(--text); }
-
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: var(--radius-full); }
-::selection { background: var(--tangerine-dim); color: var(--text); }
-
-.text-gradient {
-  background: linear-gradient(135deg, var(--tangerine), var(--tangerine-light));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ── Scroll reveal (native, replaces framer-motion whileInView) ── */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.reveal.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger helpers — add alongside .reveal for sequential group entrances */
-.reveal-delay-1 { transition-delay: 80ms; }
-.reveal-delay-2 { transition-delay: 160ms; }
-.reveal-delay-3 { transition-delay: 240ms; }
-.reveal-delay-4 { transition-delay: 320ms; }
-.reveal-delay-5 { transition-delay: 400ms; }
-.reveal-delay-6 { transition-delay: 480ms; }
-
-.section {
-  padding: 12rem 0;
-  position: relative;
-}
-
-/* ═══ Switchboard: Alternating section themes ═══ */
-.section--light {
-  background: var(--bg-light);
-  color: var(--text-dark);
-}
-
-.section--light h1,
-.section--light h2,
-.section--light h3,
-.section--light h4 {
-  color: var(--text-dark);
-}
-
-.section--light p {
-  color: var(--text-dim-dark);
-}
-
-.section--light .section-label {
-  color: var(--tangerine);
-}
-
-.section--light .section-number {
-  color: var(--text-muted-dark);
-}
-
-.section--dark {
-  background: var(--bg);
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
   color: var(--text);
 }
 
-@media (max-width: 768px) {
-  .section, .hero { padding-bottom: 120px !important; }
+h1 {
+  font-size: clamp(3.25rem, 9vw, 7.5rem);
+  font-weight: 700;
+  line-height: 0.98;
+}
+
+h2 {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 600;
+}
+
+p { color: var(--text-dim); line-height: 1.75; font-size: 1.06rem; }
+
+a {
+  color: var(--text);
+  text-decoration: none;
+  transition: color var(--dur) var(--ease-out);
+}
+a:hover { color: var(--accent-text); }
+
+::selection { background: var(--accent); color: var(--text); }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: var(--radius-full); }
+
+/* ── Shared layout scaffolding ── */
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 5vw, 4rem);
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  padding: clamp(4rem, 9vw, 8rem) 0;
+  position: relative;
 }
 
 .section-label {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--tangerine);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--accent-text);
   text-transform: uppercase;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.28em;
   margin-bottom: var(--space-lg);
   display: flex;
   align-items: center;
@@ -197,46 +158,122 @@ a:hover { color: var(--text); }
 
 .section-label::before {
   content: "";
-  width: 20px;
+  width: 22px;
   height: 1px;
-  background: var(--tangerine);
+  background: var(--accent-light);
 }
 
 .section-number {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
-  letter-spacing: 0.15em;
-  margin-bottom: var(--space-xs);
+  letter-spacing: 0.2em;
   display: block;
+  margin-bottom: var(--space-xs);
 }
 
-/* Mono utility — the ticket/dossier components carry .font-mono classNames;
-   this guarantees the mono face even where no component-level rule sets it. */
-.font-mono {
-  font-family: var(--font-mono);
+.mono { font-family: var(--font-mono); }
+
+/* ── Scroll reveal (native, replaces whileInView) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
+.reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reveal safety net: reduced-motion users get content immediately (never
+   hidden by animation), and any user stuck with a non-firing observer still
+   sees content — the JS hook also force-reveals on a timeout fallback. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+.reveal-delay-1 { --reveal-delay: 90ms; }
+.reveal-delay-2 { --reveal-delay: 180ms; }
+.reveal-delay-3 { --reveal-delay: 270ms; }
+.reveal-delay-4 { --reveal-delay: 360ms; }
+.reveal-delay-5 { --reveal-delay: 450ms; }
+.reveal-delay-6 { --reveal-delay: 540ms; }
+
+/* ── Magnetic button wrapper ──
+   Magnetic translate inline-set by JS; the wrapper never animates
+   hover/press itself — the inner button owns those (wrapper isolation). */
 .magnetic-btn {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-  /* Magnetic translate is set inline by JS; ease the return-to-rest so the
-     button glides back. Never carries hover/press transforms itself — the
-     inner button owns those (wrapper isolation). */
-  transition: transform 300ms var(--ease-out);
+  transition: transform 340ms var(--ease-out);
   will-change: transform;
 }
 
-@media (max-width: 768px) {
-  .section { padding: var(--space-3xl) 0; }
+/* ── Hairline technology: sharp 1px dividers ── */
+.hairline {
+  height: 1px;
+  background: var(--border);
+  width: 100%;
 }
 
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--accent-line);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out),
+    transform 120ms var(--ease-out);
+}
+.btn:hover { background: var(--accent); border-color: var(--accent); color: var(--text); }
+.btn:active { transform: scale(0.97); }
+
+.btn--solid {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text);
+}
+.btn--solid:hover { background: var(--accent-light); border-color: var(--accent-light); }
+
+.logo-line {
+  width: 56px;
+  height: 1px;
+  background: var(--accent-light);
+}
+.logo-line--dim { background: var(--border-strong); }
+
+/* ── Accessibility: reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .reveal { opacity: 1; transform: none; }
 }

@@ -1,151 +1,133 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from './Icon';
+import HexPattern from './HexPattern';
 import useReveal from '../hooks/useReveal';
-import LiquidDivider from './LiquidDivider';
 import './Work.css';
 
-/* ─── Brand & design pieces (real portfolio images) ─── */
-const designProjects = [
-  {
-    tag: 'Brand Identity',
-    title: 'Gold Brand Piece',
-    description: 'A premium gold-toned identity study. Palette, typography, and layered mark building for a confident brand presence.',
-    image: '/images/design/brand-identity/gold-brand-piece.jpg',
-    alt: 'Gold brand identity piece showing palette, typography, and mark exploration',
-  },
-  {
-    tag: 'Logo',
-    title: 'Logo Design',
-    description: 'A constructed logo system. Balanced geometry, consistent stroke logic, and clean application across formats.',
-    image: '/images/design/logo/logo-design.jpg',
-    alt: 'Constructed logo design system with geometry and lockups',
-  },
-  {
-    tag: 'Logo',
-    title: 'Studio Logo',
-    description: 'A studio mark built for repetition. Icon, wordmark, and clearspace rules that hold up at any size.',
-    image: '/images/design/logo/studio-logo.jpg',
-    alt: 'Studio logo mark with icon and wordmark construction',
-  },
-];
+/* ═══ Projects — 01 Guardian / 02 Chef's Muse / 03 GyMPal ═══
+   Content reflects the LIVE sites (verified), not stale prose:
+   - Guardian is an AI-native cyber defense platform (Next.js, formerly Sentari)
+   - Chef's Muse is an AI recipe generator (TypeScript, deployed demo)
+   - GyMPal is an offline-first workout PWA (JavaScript, deployed demo) */
 
-/* ─── Engineering builds (honest typographic covers, no fake screenshots) ─── */
-const softwareProjects = [
+const projects = [
   {
-    tag: 'Developer',
-    title: 'Tarisai Portal',
-    description: 'Enterprise ERP and visual scaling portal. Secure routing, dashboards, and API integrations for a Zimbabwean tech company.',
-    client: 'Tarisai',
-    year: '2025',
-    tech: ['React', 'Node.js', 'PostgreSQL', 'Security'],
-    color: '#E8650A',
-    links: [{ label: 'Open Live Demo', url: 'https://www.tarisai.co.zw/' }],
+    num: '01',
+    title: 'Guardian',
+    subtitle: 'Cyber Defense Platform',
+    description:
+      'Built in Harare. Built for Zimbabwe. Guardian scans websites the way an attacker would, then reports what is exposed and how to fix it \u2014 with plain-language guidance built around Zimbabwe\u2019s data protection law.',
+    image: '/images/projects/guardian.webp',
+    alt: 'Guardian cybersecurity platform home screen',
+    tech: ['Next.js', 'AI Validation', 'Compliance'],
+    year: '2026',
+    links: [
+      { label: 'Open Live Demo', url: 'https://sentari-seven.vercel.app' },
+      { label: 'More on GitHub', url: 'https://github.com/Le-e-lab/guardian' },
+    ],
   },
   {
-    tag: 'Developer',
-    title: 'Elevate Partners',
-    description: 'Business management system and analytics suite built for enterprise scalability and strategic decision-making.',
-    client: 'Elevate Value Partners',
-    year: '2025',
-    tech: ['Next.js', 'Tailwind', 'Node.js', 'Analytics'],
-    color: '#FF8C38',
-    links: [{ label: 'Open Live Demo', url: 'https://www.elevatevaluepartners.co.zw/' }],
-  },
-  {
-    tag: 'Project',
-    title: "The Chef's Muse",
-    description: 'AI-powered recipe generator with calorie scanning via Gemini Vision. A personal project exploring AI in everyday tools.',
-    client: 'Personal Project',
-    year: '2025',
-    tech: ['React', 'Tailwind', 'Gemini API'],
-    color: '#E8650A',
+    num: '02',
+    title: 'Chef\u2019s Muse',
+    subtitle: 'AI Recipe Generator',
+    description:
+      'Generate recipes instantly from ingredients you have. Calculate calories, get cooking tips, and reduce food waste with AI.',
+    image: '/images/projects/chefs-muse.webp',
+    alt: 'Chef\u2019s Muse recipe generator interface showing ingredient input',
+    tech: ['TypeScript', 'Gemini API', 'PWA'],
+    year: '2026',
     links: [
       { label: 'Open GitHub Repository', url: 'https://github.com/Le-e-lab/chefs-muse' },
       { label: 'Open Live Demo', url: 'https://le-e-lab.github.io/chefs-muse/' },
     ],
   },
+  {
+    num: '03',
+    title: 'GyMPal',
+    subtitle: 'Workout Tracker PWA',
+    description:
+      'Track workouts, build habits, and level up your life. Free, offline-first PWA, no accounts needed.',
+    image: '/images/projects/gympal.webp',
+    alt: 'GyMPal workout tracking interface',
+    tech: ['JavaScript', 'PWA', 'Offline-first'],
+    year: '2026',
+    links: [
+      { label: 'Open GitHub Repository', url: 'https://github.com/Le-e-lab/GyMPal' },
+      { label: 'Open Live Demo', url: 'https://gympal-nine.vercel.app' },
+    ],
+  },
 ];
 
-/* Alternate design / software for a visual-technical rhythm */
-const featuredWork = [
-  { type: 'design', ...designProjects[0] },
-  { type: 'software', ...softwareProjects[0] },
-  { type: 'design', ...designProjects[1] },
-  { type: 'software', ...softwareProjects[1] },
-  { type: 'design', ...designProjects[2] },
-  { type: 'software', ...softwareProjects[2] },
-];
-
-/* Editorial index row: outlined numeral rail + media + body.
-   Each row owns its reveal observer so rows enter as they scroll in. */
 function ProjectRow({ project, index }) {
   const rowRef = useReveal();
-  const num = String(index + 1).padStart(2, '0');
-  const flip = project.type === 'software' ? 'project-card--flip' : '';
-  const tagStyle =
-    project.type === 'software' && project.color
-      ? { color: project.color, borderColor: `${project.color}44` }
-      : undefined;
+  const flip = index % 2 === 1 ? 'project-row--flip' : '';
 
   return (
-    <article
-      ref={rowRef}
-      className={`project-card project-card--${project.type} ${flip} reveal`}
-    >
-      <span className="work-card-index font-mono" aria-hidden="true">
-        {num}
-      </span>
-
-      <div className="project-card-media">
-        {project.type === 'design' ? (
-          <img
-            src={project.image}
-            alt={project.alt}
-            loading="lazy"
-            className="project-card-img"
-          />
-        ) : (
-          <div className="project-cover" style={{ '--cover-color': project.color }}>
-            <span className="cover-title font-heading">{project.title}</span>
-            <span className="cover-tag font-mono">{project.tag.toUpperCase()}</span>
-            <span className="cover-year font-mono">{project.year}</span>
-          </div>
-        )}
+    <article ref={rowRef} className={`project-row reveal ${flip}`}>
+      <div className="project-row__media">
+        <a
+          href={project.links[0].url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-row__browser"
+          aria-label={`Open ${project.title} demo`}
+        >
+          <span className="project-row__chrome mono" aria-hidden="true">
+            <span className="project-row__dots">
+              <i /><i /><i />
+            </span>
+            <span className="project-row__url">{project.links[0].url.replace(/^https?:\/\//, '')}</span>
+            <Icon name="external" size={13} />
+          </span>
+          <img src={project.image} alt={project.alt} loading="lazy" className="project-row__img" />
+        </a>
+        <span className="project-row__ghost mono" aria-hidden="true">{project.num}</span>
       </div>
 
-      <div className="project-card-body">
-        <div className="project-card-top">
-          <span className="work-card-tag" style={tagStyle}>
-            {project.tag}
-          </span>
+      <div className="project-row__body">
+        <div className="project-row__heading">
+          <Icon name="code-bracket" size={16} className="project-row__code" />
+          <span className="mono project-row__eyebrow">{project.subtitle}</span>
         </div>
-        <h3 className="project-card-title font-heading">{project.title}</h3>
-        <p className="project-card-desc">{project.description}</p>
-        {project.type === 'software' && (
-          <>
-            <div className="project-card-tech">
-              {project.tech.map((t) => (
-                <span key={t} className="work-tech-pill">{t}</span>
-              ))}
-            </div>
-            <div className="project-card-links">
-              {project.links.map((link) => (
-                <a
-                  key={link.url}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-link interactive"
-                >
-                  <span className="project-link-text">{link.label}</span>
-                  <Icon name="arrow-up-right" size={15} className="project-link-arrow" />
-                </a>
-              ))}
-            </div>
-          </>
-        )}
+        <h2 className="project-row__title">{project.title}</h2>
+        <p className="project-row__desc">{project.description}</p>
+
+        <div className="project-row__meta">
+          <span className="mono project-row__year">{project.year}</span>
+          <div className="project-row__tech">
+            {project.tech.map((t) => (
+              <span key={t} className="work-tech-pill">{t}</span>
+            ))}
+          </div>
+        </div>
+
+        <div className="project-row__links">
+          {project.links.map((link) => (
+            <a
+              key={link.url}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-link interactive"
+            >
+              <span className="project-link-text">{link.label}</span>
+              <Icon name="arrow-up-right" size={15} className="project-link-arrow" />
+            </a>
+          ))}
+        </div>
       </div>
     </article>
+  );
+}
+
+function DiagonalDivider() {
+  const ref = useReveal();
+  return (
+    <div ref={ref} className="work-diagonal reveal" aria-hidden="true">
+      <svg viewBox="0 0 100 60" preserveAspectRatio="none" className="work-diagonal__svg">
+        <line x1="0" y1="60" x2="100" y2="0" />
+      </svg>
+    </div>
   );
 }
 
@@ -179,15 +161,14 @@ export default function Work() {
         if (!Array.isArray(repos)) return;
 
         const norm = (t) => t.toLowerCase().replace(/[^a-z0-9]/g, '');
-        const featured = featuredWork
-          .filter((p) => p.type === 'software')
-          .map((p) => norm(p.links[0]?.url || p.title));
+        const featured = projects.map((p) => norm(p.title));
 
         const rows = repos
           .filter(
             (repo) =>
-              !featured.includes(norm(repo.html_url)) &&
-              !featured.includes(norm(repo.name))
+              !featured.some(
+                (f) => f.includes(norm(repo.name)) || norm(repo.name).includes(f)
+              )
           )
           .map((repo) => ({
             name: repo.name.replace(/-|_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
@@ -205,56 +186,61 @@ export default function Work() {
 
   return (
     <section className="work-section">
-      {/* ══════ CREAM INTRO ZONE ══════ */}
-      <div className="section--light work-zone work-zone--intro">
-        <div className="work-zone-inner">
-          <div ref={headingRef} className="reveal work-heading-block">
-            <span className="section-number">02</span>
-            <span className="section-label">Projects</span>
-            <h1 className="work-heading font-heading">My Projects</h1>
-            <p className="work-desc">
-              From brand identities to AI-powered systems. Every build here solves a real problem with design and speed.
-            </p>
-          </div>
-        </div>
+      <HexPattern className="work-section__hex" opacity={0.08} />
+
+      <div className="page work-heading-block" ref={headingRef}>
+        <p className="section-label">
+          <span className="mono section-label__num">02</span>
+          Projects
+        </p>
+        <h1 className="work-heading">My Projects</h1>
+        <p className="work-desc">
+          From contractor tools to AI-powered cooking. Every build here solves a
+          real problem with design and speed.
+        </p>
       </div>
 
-      {/* Liquid blend into the dark projects zone */}
-      <LiquidDivider fill="var(--bg)" variant={0} />
+      <div className="page work-projects">
+        {projects.map((project, i) => (
+          <div className="work-project-group" key={project.num}>
+            {i > 0 && <DiagonalDivider />}
+            <ProjectRow project={project} index={i} />
+          </div>
+        ))}
+      </div>
 
-      {/* ══════ DARK PROJECTS ZONE ══════ */}
-      <div className="section--dark work-zone work-zone--projects">
-        <div className="work-zone-inner">
-          <div className="work-projects">
-            {featuredWork.map((project, i) => (
-              <ProjectRow key={`${project.type}-${project.title}`} project={project} index={i} />
+      {/* Compact "More on GitHub" block */}
+      {moreRepos.length > 0 && (
+        <div className="page more-github">
+          <h3 className="mono more-github-title">More on GitHub</h3>
+          <div className="more-github-list">
+            {moreRepos.map((repo) => (
+              <a
+                key={repo.url}
+                href={repo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="more-github-row interactive"
+              >
+                <span
+                  className="more-github-dot"
+                  style={{
+                    background:
+                      repo.language === 'JavaScript'
+                        ? '#f1e05a'
+                        : repo.language === 'TypeScript'
+                          ? '#3178c6'
+                          : 'var(--accent-light)',
+                  }}
+                />
+                <span className="more-github-name">{repo.name}</span>
+                <span className="more-github-desc">{repo.description}</span>
+                <Icon name="arrow-up-right" size={14} className="more-github-arrow" />
+              </a>
             ))}
           </div>
-
-          {/* Compact "More on GitHub" block */}
-          {moreRepos.length > 0 && (
-            <div className="more-github">
-              <h3 className="more-github-title font-mono">More on GitHub</h3>
-              <div className="more-github-list">
-                {moreRepos.map((repo) => (
-                  <a
-                    key={repo.url}
-                    href={repo.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="more-github-row interactive"
-                  >
-                    <span className="more-github-dot" style={{ background: repo.language === 'JavaScript' ? '#f1e05a' : repo.language === 'TypeScript' ? '#3178c6' : 'var(--tangerine)' }} />
-                    <span className="more-github-name">{repo.name}</span>
-                    <span className="more-github-desc">{repo.description}</span>
-                    <Icon name="arrow-up-right" size={14} className="more-github-arrow" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
-      </div>
+      )}
     </section>
   );
 }

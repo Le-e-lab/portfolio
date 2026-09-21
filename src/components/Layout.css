@@ -36,104 +36,6 @@
   .app::after { display: none; }
 }
 
-/* ═══ Curtain Transitions — pure CSS ═══ */
-.curtain-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 99999;
-  /* Fade the whole overlay out gently; JS unmounts afterwards. */
-  animation: curtain-fade-out 0.35s var(--ease-out) 0.8s forwards;
-}
-
-@keyframes curtain-fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; visibility: hidden; }
-}
-
-.curtain-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.primary-curtain {
-  background: var(--tangerine); /* Tangerine sweeps first */
-  z-index: 1;
-}
-
-.secondary-curtain {
-  background: var(--bg); /* Graphite sweeps second & covers */
-  z-index: 2;
-}
-
-/* Horizontal sweep (Home) */
-.curtain--horizontal .primary-curtain {
-  animation: sweep-x 0.85s var(--ease-in-out) forwards;
-}
-.curtain--horizontal .secondary-curtain {
-  animation: sweep-x 0.85s var(--ease-in-out) 0.06s forwards;
-}
-@keyframes sweep-x {
-  0% { transform: translateX(-100%); }
-  45% { transform: translateX(0); }
-  100% { transform: translateX(100%); }
-}
-
-/* Vertical sweep (Work) */
-.curtain--vertical .primary-curtain {
-  animation: sweep-y 0.85s var(--ease-in-out) forwards;
-}
-.curtain--vertical .secondary-curtain {
-  animation: sweep-y 0.85s var(--ease-in-out) 0.06s forwards;
-}
-@keyframes sweep-y {
-  0% { transform: translateY(-100%); }
-  45% { transform: translateY(0); }
-  100% { transform: translateY(100%); }
-}
-
-/* Diagonal sweep (About) */
-.curtain--diagonal .primary-curtain {
-  animation: sweep-d 0.95s var(--ease-in-out) forwards;
-  transform: scale(1.5);
-}
-.curtain--diagonal .secondary-curtain {
-  animation: sweep-d 0.95s var(--ease-in-out) 0.06s forwards;
-  transform: scale(1.5);
-}
-@keyframes sweep-d {
-  0% { transform: translate(-130%, -130%) scale(1.5) rotate(-25deg); }
-  45% { transform: translate(0, 0) scale(1.5) rotate(-25deg); }
-  100% { transform: translate(130%, 130%) scale(1.5) rotate(-25deg); }
-}
-
-/* Iris circle (Contact) */
-.curtain--iris .primary-curtain,
-.curtain--iris .secondary-curtain {
-  top: 50%;
-  left: 50%;
-  width: 150vmax;
-  height: 150vmax;
-  transform: translate(-50%, -50%) scale(0);
-  transform-origin: center center;
-  border-radius: 50%;
-}
-.curtain--iris .primary-curtain {
-  animation: iris 0.95s var(--ease-in-out) forwards;
-}
-.curtain--iris .secondary-curtain {
-  animation: iris 0.95s var(--ease-in-out) 0.1s forwards;
-}
-@keyframes iris {
-  0% { transform: translate(-50%, -50%) scale(0); }
-  50% { transform: translate(-50%, -50%) scale(1); }
-  100% { transform: translate(-50%, -50%) scale(1.6); }
-}
-
 @media (max-width: 1024px) {
   .main-content {
     padding: 0 var(--space-2xl);
@@ -147,5 +49,82 @@
     padding-top: var(--space-2xl);
     /* Clearance for the floating bottombar (~72px tall, 24px from bottom) */
     padding-bottom: calc(112px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ═══ Site Footer — thin hairline strip on every page ═══ */
+.site-footer {
+  margin-top: clamp(3rem, 7vw, 5.5rem);
+  border-top: 1px solid var(--border);
+}
+
+.site-footer__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.75rem 0 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.site-footer__note {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+.site-footer__links {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+
+.site-footer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.35rem 0;
+  transition: color var(--dur) var(--ease-out);
+}
+.site-footer__link:hover { color: var(--accent-text); }
+
+.site-footer__back-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: none;
+  border: none;
+  padding: 0.75rem 0.5rem;
+  margin: -0.4rem 0 0 -0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  cursor: pointer;
+  transition: color var(--dur) var(--ease-out);
+}
+.site-footer__back-top:hover { color: var(--accent-text); }
+.site-footer__back-top svg { transform: rotate(45deg); }
+
+@media (max-width: 768px) {
+  .site-footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  /* Touch targets: footer links measured 30px / 39px tall on mobile.
+     Desktop is pointer-driven so it keeps the tighter rhythm. */
+  .site-footer__link,
+  .site-footer__back-top {
+    min-height: 44px;
   }
 }

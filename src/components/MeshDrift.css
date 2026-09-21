@@ -1,0 +1,12 @@
+/* ═══ MeshDrift — brand-adapted WebGL mesh background ═══ */
+
+.mesh-drift {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none; /* swirl tracks via window listener; never blocks UI */
+  z-index: 0;
+  background: var(--bg); /* dark field while shader compiles / on fallback */
+}

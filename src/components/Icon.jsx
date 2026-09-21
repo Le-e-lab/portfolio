@@ -59,6 +59,21 @@ const paths = {
   x: (
     <path d="M4 4l7.2 9.3L4.4 20h2.2l5.5-5.6L16.8 20H20l-7.5-9.7L18.9 4h-2.2l-5 5.2L7.2 4H4z" />
   ),
+  'arrow-up': (
+    <>
+      <path d="M12 19V5" />
+      <path d="M6 11l6-6 6 6" />
+    </>
+  ),
+  'chevron-left': <path d="M15 5l-7 7 7 7" />,
+  'chevron-right': <path d="M9 5l7 7-7 7" />,
+  external: (
+    <>
+      <path d="M14 4h6v6" />
+      <path d="M20 4l-9 9" />
+      <path d="M19 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h6" />
+    </>
+  ),
 };
 
 export default function Icon({ name, size = 16, className = '', style }) {

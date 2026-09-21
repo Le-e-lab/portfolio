@@ -1,70 +1,63 @@
 import { useRef, useState } from 'react';
+import HexPattern from './HexPattern';
+import Carousel from './Carousel';
 import Icon from './Icon';
 import useReveal from '../hooks/useReveal';
-import LiquidDivider from './LiquidDivider';
 import './Contact.css';
+
+/* ═══ Contact ═══
+   - Staggered "Let's build something together" heading
+   - Availability pill, location, email
+   - Release card (real CV: 1.6 MB DOCX) with press+spring download feedback
+   - Web3Forms contact form (falls back to mail client during local dev)
+   - Q&A carousel + why-work-with-me cards */
 
 const reasons = [
   {
-    svg: (
-      <svg className="reason-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <rect x="3" y="4" width="18" height="4" rx="1" />
-        <rect x="3" y="10" width="18" height="4" rx="1" />
-        <rect x="3" y="16" width="18" height="4" rx="1" />
-        <circle cx="6" cy="6" r="1" fill="currentColor" />
-        <circle cx="6" cy="12" r="1" fill="currentColor" />
-        <circle cx="6" cy="18" r="1" fill="currentColor" />
-      </svg>
-    ),
     title: 'Full-Stack Capable',
-    desc: 'React frontends to Node.js backends and Python scripts.'
+    desc: 'React frontends to Node.js backends and Python scripts.',
+    icon: 'code-bracket',
   },
   {
-    svg: (
-      <svg className="reason-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <circle cx="12" cy="12" r="3" />
-        <circle cx="5" cy="5" r="2" />
-        <circle cx="19" cy="5" r="2" />
-        <circle cx="5" cy="19" r="2" />
-        <circle cx="19" cy="19" r="2" />
-        <line x1="6.5" y1="6.5" x2="10" y2="10" />
-        <line x1="17.5" y1="6.5" x2="14" y2="10" />
-        <line x1="6.5" y1="17.5" x2="10" y2="14" />
-        <line x1="17.5" y1="17.5" x2="14" y2="14" />
-      </svg>
-    ),
     title: 'Problem Solver',
-    desc: 'I solve business problems with efficient, scalable logic.'
+    desc: 'I solve business problems with efficient, scalable logic.',
+    icon: 'map-pin',
   },
   {
-    svg: (
-      <svg className="reason-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-      </svg>
-    ),
     title: 'Quick Learner',
-    desc: 'Adapting to new stacks is second nature.'
+    desc: 'Adapting to new stacks is second nature.',
+    icon: 'arrow-up-right',
   },
   {
-    svg: (
-      <svg className="reason-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <line x1="9" y1="3" x2="9" y2="21" />
-        <line x1="15" y1="3" x2="15" y2="21" />
-        <line x1="3" y1="9" x2="21" y2="9" />
-        <line x1="3" y1="15" x2="21" y2="15" />
-      </svg>
-    ),
     title: 'Design Sensibility',
-    desc: 'Clean aesthetics, glassmorphism, and smooth animations.'
+    desc: 'Clean aesthetics, deliberate motion, and strong type.',
+    icon: 'user',
+  },
+];
+
+const qaPairs = [
+  {
+    q: 'What do you actually do?',
+    a: 'Brand identities and visual design on one end, full-stack web apps on the other. Most projects live somewhere in between.',
+  },
+  {
+    q: 'Do you take on freelance work?',
+    a: 'Yes. I work with clients on brand systems, websites, and web applications — juggling it with my CS degree at Africa University.',
+  },
+  {
+    q: 'What stack do you ship with?',
+    a: 'React and Next.js up front, Node.js/Python and PostgreSQL in the back, deployed calmly and reliably.',
+  },
+  {
+    q: 'How fast do you respond?',
+    a: 'Within a day or two. If I am in exams week, I will tell you when to expect a real reply.',
   },
 ];
 
 const socials = [
   { icon: 'github', href: 'https://github.com/Le-e-lab', label: 'GitHub' },
   { icon: 'linkedin', href: 'https://www.linkedin.com/in/lesley-mutsambiwa/', label: 'LinkedIn' },
-  { icon: 'x', href: 'https://x.com', label: 'X' },
-  { icon: 'envelope', href: 'https://mail.google.com/mail/?view=cm&fs=1&to=lesleymutsambiwa@gmail.com', label: 'Email' },
+  { icon: 'envelope', href: 'mailto:lesleymutsambiwa@gmail.com', label: 'Email' },
 ];
 
 const serviceOptions = [
@@ -76,15 +69,15 @@ const serviceOptions = [
   'Other',
 ];
 
-// Public Web3Forms access key (forms.wtf-style spam-protected endpoint).
-// When unset, the form falls back to the visitor's mail client so it never
-// dead-ends during local development.
+// Public Web3Forms access key. When unset, the form falls back to the
+// visitor's mail client so it never dead-ends during local development.
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
 export default function Contact() {
   const [formState, setFormState] = useState('idle');
   const [sentVia, setSentVia] = useState('web3forms');
   const [subject, setSubject] = useState('');
+  const [dlState, setDlState] = useState('idle'); // idle → downloading → downloaded
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const msgRef = useRef(null);
@@ -92,6 +85,13 @@ export default function Contact() {
   const formRef = useReveal();
   const reasonsRef = useReveal();
   const socialsRef = useReveal();
+
+  const handleDownload = () => {
+    if (dlState !== 'idle') return;
+    setDlState('downloading');
+    window.setTimeout(() => setDlState('downloaded'), 1500);
+    window.setTimeout(() => setDlState('idle'), 4200);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,7 +101,6 @@ export default function Contact() {
     if (!name || !email || !message) return;
     setFormState('sending');
 
-    // Real async dispatch via Web3Forms when an access key is configured.
     if (WEB3FORMS_KEY) {
       try {
         const res = await fetch('https://api.web3forms.com/submit', {
@@ -127,9 +126,6 @@ export default function Contact() {
       return;
     }
 
-    // No key configured (local dev) — fall back to the visitor's mail client.
-    // The success screen explicitly says nothing was sent, only that the
-    // client was asked to open with the message pre-filled.
     setSentVia('mailto');
     setFormState('sent');
     setTimeout(() => {
@@ -144,204 +140,257 @@ export default function Contact() {
   };
 
   return (
-    <section className="section contact-section">
-      {/* Light zone: contact info + form */}
-      <div className="contact-light-zone section--light">
-        <div className="contact-grid-container">
-          {/* LEFT COLUMN */}
-          <div ref={infoRef} className="reveal contact-info-col">
-            <span className="section-number">04</span>
-            <span className="section-label">Contact</span>
-            <h1 className="contact-heading">
-              Let&apos;s build <span className="text-gradient">something</span><br />together.
-            </h1>
-            <p className="contact-desc">
-              I&apos;m always down to collaborate on brand identities, visual design, or full-stack systems. If you want to talk design, systems, or have an interesting project, drop me a line.
-            </p>
-            <div className="freelance-badge">
-              <span className="freelance-dot" />
-              <span>Available for work</span>
-            </div>
-            <div className="location-block">
-              <h3 className="location-title font-mono">/ PRIMARY_LOCATION</h3>
-              <div className="location-details">
-                <div className="loc-item">
-                  <Icon name="map-pin" size={15} />
-                  <span>Harare, Zimbabwe</span>
-                </div>
-                <div className="loc-item">
-                  <Icon name="envelope" size={15} />
-                  <span>lesleymutsambiwa@gmail.com</span>
-                </div>
-              </div>
-            </div>
-            <a
-              className="resume-dossier-ticket interactive"
-              href="/Lesley_Mutsambiwa_Resume.docx"
-              download="Lesley_Mutsambiwa_CV.docx"
-              title="Download CV"
-            >
-              <div className="ticket-header">
-                <span className="ticket-label font-mono">DOC_RELEASE // v6.0</span>
-                <span className="ticket-status font-mono">APPROVED</span>
-              </div>
-              <div className="ticket-body">
-                <div className="ticket-details">
-                  <h4 className="ticket-title">Lesley_Mutsambiwa_Resume.docx</h4>
-                  <div className="ticket-meta">
-                    <span className="font-mono">SIZE: 24.5 KB</span>
-                    <span className="font-mono">TYPE: DOCX</span>
-                    <span className="font-mono">LOC: ZW.HRE</span>
-                  </div>
-                </div>
-                <span className="ticket-download-btn interactive">
-                  <Icon name="download" size={18} />
-                </span>
-              </div>
-              <div className="ticket-barcode-wrap">
-                <div className="barcode">
-                  <div className="bar thin"></div>
-                  <div className="bar thick"></div>
-                  <div className="bar mid"></div>
-                  <div className="bar thin"></div>
-                  <div className="bar thin"></div>
-                  <div className="bar thick"></div>
-                  <div className="bar mid"></div>
-                  <div className="bar thick"></div>
-                  <div className="bar thin"></div>
-                  <div className="bar thin"></div>
-                  <div className="bar thick"></div>
-                </div>
-                <span className="barcode-text font-mono">*LESLEY-MUTSAMBIWA-RESUME*</span>
-              </div>
-            </a>
+    <section className="contact-section">
+      <HexPattern className="contact-section__hex" opacity={0.07} />
+
+      {/* ── Heading + info column ── */}
+      <div className="page contact-grid" ref={infoRef}>
+        <div className="contact-info">
+          <p className="section-label">
+            <span className="mono section-label__num">04</span>
+            Contact
+          </p>
+          <h1 className="contact-heading" aria-label="Let's build something together.">
+            {'Let\u2019s build'.split('').map((ch, i) => (
+              <span key={`l${i}`} className="contact-heading__char" style={{ '--char-i': i }}>
+                {ch === ' ' ? '\u00A0' : ch}
+              </span>
+            ))}
+            <br />
+            {'something'.split('').map((ch, i) => (
+              <span key={`s${i}`} className="contact-heading__char contact-heading__char--accent" style={{ '--char-i': i }}>
+                {ch}
+              </span>
+            ))}
+            <br />
+            {'together.'.split('').map((ch, i) => (
+              <span key={`t${i}`} className="contact-heading__char" style={{ '--char-i': i }}>
+                {ch}
+              </span>
+            ))}
+          </h1>
+
+          <p className="contact-desc">
+            I&apos;m always down to collaborate on brand identities, visual
+            design, or full-stack systems. If you want to talk design, systems,
+            or have an interesting project, drop me a line.
+          </p>
+
+          <div className="freelance-badge">
+            <span className="freelance-dot" aria-hidden="true" />
+            <span>Available for work</span>
           </div>
 
-          {/* RIGHT COLUMN */}
-          <div ref={formRef} className="reveal contact-form-col">
-            <div className="contact-glass-form-container">
-              <h3 className="glass-form-title font-mono">Send a message</h3>
-
-              {formState === 'sent' ? (
-                <div className="contact-success-screen">
-                  <div className="success-icon-wrap">
-                    <svg viewBox="0 0 50 50" className="success-svg-check">
-                      <circle cx="25" cy="25" r="20" stroke="var(--tangerine)" strokeWidth="2" fill="none" strokeDasharray="126" strokeDashoffset="126">
-                        <animate attributeName="stroke-dashoffset" from="126" to="0" dur="0.8s" fill="freeze" />
-                      </circle>
-                      <path d="M 15 25 L 22 32 L 35 18" stroke="var(--tangerine)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" strokeDasharray="30" strokeDashoffset="30">
-                        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.6s" begin="0.6s" fill="freeze" />
-                      </path>
-                    </svg>
-                  </div>
-                  <h4 className="success-title font-mono">{sentVia === 'mailto' ? 'Message ready' : 'Message sent'}</h4>
-                  <p className="success-text">{sentVia === 'mailto'
-                    ? 'Your mail client has opened with your message pre-filled. Hit send there to deliver it to Lesley.'
-                    : 'Protocol initiated successfully. Message encrypted and dispatched to Lesley.'}</p>
-                  <div className="success-logs font-mono">
-                    {sentVia === 'mailto' ? (
-                      <>
-                        <span className="log-line">Mail client opened</span>
-                        <span className="log-line">Message pre-filled</span>
-                        <span className="log-line">Status: hit send to deliver</span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="log-line">Connected securely</span>
-                        <span className="log-line">Message dispatched</span>
-                        <span className="log-line">Status: awaiting reply</span>
-                      </>
-                    )}
-                  </div>
-                  <button onClick={() => setFormState('idle')} className="success-reset-btn interactive font-mono">Send another</button>
-                </div>
-              ) : (
-                <>
-                  <div className="service-options">
-                    <span className="service-options-label font-mono">What can I help with?</span>
-                    <div className="service-chips">
-                      {serviceOptions.map((s) => (
-                        <button key={s} className={`service-chip interactive ${subject === s ? 'active' : ''}`} onClick={() => setSubject(s)} type="button">{s}</button>
-                      ))}
-                    </div>
-                  </div>
-                  <form className="contact-glass-form" onSubmit={handleSubmit}>
-                    <div className="input-group">
-                      <input ref={nameRef} type="text" id="form-name" required placeholder=" " className="glass-input" disabled={formState === 'sending'} />
-                      <label htmlFor="form-name" className="glass-label font-mono">YOUR NAME</label>
-                      <span className="input-line"></span>
-                    </div>
-                    <div className="input-group">
-                      <input ref={emailRef} type="email" id="form-email" required placeholder=" " className="glass-input" disabled={formState === 'sending'} />
-                      <label htmlFor="form-email" className="glass-label font-mono">EMAIL ADDRESS</label>
-                      <span className="input-line"></span>
-                    </div>
-                    <div className="input-group">
-                      <input type="text" id="form-subject" required placeholder=" " className="glass-input" value={subject} onChange={(e) => setSubject(e.target.value)} disabled={formState === 'sending'} />
-                      <label htmlFor="form-subject" className="glass-label font-mono">SUBJECT</label>
-                      <span className="input-line"></span>
-                    </div>
-                    <div className="input-group textarea-group">
-                      <textarea ref={msgRef} id="form-message" required placeholder=" " className="glass-input" rows={5} disabled={formState === 'sending'} />
-                      <label htmlFor="form-message" className="glass-label font-mono">YOUR MESSAGE</label>
-                      <span className="input-line"></span>
-                    </div>
-                    <div className="form-submit-row">
-                      <button type="submit" className="glass-submit-btn interactive" disabled={formState === 'sending'}>
-                        <span className="btn-text">{formState === 'sending' ? 'Sending...' : formState === 'error' ? 'Try again' : 'Send message'}</span>
-                        <Icon name="envelope" size={14} className="btn-icon" />
-                      </button>
-                    </div>
-                    {formState === 'error' && (
-                      <div className="contact-error-banner" role="alert">
-                        <span className="error-banner-symbol font-mono">!</span>
-                        <div className="error-banner-copy">
-                          <span className="error-banner-title font-mono">Something went wrong</span>
-                          <span className="error-banner-desc">Message failed to dispatch. Check your connection and try again.</span>
-                        </div>
-                      </div>
-                    )}
-                  </form>
-                </>
-              )}
+          <div className="location-block">
+            <h3 className="mono location-title">/ PRIMARY_LOCATION</h3>
+            <div className="location-details">
+              <div className="loc-item">
+                <Icon name="map-pin" size={15} />
+                <span>Harare, Zimbabwe</span>
+              </div>
+              <a className="loc-item interactive" href="mailto:lesleymutsambiwa@gmail.com">
+                <Icon name="envelope" size={15} />
+                <span>lesleymutsambiwa@gmail.com</span>
+              </a>
             </div>
+          </div>
+
+          {/* Release card — the real CV, honest size */}
+          <a
+            className={`resume-ticket interactive ${dlState === 'downloading' ? 'is-downloading' : ''} ${dlState === 'downloaded' ? 'is-downloaded' : ''}`}
+            href="/Lesley_Mutsambiwa_Resume.docx"
+            download="Lesley_Mutsambiwa_CV.docx"
+            onClick={handleDownload}
+          >
+            <div className="ticket-header">
+              <span className="mono ticket-label">DOC_RELEASE // v6.0</span>
+              <span className="mono ticket-status">APPROVED</span>
+            </div>
+            <div className="ticket-body">
+              <div className="ticket-details">
+                <h4 className="ticket-title">Lesley_Mutsambiwa_Resume.docx</h4>
+                <div className="ticket-meta">
+                  <span className="mono ticket-meta__size">
+                    {dlState === 'idle' ? 'SIZE: 1.6 MB' : dlState === 'downloading' ? 'DOWNLOADING...' : 'DOWNLOADED ✓'}
+                  </span>
+                  <span className="mono">TYPE: DOCX</span>
+                  <span className="mono">LOC: ZW.HRE</span>
+                </div>
+              </div>
+              <span className="ticket-download-btn" aria-hidden="true">
+                <Icon name="download" size={18} />
+              </span>
+            </div>
+            <div className="ticket-barcode-wrap">
+              <div className="barcode" aria-hidden="true">
+                <span className="bar thin" />
+                <span className="bar thick" />
+                <span className="bar mid" />
+                <span className="bar thin" />
+                <span className="bar thin" />
+                <span className="bar thick" />
+                <span className="bar mid" />
+                <span className="bar thick" />
+                <span className="bar thin" />
+                <span className="bar thin" />
+                <span className="bar thick" />
+              </div>
+              <span className="mono barcode-text">*LESLEY-MUTSAMBIWA-RESUME*</span>
+            </div>
+          </a>
+        </div>
+
+        {/* ── Form column ── */}
+        <div className="contact-form-col" ref={formRef}>
+          <div className="contact-form-panel">
+            <h3 className="mono glass-form-title">Send a message</h3>
+
+            {formState === 'sent' ? (
+              <div className="contact-success-screen">
+                <div className="success-icon-wrap">
+                  <svg viewBox="0 0 50 50" className="success-svg-check">
+                    <circle cx="25" cy="25" r="20" stroke="var(--accent-light)" strokeWidth="2" fill="none" strokeDasharray="126" strokeDashoffset="126">
+                      <animate attributeName="stroke-dashoffset" from="126" to="0" dur="0.8s" fill="freeze" />
+                    </circle>
+                    <path d="M 15 25 L 22 32 L 35 18" stroke="var(--accent-light)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" strokeDasharray="30" strokeDashoffset="30">
+                      <animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.6s" begin="0.6s" fill="freeze" />
+                    </path>
+                  </svg>
+                </div>
+                <h4 className="mono success-title">
+                  {sentVia === 'mailto' ? 'Message ready' : 'Message sent'}
+                </h4>
+                <p className="success-text">
+                  {sentVia === 'mailto'
+                    ? 'Your mail client has opened with your message pre-filled. Hit send there to deliver it to Lesley.'
+                    : 'Protocol initiated successfully. Message encrypted and dispatched to Lesley.'}
+                </p>
+                <div className="success-logs mono">
+                  {sentVia === 'mailto' ? (
+                    <>
+                      <span className="log-line">Mail client opened</span>
+                      <span className="log-line">Message pre-filled</span>
+                      <span className="log-line">Status: hit send to deliver</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="log-line">Connected securely</span>
+                      <span className="log-line">Message dispatched</span>
+                      <span className="log-line">Status: awaiting reply</span>
+                    </>
+                  )}
+                </div>
+                <button onClick={() => setFormState('idle')} className="mono success-reset-btn interactive">
+                  Send another
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="service-options">
+                  <span className="mono service-options-label">What can I help with?</span>
+                  <div className="service-chips">
+                    {serviceOptions.map((s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        className={`service-chip interactive ${subject === s ? 'active' : ''}`}
+                        onClick={() => setSubject(s)}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <form className="contact-form" onSubmit={handleSubmit}>
+                  <div className="input-group">
+                    <input ref={nameRef} type="text" id="form-name" required placeholder=" " className="glass-input" disabled={formState === 'sending'} />
+                    <label htmlFor="form-name" className="mono glass-label">YOUR NAME</label>
+                    <span className="input-line" aria-hidden="true" />
+                  </div>
+                  <div className="input-group">
+                    <input ref={emailRef} type="email" id="form-email" required placeholder=" " className="glass-input" disabled={formState === 'sending'} />
+                    <label htmlFor="form-email" className="mono glass-label">EMAIL ADDRESS</label>
+                    <span className="input-line" aria-hidden="true" />
+                  </div>
+                  <div className="input-group">
+                    <input type="text" id="form-subject" required placeholder=" " className="glass-input" value={subject} onChange={(e) => setSubject(e.target.value)} disabled={formState === 'sending'} />
+                    <label htmlFor="form-subject" className="mono glass-label">SUBJECT</label>
+                    <span className="input-line" aria-hidden="true" />
+                  </div>
+                  <div className="input-group textarea-group">
+                    <textarea ref={msgRef} id="form-message" required placeholder=" " className="glass-input" rows={5} disabled={formState === 'sending'} />
+                    <label htmlFor="form-message" className="mono glass-label">YOUR MESSAGE</label>
+                    <span className="input-line" aria-hidden="true" />
+                  </div>
+                  <div className="form-submit-row">
+                    <button type="submit" className="glass-submit-btn interactive" disabled={formState === 'sending'}>
+                      <span className="btn-text">
+                        {formState === 'sending' ? 'Sending...' : formState === 'error' ? 'Try again' : 'Send message'}
+                      </span>
+                      <Icon name="envelope" size={14} className="btn-icon" />
+                    </button>
+                  </div>
+                  {formState === 'error' && (
+                    <div className="contact-error-banner" role="alert">
+                      <span className="mono error-banner-symbol">!</span>
+                      <div className="error-banner-copy">
+                        <span className="mono error-banner-title">Something went wrong</span>
+                        <span className="error-banner-desc">Message failed to dispatch. Check your connection and try again.</span>
+                      </div>
+                    </div>
+                  )}
+                </form>
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Liquid blend into dark capabilities + footer zone */}
-      <LiquidDivider fill="var(--bg)" variant={2} />
+      {/* ── Q&A carousel ── */}
+      <section className="page contact-qa-section">
+        <div className="contact-qa-head">
+          <p className="section-label">Q&amp;A</p>
+          <h2 className="contact-qa-title">Quick answers</h2>
+        </div>
+        <Carousel
+          slides={qaPairs}
+          label="Q and A"
+          renderSlide={(item) => (
+            <article className="qa-card">
+              <h3 className="qa-card__q">{item.q}</h3>
+              <p className="qa-card__a">{item.a}</p>
+            </article>
+          )}
+        />
+      </section>
 
-      {/* Dark zone: capabilities + footer */}
-      <div className="section--dark contact-dark-zone">
-        <div className="contact-block why-block">
-          <div className="block-header-wrap">
-            <h3 className="contact-subtitle">{'// PERF_CAPABILITIES'}</h3>
-          </div>
-          <div ref={reasonsRef} className="reveal reasons-grid">
-            {reasons.map((r) => (
-              <div key={r.title} className="reason-card interactive">
-                <div className="reason-svg-wrapper">{r.svg}</div>
-                <h4 className="reason-title">{r.title}</h4>
-                <p className="reason-desc">{r.desc}</p>
+      {/* ── Why work with me ── */}
+      <div className="page contact-why" ref={reasonsRef}>
+        <div className="block-header-wrap">
+          <h3 className="mono contact-subtitle">{'// PERF_CAPABILITIES'}</h3>
+        </div>
+        <div className="reasons-grid">
+          {reasons.map((r) => (
+            <div key={r.title} className="reason-card interactive">
+              <div className="reason-icon-wrap">
+                <Icon name={r.icon} size={18} />
               </div>
-            ))}
-          </div>
+              <h4 className="reason-title">{r.title}</h4>
+              <p className="reason-desc">{r.desc}</p>
+            </div>
+          ))}
         </div>
+      </div>
 
-        <div className="contact-footer-wrap">
-          <div ref={socialsRef} className="reveal contact-socials">
-            {socials.map((s) => (
-              <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="social-circle interactive" title={s.label}>
-                <Icon name={s.icon} size={16} />
-              </a>
-            ))}
-          </div>
-          <footer className="site-footer">
-            <p className="footer-text">Designed & built by Lesley &middot; &copy; {new Date().getFullYear()}</p>
-            <p className="footer-sub font-mono">SYSTEM_ID: LSL-ZW-6.0 // REACT-CORE</p>
-          </footer>
-        </div>
+      {/* ── Socials strip ── */}
+      <div className="page contact-socials" ref={socialsRef}>
+        {socials.map((s) => (
+          <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="social-circle interactive" title={s.label}>
+            <Icon name={s.icon} size={16} />
+            <span>{s.label}</span>
+          </a>
+        ))}
       </div>
     </section>
   );

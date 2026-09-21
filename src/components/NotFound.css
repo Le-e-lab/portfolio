@@ -10,11 +10,13 @@
 }
 
 .not-found__code {
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: clamp(7rem, 18vw, 14rem);
   line-height: 0.85;
-  color: var(--tangerine);
-  opacity: 0.18;
+  /* AA-safe violet at full strength: the old --accent @ 0.18 opacity measured
+     1.4:1 and read as a smudge rather than a numeral. Large text needs >= 3:1. */
+  color: var(--accent-text);
+  opacity: 1;
   letter-spacing: -0.02em;
   user-select: none;
   pointer-events: none;
@@ -38,18 +40,19 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--tangerine);
-  border: 1px solid var(--border-hover);
-  border-radius: var(--radius-sm);
-  background: var(--tangerine-dim);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--accent);
   text-decoration: none;
   transition: background var(--dur) var(--ease-out),
-              border-color var(--dur) var(--ease-out);
+              border-color var(--dur) var(--ease-out),
+              transform 120ms var(--ease-out);
 }
 
 .not-found__cta:hover {
-  background: var(--tangerine-glow);
-  border-color: var(--tangerine);
+  background: var(--accent-light);
+  border-color: var(--accent-light);
 }
 
 .not-found__cta:active {

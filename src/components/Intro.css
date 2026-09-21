@@ -1,0 +1,168 @@
+/* ═══ First-Open Intro — signature + F1 car ═══
+   Plays once per session. Signature "writes itself" left-to-right,
+   an F1 car accelerates across and off-screen, then the whole panel
+   lifts up to reveal the site. Skipped for prefers-reduced-motion. */
+
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.75s var(--ease-out);
+}
+
+/* Lift the entire canvas up off the viewport (phase 3) */
+.intro-overlay.is-exit {
+  transform: translateY(-101%);
+}
+
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 0 1.5rem;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Great Vibes script — the name "signs itself in" via a clipping sweep */
+.intro-signature {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 9vw, 6rem);
+  line-height: 1.15;
+  color: var(--text);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  clip-path: inset(0 100% 0 0);
+  animation: signature-sweep 1.45s var(--ease-out) 0.1s forwards;
+}
+
+@keyframes signature-sweep {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.intro-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0;
+  animation: kicker-in 0.6s var(--ease-out) 1.55s forwards;
+}
+
+@keyframes kicker-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── F1 launching track — sits below the waterline of the signature ── */
+.intro-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12vh;
+  height: 110px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Speed streaks: thin hairlines that flicker past as the car launches */
+.intro-streak {
+  position: absolute;
+  height: 1px;
+  background: var(--text-muted);
+  opacity: 0;
+}
+
+.intro-streak--1 {
+  width: 11vw;
+  max-width: 150px;
+  top: 22px;
+  left: 30%;
+}
+
+.intro-streak--2 {
+  width: 7vw;
+  max-width: 96px;
+  top: 52px;
+  left: 48%;
+}
+
+.is-car .intro-streak--1,
+.is-car .intro-streak--2 {
+  animation: streak-flicker 0.5s linear 0.08s infinite;
+}
+
+@keyframes streak-flicker {
+  0% { opacity: 0; }
+  35% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+.intro-car {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: clamp(220px, 30vw, 340px);
+  will-change: transform;
+  opacity: 0;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
+}
+
+.is-car .intro-car {
+  animation: car-race 2s cubic-bezier(0.42, 0, 0.58, 1) 0.05s forwards;
+}
+
+/* Spawn off-screen left, cross the viewport, vanish off-screen right.
+   Opacity holds through the middle so the car is always visible in flight */
+@keyframes car-race {
+  0% { transform: translateX(-380px); opacity: 0; }
+  5% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(calc(100vw + 380px)); opacity: 0; }
+}
+
+/* Car rendering — white body, accent wheel hubs (game-icons silhouette) */
+.intro-car__body { fill: var(--text); }
+.intro-car__hub { fill: var(--accent-light); }
+
+/* Subtle skip affordance — top-right, mono, clickable (overlay click) */
+.intro-skip {
+  position: absolute;
+  top: 1.6rem;
+  right: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.7;
+  z-index: 3;
+}
+
+/* Reduced motion: whole intro is skipped in JS (App gate), belt + braces */
+@media (prefers-reduced-motion: reduce) {
+  .intro-overlay {
+    transition: none;
+    animation: none;
+  }
+  .intro-signature,
+  .intro-kicker,
+  .intro-car,
+  .intro-streak {
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-track { bottom: 18vh; }
+  .intro-skip { top: 1.2rem; right: 1.25rem; }
+}

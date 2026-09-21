@@ -2,15 +2,17 @@
 
 > **Project:** Portfolio Refactor & Modernization (`lesley.runs-on.dev` / `Le-e-lab.github.io/portfolio/`)  
 > **Brand Persona:** Lesley — Designer & Developer ("Designer who also codes")  
-> **Stack:** React 19, Vite, Vanilla CSS (tokens), Framer Motion (purposeful feedback only), Native Playwright for verification.  
-> **Palette:** Carbon Black (`#0c0c0c`), Charcoal (`#141414`), Tangerine (`#E8650A` / `#F97316`), Cream (`#F5F2EB` for light alternating sections).  
-> **Typography:** Display Serifs (`Playfair Display`, `Bebas Neue`, `Clash Display`), Clean Sans (`Outfit`, `Satoshi`), Monospace (`JetBrains Mono`).
+> **Stack:** React 19, Vite, Vanilla CSS (design tokens), IntersectionObserver-based reveal system (`useReveal`), Embla carousel, Native Playwright for verification.  
+> **Palette (current, live):** Carbon background (`#0E0E12` page / `#18171C` raised), electric violet-blue accent (`#1800AD` → `#2B1AFF` hover), White text (`#FFFFFF`, dimmed `#C9CDD5`, muted `#8B8F99`), hairline borders (`rgba(255,255,255,0.12)` → `0.28` strong), success/download green (`#57e389`). Full tokens in `src/index.css`.  
+> **Typography:** Display Serif (`Playfair Display`), Body Sans (`Outfit`), Monospace (`JetBrains Mono`).
 
 ---
 
+> **Legacy note:** Sections marked with ⚠️ describe the *previous* Tangerine/Cream/honeycomb design (2025-era). The shipped 2026 reskin replaced that system with the Carbon + electric violet-blue palette above and a carousel-based Work gallery. Guardrails here override those legacy spec blocks where they conflict.
+
 ## 1. Aesthetic Architecture & Core Features
 
-### A. Pointy-Top Interlocking Honeycomb Gallery (`Featured Work`)
+### ⚠️ A. Pointy-Top Interlocking Honeycomb Gallery (`Featured Work`)
 - **Shape & Ratio:** CSS `clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)` on container with `aspect-ratio: 1 / 1.1547`.
 - **Flex-Row Interlock Math:**
   - Rows are flex containers (`.hexcomb-row`).
@@ -23,7 +25,7 @@
   - Label overlay slides up showing project title and discipline.
 - **Mobile Graceful Degradation:** Below 480px, interlock math breaks down. Fall back to a clean 2-column grid or single-column stack.
 
-### B. Liquid-Blend Organic Section Dividers
+### ⚠️ B. Liquid-Blend Organic Section Dividers
 - **Canvas Continuity Metaphor:** An organic SVG blob using the *upcoming* section's background color bleeds upward into the previous section.
 - **Multi-Layer Blend:**
   - Far bleed: `filter: blur(24px)`, opacity `0.3`, screen blend mode (`mix-blend-mode: screen`).
@@ -39,18 +41,18 @@
 Actively avoid all generic "AI-generated" / "vibecoded" tropes:
 
 ### Visual & Design Clichés (Forbidden)
-- **NO harsh gradients**, NO generic "radial orb" blur shapes, NO dot-grid backgrounds (use the hexagon/honeycomb grid instead).
+- **NO harsh gradients**, NO generic "radial orb" blur shapes, NO dot-grid backgrounds.
 - **NO Lucide icon pack defaults**, NO sparkle (✨) icons, NO emoji used as UI elements (use clean, scalable inline SVGs styled with CSS custom properties).
-- **NO pure white backgrounds** — maintain deliberate dark theme with warm cream section alternation.
-- **NO rainbow/neon/basic pastel palettes**, NO generic purple-and-black cliché combo — stick strictly to the Tangerine / Carbon Black / Cream system.
-- **NO drop-shadow-heavy cards**, NO soft-corner-radius-everywhere look — keep sharp, architectural, intentional edges.
-- **NO "liquid glass" / glassmorphism effect** unless explicitly requested.
+- **NO pure white page backgrounds** — deliberate dark Carbon theme throughout.
+- **NO rainbow/neon/basic pastel palettes** — stick strictly to the Carbon + electric violet-blue system documented above (`#1800AD` / `#2B1AFF` on `#0E0E12`). Do NOT reintroduce the old Tangerine/Cream system.
+- **NO drop-shadow-heavy cards**, NO soft-corner-radius-everywhere look — keep sharp, architectural, intentional edges (hairline 1px borders, small radii).
+- **NO "liquid glass" / glassmorphism effect** — solid dark chips (e.g. `rgba(0,0,0,0.55)`) are preferred for legibility overlays; no `backdrop-filter: blur` fros glass.
 - **NO colored left-stripe cards**, NO generic bento grid layout, NO decorative faux terminal windows.
 - **NO 3-cards-in-a-row generic feature layout**, NO 3-tier pricing tables.
 - **NO checkmark bullet lists** as default list styling.
 - **NO animated arrows**, NO default "hover-lift-on-everything" animation — every animation must be purposeful feedback.
 - **NO fake testimonials** or placeholder "customer" quotes.
-- **Font deliberate selection:** Never default blindly to Inter, Geist, or Space Grotesk.
+- **Font deliberate selection:** display = Playfair Display, body = Outfit, mono = JetBrains Mono. Do not fall back to Inter, Geist, or Space Grotesk.
 
 ### Copywriting Clichés (Forbidden)
 - **NO em-dash-heavy** AI-sounding marketing copy.
@@ -97,7 +99,7 @@ Animation is feedback and storytelling, never gratuitous decoration:
 
 - **Security:** No hardcoded tokens, secrets, or API keys in code or git history. Enforce HTTPS, sanitized inputs, secure CORS, and error masking in production.
 - **Legal & Compliance:** Verify licensing on all fonts and visual assets. Simple Privacy Policy and Terms of Service. Honest representation of skills and client work.
-- **Accessibility:** Minimum WCAG AA color contrast ratios (checked especially on cream backgrounds and form inputs). Comprehensive `alt` text on images, full keyboard navigation with visible focus indicators.
+- **Accessibility:** Minimum WCAG AA color contrast ratios (checked especially on the dark Carbon backgrounds and form inputs — e.g. `--text-dim` labels on `rgba(20,20,20,0.45)` fields, the `rgba(0,0,0,0.55)` subtitle chip on the portrait shirt). Comprehensive `alt` text on images, full keyboard navigation with visible focus indicators.
 
 ---
 

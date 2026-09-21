@@ -1,157 +1,237 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import HexPattern from './HexPattern';
+import MeshDrift from './MeshDrift';
+import Carousel from './Carousel';
 import Icon from './Icon';
-import HexGlowPattern from './HexGlowPattern';
-import ServicesSection from './ServicesSection';
-import GallerySection from './GallerySection';
-import { galleryPlaceholders } from './galleryData';
-import LiquidDivider from './LiquidDivider';
-import ProjectWindow from './ProjectWindow';
+import useReveal from '../hooks/useReveal';
 import './Hero.css';
 
+/* ═══ Home — Hero ═══
+   Composition per mockup (Home page.png):
+   - Mesh-drift WebGL field (brand-adapted): cursor-reactive violet mesh
+   - Top bar: "Available" pill (left) + GitHub / mail / LinkedIn icons (right)
+   - Giant serif wordmark "Mutsambiwa" centered; portrait overlaps the center
+     glyphs (text behind, person in front)
+   - "Designer & Developer" overlay in the portrait's chest area
+   - CTA: "Let's Talk" → contact, "View Work" → work
+   - Graphic-work carousel (real brand assets, center-active + next peek)
+   - What I Do: ideology line + three capability cards */
+
+const socials = [
+  { href: 'https://github.com/Le-e-lab', label: 'GitHub', icon: 'github' },
+  { href: 'mailto:lesleymutsambiwa@gmail.com', label: 'Email', icon: 'envelope' },
+  { href: 'https://www.linkedin.com/in/lesley-mutsambiwa/', label: 'LinkedIn', icon: 'linkedin' },
+];
+
+const designWork = [
+  { src: '/images/design/work/africa-university-flyer.webp', title: 'Africa University Flyer', tag: 'Flyer Design' },
+  { src: '/images/design/work/gdg-1.webp', title: 'GDG Campus Poster 01', tag: 'Poster Design' },
+  { src: '/images/design/work/gdg-2.webp', title: 'GDG Campus Poster 02', tag: 'Poster Design' },
+  { src: '/images/design/work/gdg-3.webp', title: 'GDG Campus Poster 03', tag: 'Poster Design' },
+  { src: '/images/design/work/join-93-8.webp', title: 'Join GDG Campus', tag: 'Poster Design' },
+  { src: '/images/design/work/gold-brand.webp', title: 'Gold Brand Piece', tag: 'Brand Design' },
+  { src: '/images/design/work/logo-93-8.webp', title: 'Logo Concept', tag: 'Logo Design' },
+  { src: '/images/design/work/studio-logo.webp', title: 'Studio Logo', tag: 'Logo Design' },
+  { src: '/images/design/work/studio-2.webp', title: 'Studio Identity 02', tag: 'Brand Design' },
+  { src: '/images/design/work/studio-add-a-heading.webp', title: 'Studio Identity 01', tag: 'Brand Design' },
+  { src: '/images/design/work/the-hub.webp', title: 'The Hub', tag: 'Brand Design' },
+];
+
+const skillCards = [
+  {
+    num: '01',
+    title: 'Brand Identity',
+    body: 'Premium visual identities and brand systems that hold up in the real world — names, marks, and the guidelines that keep them consistent.',
+  },
+  {
+    num: '02',
+    title: 'Visual Design',
+    body: 'High-fidelity UI and web design — wireframe to polished interface, walking the same design-first path on every screen.',
+  },
+  {
+    num: '03',
+    title: 'Full-Stack Engineering',
+    body: 'Production web applications — React, Node.js, and databases wired into systems people actually use every day.',
+  },
+];
+
 export default function Hero() {
-  const navigate = useNavigate();
-  const [selectedProject, setSelectedProject] = useState(null);
-  const ctasRef = useRef(null);
+  const rootRef = useRef(null);
+  const carouselRef = useReveal();
+  const headingRef = useReveal();
+  const ideologyRef = useReveal();
+  const cardRefs = [useReveal(), useReveal(), useReveal()];
+  const [mounted, setMounted] = useState(false);
 
-  const openGalleryPlaceholder = (p) => {
-    const idx = galleryPlaceholders.findIndex((g) => g.id === p.id);
-    setSelectedProject({
-      title: p.title,
-      category: 'Coming Soon',
-      client: 'In progress',
-      year: '2026',
-      description: `This gallery slot (${idx + 1} of 10) is reserved for a new design piece. It will be filled with a real project image and story shortly.`,
-      image: null,
-      gradient: p.gradient,
-    });
-  };
-
-  /* Law 03 — magnetic CTA: primary buttons lean toward the cursor within a
-     small radius. The transform lives on the wrapper (.magnetic-btn) so it
-     never fights the button's own hover lift / press scale. Skipped when the
-     visitor prefers reduced motion. */
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const container = ctasRef.current;
-    if (!container) return;
-    const btns = [...container.querySelectorAll('.magnetic-btn')];
-    const STRENGTH = 0.16;
-    const MAX = 16;
+    // Trigger entrance choreography a frame after mount (keeps SSR/CSR parity
+    // and lets the browser compute layout before transitions run).
+    const t = window.setTimeout(() => setMounted(true), 60);
+    return () => window.clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    // Magnetic top-bar icons: small translate toward the cursor, then glide
+    // back to rest. Never moves the pill — only the three icon links.
+    const icons = root.querySelectorAll('.hero-top__icon');
     const onMove = (e) => {
-      for (const btn of btns) {
-        const r = btn.getBoundingClientRect();
-        const dx = (e.clientX - (r.left + r.width / 2)) * STRENGTH;
-        const dy = (e.clientY - (r.top + r.height / 2)) * STRENGTH;
-        btn.style.transform = `translate3d(${Math.max(-MAX, Math.min(MAX, dx))}px, ${Math.max(-MAX, Math.min(MAX, dy))}px, 0)`;
-      }
+      icons.forEach((icon) => {
+        const rect = icon.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / 14;
+        const dy = (e.clientY - cy) / 14;
+        icon.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
     };
     const onLeave = () => {
-      for (const btn of btns) btn.style.transform = 'translate3d(0, 0, 0)';
+      icons.forEach((icon) => { icon.style.transform = ''; });
     };
-    container.addEventListener('pointermove', onMove, { passive: true });
-    container.addEventListener('pointerleave', onLeave);
+    window.addEventListener('mousemove', onMove, { passive: true });
+    window.addEventListener('mouseleave', onLeave);
     return () => {
-      container.removeEventListener('pointermove', onMove);
-      container.removeEventListener('pointerleave', onLeave);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseleave', onLeave);
     };
   }, []);
 
   return (
     <>
-      {/* ═══ HERO — typography-overlap + portrait ═══ */}
-      <section className="hero section--dark">
-        <HexGlowPattern className="hex-pattern--parallax" stroke="#E8650A" glowColor="#e8703a" idleOpacity={0.28} glowRadius={140} />
+      <section className="hero" ref={rootRef}>
+        <MeshDrift className="hero__mesh" />
 
-        <div className="hero-inner">
-          {/* Status pill */}
-          <div className="hero-status hero-anim" style={{ animationDelay: '0.05s' }}>
-            <span className="hero-dot" />Available for work
+        {/* Top utility bar */}
+        <header className={`hero-top ${mounted ? 'is-in' : ''}`}>
+          <div className="hero-top__pill">
+            <span className="hero-top__dot" aria-hidden="true" />
+            <span>Available</span>
           </div>
+          <div className="hero-top__icons">
+            {socials.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target={s.href.startsWith('http') ? '_blank' : undefined}
+                rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="hero-top__icon"
+                aria-label={s.label}
+              >
+                <Icon name={s.icon} size={17} />
+              </a>
+            ))}
+          </div>
+        </header>
 
-          {/* ═══ Name — massive stacked typography ═══ */}
-          <div className="hero-name-stack">
-            <h1 className="hero-name-first hero-anim" style={{ animationDelay: '0.12s' }}>
-              Lesley
+        {/* Wordmark + portrait overlap — lockup keeps the ratio stable at any size */}
+        <div className={`hero-stage ${mounted ? 'is-in' : ''}`}>
+          <div className="hero-lockup">
+            <h1 className="hero-name" aria-label="Mutsambiwa">
+              <span className="hero-name__char hero-name__char--1">M</span>
+              <span className="hero-name__char hero-name__char--2">u</span>
+              <span className="hero-name__char hero-name__char--3">t</span>
+              <span className="hero-name__char hero-name__char--4">s</span>
+              <span className="hero-name__char hero-name__char--5">a</span>
+              <span className="hero-name__char hero-name__char--6">m</span>
+              <span className="hero-name__char hero-name__char--7">b</span>
+              <span className="hero-name__char hero-name__char--8">i</span>
+              <span className="hero-name__char hero-name__char--9">w</span>
+              <span className="hero-name__char hero-name__char--10">a</span>
             </h1>
 
-            {/* Circular portrait overlaps the name */}
-            <div className="hero-portrait hero-image-anim" style={{ animationDelay: '0.18s' }}>
-              <div className="hero-portrait-ring">
-                <img
-                  src="/images/hero-portrait.jpg"
-                  alt="Lesley Mutsambiwa at his desk"
-                  className="hero-portrait-img"
-                  width={320}
-                  height={320}
-                  fetchPriority="high"
-                />
-              </div>
+            <div className="hero-portrait-wrap">
+              <img
+                src="/images/hero-portrait.webp"
+                alt="Lesley Mutsambiwa — designer and developer"
+                className="hero-portrait"
+                loading="eager"
+                fetchPriority="high"
+              />
+              <p className="hero-subtitle">Designer &amp; Developer</p>
             </div>
 
-            <span className="hero-name-second hero-anim" style={{ animationDelay: '0.22s' }}>
-              Mutsambiwa
-            </span>
+            {/* Call to action — the two real next steps a visitor can take */}
+            <div className="hero-cta">
+              <Link to="/contact" className="hero-cta__primary">
+                Let&apos;s Talk
+                <Icon name="arrow-up-right" size={16} />
+              </Link>
+              <Link to="/work" className="hero-cta__ghost">
+                View Work
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Graphic work carousel */}
+        <section className="hero-carousel-section reveal" ref={carouselRef}>
+          <div className="carousel-caption">
+            <span className="carousel-caption__label mono">Graphic Work</span>
+            <p className="carousel-caption__hint">
+              Brand identities, posters, and flyers from studio work.
+            </p>
+          </div>
+          <Carousel
+            slides={designWork}
+            label="graphic work"
+            renderSlide={(slide) => (
+              <figure className="work-card">
+                <div className="work-card__frame">
+                  <img
+                    src={slide.src}
+                    alt={slide.title}
+                    loading="lazy"
+                    className="work-card__img"
+                  />
+                </div>
+                <figcaption className="work-card__meta">
+                  <span className="work-card__title">{slide.title}</span>
+                  <span className="work-card__tag mono">{slide.tag}</span>
+                </figcaption>
+              </figure>
+            )}
+          />
+        </section>
+      </section>
+
+      {/* What I Do */}
+      <section className="whatido section" id="what-i-do">
+        <HexPattern className="whatido__hex" opacity={0.09} />
+        <div className="page whatido__inner">
+          <div className="whatido__heading reveal" ref={headingRef}>
+            <p className="section-label">What I Do</p>
+            <h2>Premium Design &amp; Robust Code</h2>
           </div>
 
-          {/* Subtitle */}
-          <p className="hero-role hero-anim" style={{ animationDelay: '0.3s' }}>
-            Designer <span className="hero-amp">&</span> Developer
-          </p>
+          <blockquote className="whatido__ideology reveal" ref={ideologyRef}>
+            <p>
+              &ldquo;My ideology is turning an idea into a product that can be
+              used in the real world.&rdquo;
+            </p>
+          </blockquote>
 
-          {/* Description */}
-          <p className="hero-desc hero-anim" style={{ animationDelay: '0.38s' }}>
-            Brand identity, visual design, and full-stack applications — from concept to shipped product. CS student at Africa University, building from Harare to the world.
-          </p>
-
-          {/* Tech pills */}
-          <div className="hero-pills hero-anim" style={{ animationDelay: '0.44s' }}>
-            {['Brand Identity', 'UI Design', 'React', 'Node.js'].map((t) => (
-              <span key={t} className="hero-pill">{t}</span>
+          <div className="whatido__cards">
+            {skillCards.map((card, idx) => (
+              <article
+                key={card.num}
+                className={`whatido__card reveal reveal-delay-${(idx % 3) + 1}`}
+                ref={cardRefs[idx]}
+              >
+                <span className="whatido__num mono">{card.num}</span>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </article>
             ))}
           </div>
 
-          {/* CTAs */}
-          <div ref={ctasRef} className="hero-ctas hero-anim" style={{ animationDelay: '0.5s' }}>
-            <span className="magnetic-btn">
-              <button className="cta-primary" onClick={() => navigate('/work')}>
-                View Design Work
-              </button>
-            </span>
-            <span className="magnetic-btn">
-              <button className="cta-secondary" onClick={() => navigate('/contact')}>
-                Let&apos;s Talk
-              </button>
-            </span>
-          </div>
-
-          {/* Socials */}
-          <div className="hero-socials hero-anim" style={{ animationDelay: '0.56s' }}>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lesleymutsambiwa@gmail.com" className="hero-social interactive">
-              <Icon name="envelope" size={14} /> <span>Email</span>
-            </a>
-            <a href="https://github.com/Le-e-lab" target="_blank" rel="noreferrer" className="hero-social interactive">
-              <Icon name="github" size={14} /> <span>GitHub</span>
-            </a>
-            <a href="https://www.linkedin.com/in/lesley-mutsambiwa/" target="_blank" rel="noreferrer" className="hero-social interactive">
-              <Icon name="linkedin" size={14} /> <span>LinkedIn</span>
-            </a>
-          </div>
+          <p className="whatido__outro mono">
+            From Thought to Real World Application.
+          </p>
         </div>
       </section>
-
-      {/* ═══ GALLERY — 10 hexagon cells (placeholders for now) ═══ */}
-      <GallerySection onOpen={openGalleryPlaceholder} />
-
-      {/* Liquid blend into cream services */}
-      <LiquidDivider fill="var(--bg-light)" variant={1} />
-
-      <ServicesSection />
-
-      {/* Liquid blend back to the dark page end */}
-      <LiquidDivider fill="var(--bg)" variant={2} />
-
-      <ProjectWindow project={selectedProject} onClose={() => setSelectedProject(null)} />
     </>
   );
 }

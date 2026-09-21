@@ -1,0 +1,110 @@
+/* Shared Embla carousel styling: centered active slide with an intentional
+   edge peek, scroll-snap + drag, hairline arrows, mono counter. The viewport
+   gets gutter padding-inline so side cards read as deliberately cropped
+   (not hard-clipped at the page edge); the container counter-offsets its
+   own gutter so slide alignment stays true. */
+
+.carousel {
+  position: relative;
+  width: 100%;
+}
+
+.carousel__viewport {
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-inline: max(20px, 4vw);
+}
+
+.carousel__container {
+  display: flex;
+  align-items: center;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(-1 * max(20px, 4vw)); /* counter the viewport gutter */
+}
+
+.carousel__slide {
+  flex: 0 0 min(520px, 78vw);
+  min-width: 0;
+  padding-inline: 0.9rem;
+  /* Opaque dim — filter darkens the artwork without letting the page
+     background / hex grid bleed through translucent opacity */
+  filter: brightness(0.48) saturate(0.9);
+  transform: scale(0.92);
+  transition:
+    filter 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+}
+
+.carousel__slide--active {
+  filter: none;
+  transform: scale(1);
+}
+
+.carousel__controls {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 1.6rem;
+}
+
+.carousel__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out),
+    transform 120ms var(--ease-out);
+}
+.carousel__arrow:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text);
+}
+.carousel__arrow:active {
+  transform: scale(0.95);
+}
+.carousel__arrow:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
+.carousel__count {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.carousel__count-current {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.carousel__count-sep {
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .carousel__viewport {
+    padding-inline: 14px;
+  }
+  .carousel__container {
+    margin-left: -14px;
+  }
+  .carousel__slide {
+    flex: 0 0 82%;
+    padding-inline: 0.5rem;
+  }
+}

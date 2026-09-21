@@ -1,376 +1,339 @@
-/* ═══ About Section ═══ */
-.about-zone {
-  padding: 12rem 0;
-  overflow: visible;
+/* ═══ About ═══ */
+
+/* ── Header / statement ── */
+.about-header-section {
+  position: relative;
+  overflow: hidden;
 }
 
-/* Header zone: editorial vertical centering, no top-heavy void */
-@media (min-width: 769px) {
-  .about-zone--header {
-    min-height: 62vh;
-    display: flex;
-    align-items: center;
-    padding-top: var(--space-2xl);
-    padding-bottom: var(--space-2xl);
-  }
-}
+.about-header__hex { z-index: 0; }
 
-/* Tools zone: tighter lead-in after the dark journey divider */
-.about-zone--tools {
-  padding-top: var(--space-2xl);
-}
-
-/* Journey zone: tight lead-in after the centered header wave,
-   modest tail before the divider into the cream tools zone */
-.about-zone--journey {
-  padding: var(--space-2xl) 0 var(--space-3xl);
-}
-
-@media (max-width: 768px) {
-  .about-zone {
-    padding: var(--space-3xl) 0;
-  }
-}
-
-.about-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-xl);
+.page--center {
+  text-align: center;
 }
 
 .about-header {
-  margin-bottom: var(--space-3xl);
-}
-
-/* ═══ Statement headline (editorial, ALL-CAPS Bebas) ═══ */
-.about-statement {
-  font-size: clamp(2.6rem, 7.5vw, 6rem);
-  line-height: 1.05;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  max-width: 1000px;
-  margin: var(--space-xl) 0 0;
-  color: var(--text-dark);
-}
-
-.about-statement em {
-  font-style: normal;
-  color: var(--tangerine);
-}
-
-/* ═══ Dark journey zone ═══
-   Sticky chapter rail + origin portrait + editorial timeline rows */
-.about-journey {
-  display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
-  gap: var(--space-3xl);
-  align-items: start;
-}
-
-/* Decorative sticky rail (mirrors desktop nav hierarchy) */
-.about-rail {
-  position: sticky;
-  top: 172px;
-  align-self: start;
+  position: relative;
+  z-index: 2;
+  padding-top: clamp(3rem, 8vw, 6rem);
+  padding-bottom: clamp(2rem, 5vw, 4rem);
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-}
-
-.about-chapter {
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  transition: color 300ms var(--ease-out);
-}
-
-.about-chapter:first-child {
-  color: var(--tangerine);
-}
-
-.about-journey-body {
-  min-width: 0;
-}
-
-/* ─── Chapter 01 — Origin: portrait + narrative ─── */
-.about-origin {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: var(--space-3xl);
   align-items: center;
-  margin-bottom: var(--space-3xl);
+}
+
+.about-statement {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+  margin-top: 0.8rem;
+}
+
+/* ── Narrative ── */
+.about-narrative {
+  position: relative;
+  z-index: 2;
+}
+
+.about-narrative-grid {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: clamp(1.75rem, 5vw, 4.5rem);
+  align-items: center;
 }
 
 .about-portrait {
   position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius-sharp);
-  overflow: hidden;
-  background: var(--bg-raised);
 }
 
 .about-portrait-img {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
-  transform: scale(1);
-  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: var(--radius-lg);
 }
 
-.about-portrait:hover .about-portrait-img {
-  transform: scale(1.04);
-}
-
-.about-portrait-scrim {
+.about-portrait-frame {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(12, 12, 12, 0.55), transparent 40%);
-  pointer-events: none;
-}
-
-.about-narrative-copy {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
+  inset: 12px -12px -12px 12px;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-lg);
+  z-index: -1;
 }
 
 .about-para {
-  font-size: 1.12rem;
-  line-height: 1.8;
+  font-size: clamp(1.02rem, 1.7vw, 1.15rem);
+  line-height: 1.75;
   color: var(--text-dim);
-  max-width: 60ch;
+  margin-bottom: 1.35rem;
 }
 
 .about-para--lead {
-  font-size: 1.3rem;
-  line-height: 1.65;
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
   color: var(--text);
-  font-family: var(--font-display);
 }
 
 .about-para--life {
   color: var(--text-muted);
-  border-left: 2px solid var(--tangerine);
-  padding-left: var(--space-lg);
 }
 
-/* ─── Chapter 02 — Where I've been: editorial rows ─── */
-.about-timeline {
-  padding-top: var(--space-3xl);
+/* ── Pull-quote ── */
+.about-pullquote {
+  position: relative;
+  margin: clamp(3rem, 8vw, 6rem) auto 0;
+  max-width: 74ch;
+  text-align: center;
+  padding: 2.5rem clamp(1rem, 3vw, 3rem);
   border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
-.timeline-kicker {
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
+.about-pullquote p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.4vw, 2.3rem);
+  line-height: 1.4;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.about-pullquote cite {
+  display: block;
+  margin-top: 1.25rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(245, 240, 235, 0.55);
-  margin-bottom: var(--space-2xl);
+  color: var(--text-muted);
+  font-style: normal;
 }
 
-.about-timeline-rows {
+/* ── Timeline ── */
+.about-timeline-section {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(3rem, 7vw, 5.5rem);
+}
+
+.about-timeline-head {
+  margin-bottom: 2.5rem;
+}
+
+.about-timeline-kicker {
+  font-size: 0.82rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.about-timeline-sub {
+  margin-top: 0.6rem;
+  color: var(--text-muted);
+  max-width: 46ch;
+}
+
+.about-timeline {
+  position: relative;
   display: flex;
   flex-direction: column;
+  gap: 2.25rem;
 }
 
-.about-row {
-  display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
-  gap: var(--space-xl);
-  padding: var(--space-lg) 0;
-  border-top: 1px solid var(--border);
-  transition:
-    opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
-    padding-left 300ms var(--ease-out),
-    border-color 300ms var(--ease-out);
-}
-
-.about-row:first-child {
-  border-top: none;
-}
-
-.about-row:hover {
-  padding-left: var(--space-md);
-  border-top-color: var(--tangerine);
-}
-
-.about-row-tag {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  color: var(--tangerine);
-  padding-top: 4px;
-}
-
-.about-row-body {
-  min-width: 0;
-}
-
-.about-row-role {
-  font-size: 1.25rem;
-  line-height: 1.35;
-  color: var(--text);
-  margin-bottom: var(--space-xs);
-}
-
-.about-row-company {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  margin-bottom: var(--space-sm);
-}
-
-.about-row-link {
-  color: var(--tangerine-light);
-  text-decoration: none;
-  font-weight: 500;
-  border-bottom: 1px solid transparent;
-  transition: color 250ms var(--ease-out), border-color 250ms var(--ease-out);
-}
-
-.about-row-link:hover {
-  color: var(--text);
-  border-color: var(--tangerine);
-}
-
-.about-row-link:focus-visible {
-  outline: 2px solid var(--tangerine);
-  outline-offset: 3px;
+/* Scrub line — grows with scroll progress behind the dots */
+.about-timeline-line {
+  position: absolute;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  left: 0;
+  width: 2px;
+  background: var(--border);
   border-radius: 2px;
+  overflow: hidden;
 }
 
-.about-row-link:active {
-  opacity: 0.75;
+.about-timeline-line__fill {
+  width: 100%;
+  height: 100%;
+  background: var(--accent-light);
+  transform: scaleY(0.001);
 }
 
-.about-row-desc {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: var(--text-muted);
-}
-
-/* ═══ Cream tools zone (Chapter 03 — Toolbox: hairline chips) ═══ */
-.about-tools {
+.about-timeline-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-2xl) var(--space-3xl);
-  border-top: 1px solid var(--border-dark);
-  padding-top: var(--space-3xl);
+  grid-template-columns: 0 1fr;
+  gap: clamp(1.25rem, 4vw, 3rem);
+  padding-left: 14px;
 }
 
-.about-tools-header {
-  grid-column: 1 / -1;
-  max-width: 420px;
+.about-timeline-rail {
+  position: relative;
+}
+
+.about-timeline-dot {
+  position: absolute;
+  top: 0.55rem;
+  left: -14px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent-light);
+  box-shadow: 0 0 0 3px rgba(43, 26, 255, 0.12);
+}
+
+.about-timeline-tag {
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.about-timeline-role {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+  margin-top: 0.45rem;
+}
+
+.about-timeline-company {
+  display: inline-block;
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+.about-timeline-link {
+  color: var(--accent-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-line);
+  transition: color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+}
+.about-timeline-link:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+.about-timeline-desc {
+  margin-top: 0.7rem;
+  color: var(--text-muted);
+  max-width: 54ch;
+  line-height: 1.7;
+}
+
+/* ── Toolbox ── */
+.about-tools-section {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(3.5rem, 8vw, 6rem);
 }
 
 .about-tools-title {
-  font-size: 2rem;
-  line-height: 1.15;
-  letter-spacing: 0.01em;
-  color: var(--text-dark);
-  text-transform: uppercase;
-  margin-bottom: var(--space-sm);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
 }
 
 .about-tools-sub {
-  font-size: 0.98rem;
-  line-height: 1.65;
-  color: var(--text-dim-dark);
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}
+
+.tool-groups {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
 .tool-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  padding: 1.5rem 1.5rem 1.75rem;
+  transition: border-color var(--dur) var(--ease-out);
+}
+.tool-group:hover {
+  border-color: var(--accent-line);
 }
 
 .tool-group-title {
-  font-size: 1rem;
-  letter-spacing: 0.06em;
-  color: var(--text-dark);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
 }
 
 .tool-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-xs);
+  gap: 0.55rem;
 }
 
 .tool-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 0 1.1em;
-  font-size: 0.88rem;
-  color: var(--text-dark);
-  border: 1px solid var(--border-dark);
-  border-radius: var(--radius-sharp);
-  transition:
-    color 250ms var(--ease-out),
-    border-color 250ms var(--ease-out);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 1rem;
+  transition: border-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
 }
-
 .tool-chip:hover {
-  color: var(--tangerine-dark);
-  border-color: var(--tangerine-dark);
+  border-color: var(--accent-light);
+  color: var(--accent-text);
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .about-journey {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-  }
-
-  .about-rail {
-    position: static;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: var(--space-lg);
-    padding-bottom: var(--space-lg);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .about-origin {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-    margin-bottom: var(--space-2xl);
-  }
-
-  .about-portrait {
-    max-width: 440px;
-  }
-
-  .about-row {
-    grid-template-columns: 80px minmax(0, 1fr);
-  }
-
-  .about-tools {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-  }
-}
-
+/* ── Responsive ── */
 @media (max-width: 768px) {
-  .about-container {
-    padding: 0 var(--space-lg);
-  }
-
-  .about-statement {
-    margin-top: var(--space-lg);
-  }
-
-  .about-row {
+  .about-narrative-grid {
     grid-template-columns: 1fr;
-    gap: var(--space-sm);
+    gap: 2rem;
+    align-items: start;
   }
+  .about-portrait {
+    max-width: 320px;
+  }
+  /* Frame hugs the portrait on small screens — no negative bleed that
+     could push toward a horizontal overflow at 360–400px */
+  .about-portrait-frame {
+    inset: 10px -8px -8px 10px;
+  }
+  .tool-groups {
+    grid-template-columns: 1fr;
+  }
+  .about-timeline-row {
+    gap: 1.25rem;
+    padding-left: 12px;
+  }
+  .about-timeline-dot {
+    left: -12px;
+  }
+}
 
-  .about-row-tag {
-    padding-top: 0;
+@media (max-width: 480px) {
+  /* Pullquote: keep the rule lines, tighten gutters so the italic line
+     never feels squeezed against the screen edge */
+  .about-pullquote {
+    padding: 2rem 0.5rem;
+    margin-top: 2.5rem;
+  }
+  .about-pullquote p {
+    font-size: 1.4rem;
+  }
+  .about-pullquote cite {
+    margin-top: 1rem;
+  }
+  .tool-group {
+    padding: 1.25rem 1rem 1.4rem;
+  }
+  .tool-chip {
+    font-size: 0.78rem;
+    padding: 0.4rem 0.85rem;
   }
 }

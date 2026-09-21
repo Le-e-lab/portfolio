@@ -1,348 +1,536 @@
-/* ═══ Hero — Typography Overlap ═══ */
+/* ═══ Home Hero ═══
+   Mockup composition (Home page.png, 1366 wide):
+   - Top bar: availability pill (left) + social icons (right)
+   - Single-line serif wordmark "Mutsambiwa" — portrait sits IN FRONT of the
+     center glyphs (legs of the a/m/b read behind the head/hair)
+   - "Designer & Developer" subtitle overlays the portrait chest — white text
+     on the suit pixels
+   - Below: graphic-work carousel then the What-I-Do section */
+
 .hero {
+  position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg);
-  position: relative;
-  overflow: hidden;
-  padding: 5rem 0 6rem;
-}
-
-.hero-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 var(--space-xl);
-  width: 100%;
+  padding-top: clamp(1.5rem, 4vw, 3rem);
 }
 
-/* ── Status pill ── */
-.hero-status {
+/* Mesh-drift WebGL field fills the hero behind all content (z-index 0) */
+.hero__mesh {
+  z-index: 0;
+}
+
+/* ── Top utility bar ── */
+.hero-top {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0 clamp(0.5rem, 2vw, 1.5rem);
+  opacity: 0;
+  transform: translateY(-14px);
+  transition:
+    opacity 700ms var(--ease-out) 150ms,
+    transform 700ms var(--ease-out) 150ms;
+}
+.hero-top.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-top__pill {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: var(--tangerine-light);
-  margin-bottom: var(--space-xl);
-  background: rgba(232, 101, 10, 0.08);
-  padding: 0.4em 1em;
+  gap: 0.65rem;
+  padding: 0.55rem 1.15rem;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(232, 101, 10, 0.15);
-}
-
-.hero-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--tangerine);
-  animation: dot-pulse 2.2s ease-in-out infinite;
-}
-
-@keyframes dot-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(0.9); }
-}
-
-/* ═══ Name stack — the hero centerpiece ═══ */
-.hero-name-stack {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: var(--space-xl);
-  /* Enough height so portrait + overlapping names don't clip */
-  width: 100%;
-}
-
-/* First name: massive, full-bleed width */
-.hero-name-first,
-.hero-name-second {
-  font-family: var(--font-display-bold);
-  font-weight: 900;
-  color: var(--text);
-  text-transform: uppercase;
-  line-height: 0.88;
-  letter-spacing: -0.04em;
-  white-space: nowrap;
-  /* Scale responsively: huge on desktop, readable on mobile */
-  font-size: clamp(3.5rem, 13vw, 10rem);
-}
-
-.hero-name-second {
-  font-size: clamp(2.8rem, 9vw, 7rem);
-  letter-spacing: -0.02em;
-  /* Tuck under the portrait slightly */
-  margin-top: -0.15em;
-}
-
-/* ═══ Circular portrait — overlaps the name ═══ */
-.hero-portrait {
-  position: relative;
-  z-index: 2;
-  /* Lift the portrait up into the first name line */
-  margin-top: -0.6em;
-  margin-bottom: -0.3em;
-}
-
-.hero-portrait-ring {
-  width: clamp(180px, 24vw, 300px);
-  height: clamp(180px, 24vw, 300px);
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
-  /* Double bezel: tangerine outer + subtle inner shadow */
-  border: 2.5px solid var(--tangerine);
-  box-shadow:
-    0 0 0 4px rgba(232, 101, 10, 0.12),
-    0 0 40px rgba(232, 101, 10, 0.15),
-    inset 0 0 20px rgba(0, 0, 0, 0.4);
-  transition: box-shadow 400ms var(--ease-out), border-color 400ms var(--ease-out);
-}
-
-.hero-portrait-ring:hover {
-  border-color: var(--tangerine-light);
-  box-shadow:
-    0 0 0 4px rgba(232, 101, 10, 0.2),
-    0 0 60px rgba(232, 101, 10, 0.25),
-    inset 0 0 20px rgba(0, 0, 0, 0.4);
-}
-
-.hero-portrait-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-  transition: transform 700ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.hero-portrait-ring:hover .hero-portrait-img {
-  transform: scale(1.06);
-}
-
-/* ── Subtitle ── */
-.hero-role {
-  font-family: var(--font-heading);
-  font-size: clamp(1.3rem, 3vw, 2rem);
-  color: var(--text-dim);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: var(--space-lg);
-}
-
-.hero-amp {
-  color: var(--tangerine);
-  font-family: var(--font-display);
-  font-style: italic;
-  text-transform: none;
-}
-
-/* ── Description ── */
-.hero-desc {
-  max-width: 540px;
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: var(--text-dim);
-  margin-bottom: var(--space-xl);
-}
-
-/* ── Tech pills ── */
-.hero-pills {
-  display: flex;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-xl);
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.hero-pill {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  padding: 0.4em 1em;
+  background: var(--bg-raised);
   border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  color: var(--text-dim);
-  transition: border-color 300ms var(--ease-out), color 300ms var(--ease-out);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.hero-pill:hover {
-  border-color: var(--tangerine);
-  color: var(--tangerine);
+.hero-top__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #57e389;
+  box-shadow: 0 0 0 3px rgba(87, 227, 137, 0.16);
+  flex-shrink: 0;
 }
 
-/* ── CTAs ── */
-.hero-ctas {
+.hero-top__icons {
   display: flex;
-  gap: var(--space-md);
-  margin-bottom: var(--space-xl);
+  align-items: center;
+  gap: 0.9rem;
 }
 
-.cta-primary {
+.hero-top__icon {
   display: inline-flex;
   align-items: center;
-  padding: 0.85rem 2rem;
-  border-radius: var(--radius-full);
-  background: var(--tangerine);
-  color: #fff;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 500;
-  border: none;
-  text-decoration: none;
-  transition: box-shadow 300ms var(--ease-out), transform 300ms var(--ease-out);
-}
-
-.cta-primary:hover {
-  color: #fff;
-  box-shadow: var(--shadow-glow);
-  transform: translateY(-2px);
-}
-
-.cta-primary:active {
-  transform: scale(0.97);
-  transition: transform 100ms var(--ease-out);
-}
-
-.cta-secondary {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.85rem 2rem;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 400;
-  text-decoration: none;
-  transition: border-color 300ms var(--ease-out), color 300ms var(--ease-out), transform 300ms var(--ease-out);
+  transition:
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out),
+    transform 340ms var(--ease-out);
+  will-change: transform;
+}
+.hero-top__icon:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text);
+}
+.hero-top__icon:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
 }
 
-.cta-secondary:hover {
-  border-color: var(--tangerine);
-  color: var(--tangerine);
-  transform: translateY(-2px);
-}
-
-.cta-secondary:active {
-  transform: scale(0.97);
-  transition: transform 100ms var(--ease-out);
-}
-
-/* ── Socials ── */
-.hero-socials {
+/* ── Stage: wordmark behind, portrait in front, subtitle on chest ── */
+.hero-stage {
+  position: relative;
+  z-index: 2;
+  flex: 1;
   display: flex;
-  gap: var(--space-lg);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 62vh;
+  text-align: center;
 }
 
-.hero-social {
+/* Lockup: portrait pulled up over the wordmark's lower half, exactly like
+   the mockup (head covers the center glyphs, hair edge touches the midline) */
+.hero-lockup {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3.2rem, 11vw, 10rem);
+  line-height: 1.0;
+  letter-spacing: 0.005em;
+  color: var(--text);
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  margin-bottom: -0.38em;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.65);
+}
+
+.hero-name__char {
+  display: inline-block;
+  transform: translateY(0.55em);
+  opacity: 0;
+  transition:
+    opacity 620ms var(--ease-out),
+    transform 820ms var(--ease-out);
+}
+.hero-stage.is-in .hero-name__char {
+  transform: translateY(0);
+  opacity: 1;
+}
+.hero-name__char:nth-child(1) { transition-delay: 60ms; }
+.hero-name__char:nth-child(2) { transition-delay: 110ms; }
+.hero-name__char:nth-child(3) { transition-delay: 160ms; }
+.hero-name__char:nth-child(4) { transition-delay: 210ms; }
+.hero-name__char:nth-child(5) { transition-delay: 260ms; }
+.hero-name__char:nth-child(6) { transition-delay: 310ms; }
+.hero-name__char:nth-child(7) { transition-delay: 360ms; }
+.hero-name__char:nth-child(8) { transition-delay: 410ms; }
+.hero-name__char:nth-child(9) { transition-delay: 460ms; }
+.hero-name__char:nth-child(10) { transition-delay: 510ms; }
+
+/* Portrait — the front layer; the name's center glyphs read behind it.
+   Mockup crop = 3/4 bust box (not the raw 1100/1475 tall column) with the
+   face anchored at the top so the crown stays in frame and only lower chest
+   is trimmed. The wrap pulls the box up over the wordmark's lower half;
+   the name's margin-bottom overlaps it from behind. */
+.hero-portrait-wrap {
+  position: relative;
+  display: inline-block;
+  margin-top: -0.32em;
+  z-index: 2;
+}
+
+.hero-portrait {
+  display: block;
+  width: clamp(320px, 32vw, 440px);
+  max-width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 50% 12%;
+  border-radius: 4px;
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.45));
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  transition:
+    opacity 900ms var(--ease-out) 480ms,
+    transform 900ms var(--ease-out) 480ms;
+  pointer-events: none;
+}
+.hero-stage.is-in .hero-portrait {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Subtitle — overlays the portrait chest; dark chip keeps the white
+   glyphs readable over the light shirt pixels (same treatment on all
+   breakpoints, matching the mockup's legibility intent). */
+.hero-subtitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(14px);
+  bottom: 6%;
+  z-index: 4;
+  width: max-content;
+  max-width: 92%;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 3vw, 2.1rem);
+  letter-spacing: 0.01em;
+  color: var(--text);
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  text-shadow: none;
+  opacity: 0;
+  transition:
+    opacity 700ms var(--ease-out) 640ms,
+    transform 700ms var(--ease-out) 640ms;
+}
+.hero-stage.is-in .hero-subtitle {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Call to action ── */
+.hero-cta {
+  margin-top: clamp(1.75rem, 4vh, 2.75rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 700ms var(--ease-out) 800ms,
+    transform 700ms var(--ease-out) 800ms;
+}
+.hero-stage.is-in .hero-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-cta__primary,
+.hero-cta__ghost {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 44px;
+  padding: 0.7rem 1.6rem;
+  border-radius: var(--radius-full);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  transition:
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out),
+    transform 120ms var(--ease-out);
+}
+.hero-cta__primary:active,
+.hero-cta__ghost:active {
+  transform: scale(0.97);
+}
+
+.hero-cta__primary {
+  background: var(--accent-light);
+  border: 1px solid var(--accent-light);
+  color: var(--text);
+}
+.hero-cta__primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.hero-cta__ghost {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+}
+.hero-cta__ghost:hover {
+  border-color: var(--accent-light);
+  color: var(--accent-text);
+}
+
+.hero-cta__primary:focus-visible,
+.hero-cta__ghost:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
+/* ── Graphic work carousel ── */
+.hero-carousel-section {
+  position: relative;
+  z-index: 4;
+  margin-top: clamp(2rem, 5vh, 3.5rem);
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.carousel-caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.carousel-caption__label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.carousel-caption__hint {
+  font-size: 0.95rem;
   color: var(--text-muted);
-  text-decoration: none;
-  transition: color 300ms var(--ease-out);
 }
 
-.hero-social:hover {
-  color: var(--tangerine);
+/* Work card inside the carousel */
+.work-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
 }
 
-/* ═══ Entrance animations ═══ */
-.hero-anim {
-  opacity: 0;
-  animation: hero-fade-up 0.7s var(--ease-out) forwards;
+.work-card__frame {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-card);
+  aspect-ratio: 3 / 4;
+  transition:
+    border-color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
 }
 
-.hero-image-anim {
-  opacity: 0;
-  animation: hero-portrait-in 0.8s var(--ease-out) 0.15s forwards;
+.work-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 700ms var(--ease-out);
+}
+.work-card:hover .work-card__img {
+  transform: scale(1.04);
+}
+/* Hover state at 1440px: 0.55-alpha violet on a dark card is sub-threshold,
+   so the border is boosted to 0.85 + a violet-tinted lift shadow to make the
+   state legible without changing layout (border stays 1px) */
+.work-card:hover .work-card__frame {
+  border-color: rgba(43, 26, 255, 0.85);
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 32px rgba(43, 26, 255, 0.22),
+    0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-@keyframes hero-fade-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+.work-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-@keyframes hero-portrait-in {
-  from { opacity: 0; transform: scale(0.88); }
-  to   { opacity: 1; transform: scale(1); }
+.work-card__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text);
 }
 
-/* ═══ Responsive ═══ */
+.work-card__tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ── What I Do ── */
+.whatido {
+  position: relative;
+  overflow: hidden;
+}
+
+.whatido__hex {
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.whatido__inner {
+  position: relative;
+  z-index: 2;
+}
+
+.whatido__heading h2 {
+  max-width: 16ch;
+  line-height: 1.08;
+}
+
+.whatido__ideology {
+  margin: 2.75rem 0 3rem;
+  max-width: 720px;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--accent);
+}
+
+.whatido__ideology p {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.whatido__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.whatido__card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  padding: 1.75rem 1.5rem 2rem;
+  transition:
+    border-color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+}
+.whatido__card:hover {
+  border-color: var(--accent-line);
+  background: var(--bg-raised);
+  transform: translateY(-4px);
+}
+
+.whatido__num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--accent-text);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.whatido__card h3 {
+  margin-bottom: 0.6rem;
+}
+
+.whatido__card p {
+  font-size: 0.98rem;
+  color: var(--text-dim);
+}
+
+.whatido__outro {
+  margin-top: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── Responsive ── */
 @media (max-width: 768px) {
-  .hero {
-    padding-top: var(--space-3xl);
-    padding-bottom: var(--space-3xl);
+  .hero-name {
+    font-size: clamp(2.7rem, 13.5vw, 4.2rem);
+    margin-bottom: -0.18em;
   }
-
-  .hero-name-first,
-  .hero-name-second {
-    white-space: normal;
-    text-align: center;
+  .hero-portrait-wrap {
+    margin-top: -0.14em;
   }
-
   .hero-portrait {
-    margin-top: -0.4em;
-    margin-bottom: -0.2em;
+    width: min(78vw, 320px);
   }
-
-  .hero-portrait-ring {
-    width: clamp(160px, 50vw, 240px);
-    height: clamp(160px, 50vw, 240px);
+  .hero-subtitle {
+    bottom: 10%;
+    font-size: 1.05rem;
   }
-
-  .hero-ctas {
-    flex-direction: column;
-    width: 100%;
-    gap: var(--space-sm);
+  .hero-top {
+    align-items: flex-start;
   }
-
-  .cta-primary,
-  .cta-secondary {
-    width: 100%;
-    justify-content: center;
+  .hero-top__icon {
+    width: 38px;
+    height: 38px;
+  }
+  .hero-carousel-section {
+    margin-top: 1.5rem;
+  }
+  .whatido__cards {
+    grid-template-columns: 1fr;
+  }
+  .whatido__ideology {
+    margin: 2rem 0;
   }
 }
 
 @media (max-width: 480px) {
-  .hero-name-first,
-  .hero-name-second {
-    font-size: clamp(2.6rem, 14vw, 4rem);
+  .hero-name {
+    font-size: 2.7rem;
   }
-
-  .hero-name-second {
-    font-size: clamp(2rem, 10vw, 3rem);
+  .hero-portrait-wrap {
+    margin-top: -0.12em;
   }
-
-  .hero-socials {
-    flex-direction: column;
-    gap: var(--space-md);
-    align-items: center;
+  .hero-portrait {
+    width: min(78vw, 320px);
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-anim,
-  .hero-image-anim {
-    animation: none;
-    opacity: 1;
-    transform: none;
+  /* Tagline chip: readable on the white shirt at any zoom */
+  .hero-subtitle {
+    bottom: 7%;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    background: rgba(0, 0, 0, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    text-shadow: none;
+  }
+  .hero-top__pill {
+    font-size: 0.66rem;
+    padding: 0.5rem 0.85rem;
+    letter-spacing: 0.04em;
   }
 }
