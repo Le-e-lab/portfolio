@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
-import HexPattern from './HexPattern';
 import useReveal from '../hooks/useReveal';
 import './About.css';
 
@@ -118,7 +117,6 @@ export default function About() {
     <>
       {/* ═══ Header / statement ═══ */}
       <section className="about-header-section">
-        <HexPattern className="about-header__hex" opacity={0.07} />
         <div className="page about-header page--center" ref={headingRef}>
           <p className="section-label">
             <span className="mono section-label__num">03</span>

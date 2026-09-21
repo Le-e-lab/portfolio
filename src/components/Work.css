@@ -5,10 +5,6 @@
   overflow: hidden;
 }
 
-.work-section__hex {
-  z-index: 0;
-}
-
 /* ── Heading block ── */
 .work-heading-block {
   position: relative;

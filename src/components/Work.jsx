@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Icon from './Icon';
-import HexPattern from './HexPattern';
 import useReveal from '../hooks/useReveal';
 import './Work.css';
 
@@ -186,7 +185,6 @@ export default function Work() {
 
   return (
     <section className="work-section">
-      <HexPattern className="work-section__hex" opacity={0.08} />
 
       <div className="page work-heading-block" ref={headingRef}>
         <p className="section-label">

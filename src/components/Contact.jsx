@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import HexPattern from './HexPattern';
 import Carousel from './Carousel';
 import Icon from './Icon';
 import useReveal from '../hooks/useReveal';
@@ -141,7 +140,6 @@ export default function Contact() {
 
   return (
     <section className="contact-section">
-      <HexPattern className="contact-section__hex" opacity={0.07} />
 
       {/* ── Heading + info column ── */}
       <div className="page contact-grid" ref={infoRef}>

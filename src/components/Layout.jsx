@@ -2,11 +2,13 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Sidebar from './Sidebar';
 import MobileNav from './MobileNav';
+import MeshDrift from './MeshDrift';
 import Icon from './Icon';
 import './Layout.css';
 
 export default function Layout() {
   const location = useLocation();
+  const isHome = location.pathname === '/';
 
   // Per-route document titles (SEO + tab clarity)
   useEffect(() => {
@@ -21,6 +23,12 @@ export default function Layout() {
 
   return (
     <div className="app">
+      {/* Home backdrop. Rendered here, not inside .page-wrapper: that wrapper
+          animates a filter, which becomes the containing block for a fixed
+          canvas and would clip the field to the wrapper's box (short of the
+          footer). As a shell sibling it covers the whole viewport. */}
+      {isHome && <MeshDrift />}
+
       <Sidebar />
       <MobileNav />
 

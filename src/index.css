@@ -129,11 +129,25 @@ a:hover { color: var(--accent-text); }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: var(--radius-full); }
 
+/* Visually hidden, still exposed to assistive tech and crawlers. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ── Shared layout scaffolding ── */
 .page {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 5vw, 4rem);
+  /* Full-bleed: the shell already reserves the fixed right-edge nav, so content
+     runs the whole remaining width with only its own gutters. */
+  width: 100%;
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 4vw, 3.5rem);
   position: relative;
   z-index: 1;
 }

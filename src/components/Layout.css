@@ -7,8 +7,10 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 0 var(--space-4xl);
-  padding-right: 100px;
+  /* Only reserve the fixed right-edge sidenav. All other spacing is the page
+     gutter's job, so content stays full-bleed. */
+  padding: 0;
+  padding-right: 64px;
 }
 
 .page-wrapper {
@@ -38,14 +40,13 @@
 
 @media (max-width: 1024px) {
   .main-content {
-    padding: 0 var(--space-2xl);
-    padding-right: 70px;
+    padding-right: 56px; /* sidenav narrows to 56px at this breakpoint */
   }
 }
 
 @media (max-width: 768px) {
   .main-content {
-    padding: 0 var(--space-lg);
+    padding-right: 0; /* sidenav is hidden on mobile; bottombar is a floater */
     padding-top: var(--space-2xl);
     /* Clearance for the floating bottombar (~72px tall, 24px from bottom) */
     padding-bottom: calc(112px + env(safe-area-inset-bottom));

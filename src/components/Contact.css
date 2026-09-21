@@ -5,8 +5,6 @@
   overflow: hidden;
 }
 
-.contact-section__hex { z-index: 0; }
-
 /* ── Grid: info column + form column ── */
 .contact-grid {
   position: relative;

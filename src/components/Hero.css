@@ -16,10 +16,6 @@
 }
 
 /* Mesh-drift WebGL field fills the hero behind all content (z-index 0) */
-.hero__mesh {
-  z-index: 0;
-}
-
 /* ── Top utility bar ── */
 .hero-top {
   position: relative;
@@ -136,6 +132,13 @@
   text-shadow: 0 2px 24px rgba(0, 0, 0, 0.65);
 }
 
+/* aria-hidden wrapper around the animated glyphs. `display: contents` keeps the
+   character spans as direct flex items of .hero-name, so the lockup geometry is
+   byte-identical to when they were unwrapped. */
+.hero-name__visual {
+  display: contents;
+}
+
 .hero-name__char {
   display: inline-block;
   transform: translateY(0.55em);
@@ -148,16 +151,18 @@
   transform: translateY(0);
   opacity: 1;
 }
-.hero-name__char:nth-child(1) { transition-delay: 60ms; }
-.hero-name__char:nth-child(2) { transition-delay: 110ms; }
-.hero-name__char:nth-child(3) { transition-delay: 160ms; }
-.hero-name__char:nth-child(4) { transition-delay: 210ms; }
-.hero-name__char:nth-child(5) { transition-delay: 260ms; }
-.hero-name__char:nth-child(6) { transition-delay: 310ms; }
-.hero-name__char:nth-child(7) { transition-delay: 360ms; }
-.hero-name__char:nth-child(8) { transition-delay: 410ms; }
-.hero-name__char:nth-child(9) { transition-delay: 460ms; }
-.hero-name__char:nth-child(10) { transition-delay: 510ms; }
+/* Stagger keyed off the BEM modifier, not :nth-child — the heading also holds
+   an sr-only given name, so DOM order must not drive the timing. */
+.hero-name__char--1 { transition-delay: 60ms; }
+.hero-name__char--2 { transition-delay: 110ms; }
+.hero-name__char--3 { transition-delay: 160ms; }
+.hero-name__char--4 { transition-delay: 210ms; }
+.hero-name__char--5 { transition-delay: 260ms; }
+.hero-name__char--6 { transition-delay: 310ms; }
+.hero-name__char--7 { transition-delay: 360ms; }
+.hero-name__char--8 { transition-delay: 410ms; }
+.hero-name__char--9 { transition-delay: 460ms; }
+.hero-name__char--10 { transition-delay: 510ms; }
 
 /* Portrait — the front layer; the name's center glyphs read behind it.
    Mockup crop = 3/4 bust box (not the raw 1100/1475 tall column) with the
@@ -392,11 +397,6 @@
 .whatido {
   position: relative;
   overflow: hidden;
-}
-
-.whatido__hex {
-  z-index: 0;
-  opacity: 0.9;
 }
 
 .whatido__inner {

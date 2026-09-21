@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import HexPattern from './HexPattern';
-import MeshDrift from './MeshDrift';
 import Carousel from './Carousel';
 import Icon from './Icon';
 import useReveal from '../hooks/useReveal';
@@ -102,8 +100,6 @@ export default function Hero() {
   return (
     <>
       <section className="hero" ref={rootRef}>
-        <MeshDrift className="hero__mesh" />
-
         {/* Top utility bar */}
         <header className={`hero-top ${mounted ? 'is-in' : ''}`}>
           <div className="hero-top__pill">
@@ -129,17 +125,25 @@ export default function Hero() {
         {/* Wordmark + portrait overlap — lockup keeps the ratio stable at any size */}
         <div className={`hero-stage ${mounted ? 'is-in' : ''}`}>
           <div className="hero-lockup">
-            <h1 className="hero-name" aria-label="Mutsambiwa">
-              <span className="hero-name__char hero-name__char--1">M</span>
-              <span className="hero-name__char hero-name__char--2">u</span>
-              <span className="hero-name__char hero-name__char--3">t</span>
-              <span className="hero-name__char hero-name__char--4">s</span>
-              <span className="hero-name__char hero-name__char--5">a</span>
-              <span className="hero-name__char hero-name__char--6">m</span>
-              <span className="hero-name__char hero-name__char--7">b</span>
-              <span className="hero-name__char hero-name__char--8">i</span>
-              <span className="hero-name__char hero-name__char--9">w</span>
-              <span className="hero-name__char hero-name__char--10">a</span>
+            <h1 className="hero-name" aria-label="Lesley Mutsambiwa">
+              {/* The glyph spans already supply "Mutsambiwa", so "Lesley" is the
+                  only text added here — that makes the heading's text content
+                  read as the full name without duplicating the surname.
+                  aria-label gives assistive tech the clean name, and the glyphs
+                  are aria-hidden so they are never announced letter by letter. */}
+              <span className="sr-only">Lesley </span>
+              <span className="hero-name__visual" aria-hidden="true">
+                <span className="hero-name__char hero-name__char--1">M</span>
+                <span className="hero-name__char hero-name__char--2">u</span>
+                <span className="hero-name__char hero-name__char--3">t</span>
+                <span className="hero-name__char hero-name__char--4">s</span>
+                <span className="hero-name__char hero-name__char--5">a</span>
+                <span className="hero-name__char hero-name__char--6">m</span>
+                <span className="hero-name__char hero-name__char--7">b</span>
+                <span className="hero-name__char hero-name__char--8">i</span>
+                <span className="hero-name__char hero-name__char--9">w</span>
+                <span className="hero-name__char hero-name__char--10">a</span>
+              </span>
             </h1>
 
             <div className="hero-portrait-wrap">
@@ -199,7 +203,6 @@ export default function Hero() {
 
       {/* What I Do */}
       <section className="whatido section" id="what-i-do">
-        <HexPattern className="whatido__hex" opacity={0.09} />
         <div className="page whatido__inner">
           <div className="whatido__heading reveal" ref={headingRef}>
             <p className="section-label">What I Do</p>

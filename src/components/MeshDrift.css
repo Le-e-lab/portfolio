@@ -1,7 +1,9 @@
 /* ═══ MeshDrift — brand-adapted WebGL mesh background ═══ */
 
 .mesh-drift {
-  position: absolute;
+  /* Fixed, not absolute: the field is the home route's page-wide backdrop, so it
+     stays behind every section instead of stopping at the hero's box. */
+  position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
