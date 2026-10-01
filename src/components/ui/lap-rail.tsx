@@ -24,30 +24,48 @@ export function LapRail() {
     document.documentElement.style.setProperty("--lap", p.toFixed(4));
     const next = Math.round(p * 100);
     setPct((prev) => (prev === next ? prev : next));
+
+    // The activity calendar scrubs with the lap. It listens to this instead of
+    // adding a second scroll listener, so the page keeps exactly one.
+    window.dispatchEvent(
+      new CustomEvent("lap:progress", { detail: { pct: next } }),
+    );
   });
 
   // Which section is current, and where each sector starts.
   const [marks, setMarks] = useState(() => SECTORS.map((s) => ({ id: s.id, at: 0 })));
 
   useEffect(() => {
+    let frame = 0;
     const measure = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (max <= 0) return;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        if (max <= 0) return;
 
-      setMarks(
-        SECTORS.map((sector) => {
-          const firstId = sector.spans[0];
-          const el = firstId === "hero" ? document.body : document.getElementById(firstId);
-          const top = el?.getBoundingClientRect().top ?? 0;
-          const absolute = top + window.scrollY;
-          return { id: sector.id, at: Math.min(1, Math.max(0, absolute / max)) };
-        }),
-      );
+        setMarks(
+          SECTORS.map((sector) => {
+            const firstId = sector.spans[0];
+            const el = firstId === "hero" ? document.body : document.getElementById(firstId);
+            const top = el?.getBoundingClientRect().top ?? 0;
+            const absolute = top + window.scrollY;
+            return { id: sector.id, at: Math.min(1, Math.max(0, absolute / max)) };
+          }),
+        );
+      });
     };
+    const throttledMeasure = () => measure();
 
     measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    window.addEventListener("resize", throttledMeasure);
+    // Section positions shift as images decode and later sections mount, which
+    // fires neither resize nor a reliable layout event.
+    window.addEventListener("load", measure);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", throttledMeasure);
+      window.removeEventListener("load", measure);
+    };
   }, []);
 
   useEffect(() => {

@@ -159,8 +159,24 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Activity calendar: the right edge fades so a clipped week column reads as
+   "there is more this way" rather than as a broken image. Desktop has room to
+   show the whole year, so the fade and the scroll hint are mobile-only.
+--------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .activity-scroll {
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    mask-image: linear-gradient(to right, #000 88%, transparent 100%);
+  }
+  .activity-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
    Reduced motion: motion is decoration here, never information. Everything
-   renders in its final state.
+   renders in the final state.
 --------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,

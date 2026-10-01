@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "npm run snapshot:github; next build",
+    "build": "npm run snapshot:github && next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",

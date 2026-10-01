@@ -4,79 +4,106 @@ import path from "node:path";
 const DATA_DIR = path.join(process.cwd(), "data");
 const SNAPSHOT = path.join(DATA_DIR, "github-snapshot.json");
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+/** Kept in sync with siteConfig.githubUsername by hand; the script runs in tsx
+ *  without the "@/" alias, and one string is not worth a build-time import. */
+const LOGIN = "Le-e-lab";
 
-async function graphql<T>(query: string, variables: Record<string, unknown>): Promise<T> {
-  if (!GITHUB_TOKEN) {
-    throw new Error("GITHUB_TOKEN is missing");
-  }
-  const res = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
-    },
-    body: JSON.stringify({ query, variables }),
-  });
-  if (!res.ok) throw new Error(`GraphQL ${res.status}`);
-  const body = (await res.json()) as any;
-  if (body.errors) throw new Error(JSON.stringify(body.errors));
-  return body.data as T;
+type Calendar = {
+  totalContributions: number;
+  weeks: { contributionDays: { date: string; contributionCount: number; weekday: number }[] }[];
+};
+
+function write(payload: unknown) {
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.writeFileSync(SNAPSHOT, `${JSON.stringify(payload, null, 2)}\n`);
 }
 
-function writeEmptySnapshot(login: string) {
-  const payload = {
-    fetchedAt: new Date().toISOString(),
-    login,
-    totalContributions: 0,
-    weeks: [],
-  };
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(SNAPSHOT, JSON.stringify(payload, null, 2));
-  console.warn("GITHUB_TOKEN missing — wrote empty snapshot", SNAPSHOT);
+function readExisting(): { weeks: unknown[] } | null {
+  try {
+    const parsed = JSON.parse(fs.readFileSync(SNAPSHOT, "utf8"));
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * A missing token must never destroy a snapshot that a previous build already
+ * fetched. Writing an empty payload here would mean the Activity section blanks
+ * itself out on any machine without a token, which is the common case for a
+ * fresh clone.
+ */
+function ensureEmptySnapshot(reason: string) {
+  const existing = readExisting();
+  if (existing && Array.isArray(existing.weeks) && existing.weeks.length > 0) {
+    console.warn(`[snapshot] ${reason}. Keeping the existing snapshot (${existing.weeks.length} weeks).`);
+    return;
+  }
+  // An empty snapshot is already correct. Rewriting it would only churn
+  // fetchedAt on every build and produce a dirty file for no reason.
+  if (existing) {
+    console.warn(`[snapshot] ${reason}. The Activity section shows its empty state.`);
+    return;
+  }
+  write({ fetchedAt: new Date().toISOString(), login: LOGIN, totalContributions: 0, weeks: [] });
+  console.warn(`[snapshot] ${reason}. Wrote an empty snapshot — the Activity section will show its empty state.`);
 }
 
 async function main() {
-  const login = "Le-e-lab";
-  if (!login) throw new Error("githubUsername missing");
+  if (!process.env.GITHUB_TOKEN) {
+    ensureEmptySnapshot("GITHUB_TOKEN is not set");
+    return;
+  }
 
-  // Last 12 months
-  const now = new Date();
-  const from = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const from = new Date();
   from.setFullYear(from.getFullYear() - 1);
 
-  const q = `query($login:String!, $from:DateTime!){
+  const query = `query($login:String!, $from:DateTime!){
     user(login:$login){
-      contributionsCollection(from:$from, to: null){
-        contributionCalendar{ totalContributions weeks{ contributionDays{ date contributionCount weekday } } }
+      contributionsCollection(from:$from){
+        contributionCalendar{
+          totalContributions
+          weeks{ contributionDays{ date contributionCount weekday } }
+        }
       }
     }
   }`;
 
   try {
-    const data = await graphql<any>(q, { login, from: from.toISOString() });
-    const calendar = data.user?.contributionsCollection?.contributionCalendar;
-    const payload = {
-      fetchedAt: new Date().toISOString(),
-      login,
-      totalContributions: calendar?.totalContributions ?? 0,
-      weeks: calendar?.weeks ?? [],
+    const res = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      },
+      body: JSON.stringify({
+        query,
+        variables: { login: LOGIN, from: from.toISOString() },
+      }),
+    });
+
+    if (!res.ok) throw new Error(`GraphQL responded ${res.status}`);
+    const body = (await res.json()) as {
+      data?: { user?: { contributionsCollection?: { contributionCalendar?: Calendar } } };
+      errors?: { message: string }[];
     };
-    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-    fs.writeFileSync(SNAPSHOT, JSON.stringify(payload, null, 2));
-    console.log(`wrote ${SNAPSHOT}`);
-  } catch (e: any) {
-    if (e?.message === "GITHUB_TOKEN is missing" || e instanceof Error && e.message.includes("GITHUB_TOKEN")) {
-      writeEmptySnapshot(login);
-      return;
-    }
-    console.error("snapshot:github failed, will reuse existing snapshot if present:", e);
-    if (!fs.existsSync(SNAPSHOT)) {
-      writeEmptySnapshot(login);
-      return;
-    }
-    console.log("reusing existing", SNAPSHOT);
+    if (body.errors?.length) throw new Error(body.errors.map((e) => e.message).join("; "));
+
+    const calendar = body.data?.user?.contributionsCollection?.contributionCalendar;
+    if (!calendar?.weeks?.length) throw new Error("no contribution weeks returned");
+
+    const total = calendar.weeks
+      .flatMap((w) => w.contributionDays)
+      .reduce((sum, d) => sum + d.contributionCount, 0);
+
+    write({ fetchedAt: new Date().toISOString(), login: LOGIN, totalContributions: total, weeks: calendar.weeks });
+    console.log(`[snapshot] wrote ${total} contributions across ${calendar.weeks.length} weeks`);
+  } catch (err) {
+    // A rate limit or an outage must not fail the build either. Keep the data we
+    // already have and say so out loud rather than silently degrading.
+    console.error(`[snapshot] fetch failed: ${(err as Error).message}`);
+    ensureEmptySnapshot("fetch failed");
   }
 }
 
-main();
+void main();

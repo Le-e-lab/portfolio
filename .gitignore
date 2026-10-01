@@ -39,3 +39,6 @@ out/
 # Snapshot output is committed on purpose (build fallback), keep the file.
 .see/
 qa/
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
