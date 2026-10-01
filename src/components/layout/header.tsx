@@ -47,7 +47,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => openCommandPalette()}
-            className="press hidden cursor-pointer items-center gap-2 border border-line px-2.5 py-1.5 font-mono text-[10px] tracking-[0.12em] text-muted uppercase transition-colors duration-200 hover:border-muted hover:text-ink sm:inline-flex"
+            className="press hidden min-h-[32px] cursor-pointer items-center gap-2 border border-line px-2.5 py-1.5 font-mono text-[10px] tracking-[0.12em] text-muted uppercase transition-colors duration-200 hover:border-muted hover:text-ink sm:inline-flex"
           >
             <span className="sr-only">Open command palette</span>
             <kbd className="text-ink">Ctrl</kbd>

@@ -21,7 +21,9 @@ import { cn } from "@/lib/cn";
  * own image inline.
  */
 export function WorkList({ work }: { work: WorkSummary[] }) {
-  const [activeSlug, setActiveSlug] = useState<string | null>(work[0]?.slug ?? null);
+  const [activeSlug, setActiveSlug] = useState<string | null>(
+    work[0]?.slug ?? null,
+  );
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const itemRefs = useRef<Map<string, HTMLElement>>(new Map());
   const reduced = useReducedMotion();
@@ -99,7 +101,9 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
                         {w.year}
                       </span>
                     </div>
-                    <p className="mt-2 max-w-md text-sm text-muted">{w.summary}</p>
+                    <p className="mt-2 max-w-md text-sm text-muted">
+                      {w.summary}
+                    </p>
                     <p className="mt-3 font-mono text-[11px] leading-relaxed tracking-[0.1em] text-muted uppercase md:text-xs">
                       {w.role} &middot; {w.stack.slice(0, 3).join(" / ")}
                       {w.stack.length > 3 ? ` +${w.stack.length - 3}` : ""}
@@ -137,7 +141,11 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
                 if (!src) {
                   return isActive ? (
                     <div key={w.slug} className="absolute inset-0">
-                      <ImageSlot id={w.coverSlot} sizes="40vw" className="h-full w-full" />
+                      <ImageSlot
+                        id={w.coverSlot}
+                        sizes="40vw"
+                        className="h-full w-full"
+                      />
                     </div>
                   ) : null;
                 }

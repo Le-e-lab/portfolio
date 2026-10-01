@@ -187,11 +187,21 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Motion writes its hidden state as an inline style after hydration, so the
+     generic override above leaves content stranded at opacity 0. This rule is
+     scoped to the reduced-motion media query, which the browser evaluates
+     before paint — content is visible even if hydration never happens. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ---------------------------------------------------------------------------
-   No-JS guard lives in src/app/layout.tsx as a <noscript> block, because
-   motion applies its `initial` hidden state as an inline style only after
-   hydration. Server-rendered HTML is therefore already fully visible, and an
-   `!important` rule here would break every reveal animation.
+   No-JS guard lives in src/app/layout.tsx as a <noscript> block. Motion applies
+   its hidden state as an inline style only after hydration, so server-rendered
+   HTML is already visible and an unconditional `!important` rule would break
+   every reveal animation. The reduced-motion rule above is the one exception:
+   it is scoped to a media query the browser honours pre-paint.
 --------------------------------------------------------------------------- */

@@ -88,17 +88,17 @@ function PlaceholderFrame({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-2 border border-dashed border-line bg-surface p-6",
+        "flex flex-col items-center justify-center gap-2 border border-dashed border-line bg-bg p-6",
         className,
       )}
       style={{ aspectRatio: ratio }}
       role="img"
       aria-label={`Placeholder awaiting ${label} at ${spec}`}
     >
-      <span className="text-center font-mono text-[11px] tracking-[0.14em] text-muted uppercase md:text-xs">
+      <span className="text-center font-mono text-[10px] leading-[1.5] tracking-[0.1em] text-muted uppercase sm:text-[11px] sm:tracking-[0.14em]">
         {label}
       </span>
-      <span className="text-center font-mono text-[11px] tracking-[0.14em] text-muted uppercase tabular">
+      <span className="text-center font-mono text-[10px] leading-[1.5] tracking-[0.1em] text-muted uppercase tabular sm:text-[11px] sm:tracking-[0.14em]">
         {spec}
       </span>
     </div>

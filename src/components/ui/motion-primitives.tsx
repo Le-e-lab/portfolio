@@ -15,17 +15,6 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
   return <LazyMotion features={domAnimation}>{children}</LazyMotion>;
 }
 
-/**
- * Section 8: entrance easing and the reduced-motion contract.
- * With reduced motion, children render in their final state immediately —
- * no stagger, no scrub, no counters.
- */
-function useEntrance(delay = 0) {
-  const reduced = usePrefersReducedMotion();
-  if (reduced || !siteConfig.flags.storytelling) return 0;
-  return delay;
-}
-
 export function Reveal({
   children,
   delay = 0,
@@ -41,17 +30,24 @@ export function Reveal({
   className?: string;
   as?: "div" | "li" | "span" | "section";
 }) {
-  const d = useEntrance(delay);
+  const reduced = usePrefersReducedMotion();
+  const off = reduced || !siteConfig.flags.storytelling;
   const Tag = m[as];
 
+  // Reduced motion or the storytelling kill-switch renders the final state with
+  // no animation. This still has to be an m.* element with an explicit visible
+  // `initial`, not an early return: motion writes its hidden state as an inline
+  // style on the first render, and React reuses that DOM node on the re-render
+  // that follows the media query resolving. A plain tag leaves the stale
+  // opacity:0 behind and the content never appears.
   return (
     <Tag
       data-reveal=""
       className={className}
-      initial={{ opacity: 0, y }}
+      initial={off ? false : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration, ease: EASE_OUT, delay: d }}
+      transition={off ? { duration: 0 } : { duration, ease: EASE_OUT, delay }}
     >
       {children}
     </Tag>

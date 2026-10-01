@@ -42,7 +42,10 @@ function ActivityCalendar({
   }, [dayCount]);
 
   const days = useMemo(() => weeks.flat(), [weeks]);
-  const max = useMemo(() => days.reduce((m, d) => Math.max(m, d.contributionCount), 0), [days]);
+  const max = useMemo(
+    () => days.reduce((m, d) => Math.max(m, d.contributionCount), 0),
+    [days],
+  );
   const first = days[0]?.date;
 
   return (
@@ -54,7 +57,10 @@ function ActivityCalendar({
       <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <SectionLabel index="02" label="Activity" />
-          <h2 id="activity-heading" className="mt-3 max-w-md text-3xl sm:text-4xl">
+          <h2
+            id="activity-heading"
+            className="mt-3 max-w-md text-3xl sm:text-4xl"
+          >
             What I actually typed.
           </h2>
         </div>
@@ -64,10 +70,17 @@ function ActivityCalendar({
       </div>
 
       <dl className="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-4">
-        <Stat term="Contributions" value={totalContributions.toLocaleString("en-GB")} />
+        <Stat
+          term="Contributions"
+          value={totalContributions.toLocaleString("en-GB")}
+        />
         <Stat term="Days active" value={activeDays.toLocaleString("en-GB")} />
         <Stat term="Longest streak" value={`${longestStreak}d`} />
-        <Stat term="Current streak" value={`${currentStreak}d`} accent={currentStreak > 0} />
+        <Stat
+          term="Current streak"
+          value={`${currentStreak}d`}
+          accent={currentStreak > 0}
+        />
       </dl>
 
       <p className="mb-3 font-mono text-[10px] tracking-[0.14em] text-muted uppercase md:hidden">
@@ -84,7 +97,9 @@ function ActivityCalendar({
           style={
             reduced || playhead === null
               ? undefined
-              : { clipPath: `inset(0 ${100 - (playhead / dayCount) * 100}% 0 0)` }
+              : {
+                  clipPath: `inset(0 ${100 - (playhead / dayCount) * 100}% 0 0)`,
+                }
           }
           aria-hidden="true"
         >
@@ -95,7 +110,9 @@ function ActivityCalendar({
                   key={day.date}
                   title={`${day.contributionCount} contributions on ${day.date}`}
                   className="h-[11px] w-[11px] border border-line"
-                  style={{ backgroundColor: `var(--heat-${heatLevel(day.contributionCount, max)})` }}
+                  style={{
+                    backgroundColor: `var(--heat-${heatLevel(day.contributionCount, max)})`,
+                  }}
                 />
               ))}
             </div>
@@ -157,7 +174,12 @@ function Stat({
       <dt className="whitespace-nowrap font-mono text-[11px] leading-4 tracking-[0.12em] text-muted uppercase">
         {term}
       </dt>
-      <dd className={cn("mt-2 text-3xl tabular", accent ? "text-accent" : "text-ink")}>
+      <dd
+        className={cn(
+          "mt-2 text-3xl tabular",
+          accent ? "text-accent" : "text-ink",
+        )}
+      >
         {value}
       </dd>
     </div>
@@ -209,7 +231,11 @@ function monthRange(first: string | undefined, last: string | null) {
   const fmt = (iso: string) => {
     const d = new Date(`${iso}T00:00:00Z`);
     if (Number.isNaN(d.getTime())) return "";
-    return d.toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" });
+    return d.toLocaleDateString("en-GB", {
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    });
   };
   return `${fmt(first)} to ${fmt(last)}`;
 }

@@ -161,38 +161,13 @@ const WORK_GRADE: Record<string, string | undefined> = {
 const WORK_PENDING_ALT: Record<string, string> = {
   "work-kwikifund-cover":
     "[[FILL]] Kwikifund mobile screen showing the credit scoring result",
-  "work-ai-job-agent-cover":
+  "work-job-agent-cover":
     "[[FILL]] Screenshot of the job automation agent's output",
 };
 
 /** Dynamic slot for a case-study slug + kind. Returns undefined for junk ids. */
 export function getWorkSlotId(slug: string, kind: "cover" | `gallery${1|2|3|4}`) {
   return kind === "cover" ? `work-${slug}-cover` : `work-${slug}-${kind}`;
-}
-
-export function getWorkSlotDef(slug: string, kind: "cover" | `gallery${1|2|3|4}`): ImageSlotDef {
-  const id = getWorkSlotId(slug, kind);
-  if (kind === "cover") {
-    return {
-      id,
-      where: `Work / ${slug}`,
-      required: false,
-      ratio: WORK_COVER_RATIO,
-      minWidth: WORK_COVER_MIN.width,
-      minHeight: WORK_COVER_MIN.height,
-      alt:
-        WORK_ALT[id] ?? WORK_PENDING_ALT[id] ?? "[[FILL]] Describe the project UI",
-    };
-  }
-  return {
-    id,
-    where: `Work / ${slug}`,
-    required: false,
-    ratio: "16 / 10",
-    minWidth: WORK_GALLERY_MIN_WIDTH,
-    minHeight: Math.round(WORK_GALLERY_MIN_WIDTH * 0.625),
-    alt: "[[FILL]] Describe the screen",
-  };
 }
 
 /**
