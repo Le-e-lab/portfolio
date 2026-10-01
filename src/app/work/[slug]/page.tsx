@@ -7,6 +7,7 @@ import { getWork, getWorkSlugs, getAdjacent } from "@/lib/work";
 import { ImageSlot } from "@/components/ui/image-slot";
 import { siteConfig } from "@/config/site.config";
 import { getImage } from "@/lib/images";
+import { cn } from "@/lib/cn";
 
 export function generateStaticParams() {
   return getWorkSlugs().map((slug) => ({ slug }));
@@ -89,14 +90,14 @@ export default async function CaseStudyPage({
           <Meta term="Year">{meta.year}</Meta>
           <Meta term="Role">{meta.role}</Meta>
           <div>
-            <dt className="text-dim">Stack</dt>
+            <dt className="text-muted">Stack</dt>
             <dd className="mt-1 text-muted">{meta.stack.join(", ")}</dd>
           </div>
           <div>
-            <dt className="text-dim">Links</dt>
+            <dt className="text-muted">Links</dt>
             <dd className="mt-1 flex flex-wrap gap-3">
               {meta.links.length === 0 ? (
-                <span className="text-dim">None yet</span>
+                <span className="text-muted">None yet</span>
               ) : (
                 meta.links.map((l) => (
                   <a
@@ -120,7 +121,7 @@ export default async function CaseStudyPage({
         {index.length > 0 && (
           <nav aria-label="On this page" className="hidden lg:col-span-3 lg:block">
             <div className="sticky top-28">
-              <p className="font-mono text-[10px] tracking-[0.16em] text-dim uppercase">
+              <p className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
                 On this page
               </p>
               <ul className="mt-3 flex flex-col gap-2 border-l border-line pl-4">
@@ -148,7 +149,8 @@ export default async function CaseStudyPage({
                 fill
                 priority
                 sizes="(max-width: 1024px) 92vw, 780px"
-                className="object-cover [filter:saturate(0.92)_contrast(1.04)]"
+                className="object-cover"
+                style={{ filter: entry.meta.coverGrade ?? "saturate(0.92) contrast(1.04)" }}
               />
             </div>
           ) : (
@@ -191,7 +193,7 @@ export default async function CaseStudyPage({
 
           {meta.gallerySlots.length > 0 && (
             <div className="mt-14">
-              <h2 className="font-mono text-[10px] tracking-[0.16em] text-dim uppercase">
+              <h2 className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
                 Gallery
               </h2>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -204,21 +206,23 @@ export default async function CaseStudyPage({
         </article>
       </div>
 
-      {/* Large previous / next. */}
+      {/*
+        Large previous / next. The first and last case study have one
+        neighbour, not two, so the row collapses to the columns that exist
+        rather than padding the gap with an empty bordered cell — an empty
+        panel next to a filled one reads as a broken image.
+      */}
       <nav
         aria-label="More projects"
-        className="mt-20 grid gap-px border border-line bg-line sm:grid-cols-2"
+        className={cn(
+          "mt-20 grid gap-px border border-line bg-line",
+          // Two neighbours split the row. One neighbour takes the full width
+          // rather than sitting in a half-width cell next to empty space.
+          prev && next ? "sm:grid-cols-2" : "sm:grid-cols-1",
+        )}
       >
-        {prev ? (
-          <ProjectLink item={prev} direction="prev" />
-        ) : (
-          <span className="bg-bg p-6" />
-        )}
-        {next ? (
-          <ProjectLink item={next} direction="next" />
-        ) : (
-          <span className="bg-bg p-6" />
-        )}
+        {prev && <ProjectLink item={prev} direction="prev" />}
+        {next && <ProjectLink item={next} direction="next" />}
       </nav>
     </div>
   );
@@ -227,7 +231,7 @@ export default async function CaseStudyPage({
 function Meta({ term, children }: { term: string; children: React.ReactNode }) {
   return (
     <div>
-      <dt className="text-dim">{term}</dt>
+      <dt className="text-muted">{term}</dt>
       <dd className="mt-1 text-muted">{children}</dd>
     </div>
   );
@@ -245,7 +249,7 @@ function ProjectLink({
       href={`/work/${item.slug}`}
       className="group flex flex-col gap-3 bg-bg p-6 transition-colors duration-300 hover:bg-surface sm:p-8"
     >
-      <span className="font-mono text-[10px] tracking-[0.16em] text-dim uppercase">
+      <span className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
         {direction === "prev" ? "Previous" : "Next"}
       </span>
       <span className="text-2xl tracking-[-0.02em] sm:text-3xl">

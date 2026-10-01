@@ -23,6 +23,12 @@ export type ImageSlotDef = {
   alt: string;
   /** short mono caption used under About images */
   caption?: string;
+  /**
+   * Per-slot CSS filter. Only for screenshots whose own brightness fights the
+   * dark page — a light-theme product shot next to near-black frames otherwise
+   * blows out the whole section. Defaults to the gentle global grade.
+   */
+  grade?: string;
 };
 
 export const IMAGE_SLOTS = {
@@ -141,6 +147,16 @@ const WORK_ALT: Record<string, string> = {
     "GyMPal dashboard: 'Level Up Every Day' above streak counters and dumbbell-only workout templates",
 };
 
+/**
+ * Per-slot grades for screenshots whose own brightness fights the dark page.
+ * Measured mean luminance of each cover: Guardian 231/255, Chef's Muse 16/255,
+ * GyMPal 13/255. Guardian is light-theme, so it needs pulling down or it blows
+ * out the section. The other two are already at the page's own level.
+ */
+const WORK_GRADE: Record<string, string | undefined> = {
+  "work-guardian-cover": "brightness(0.72) contrast(0.96) saturate(0.85)",
+};
+
 /** Work slots we have real descriptions for but no file yet. */
 const WORK_PENDING_ALT: Record<string, string> = {
   "work-kwikifund-cover":
@@ -209,6 +225,7 @@ export function getSlot(id: string): ImageSlotDef | undefined {
       minWidth: WORK_COVER_MIN.width,
       minHeight: WORK_COVER_MIN.height,
       alt: WORK_ALT[id] ?? WORK_PENDING_ALT[id] ?? "[[FILL]] Describe the project UI",
+      grade: WORK_GRADE[id],
     };
   }
 

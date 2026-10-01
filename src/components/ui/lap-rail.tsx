@@ -117,7 +117,7 @@ export function LapRail() {
           </div>
 
           <div className="flex w-28 flex-col justify-between py-0.5">
-            <span className="font-mono text-[10px] tracking-[0.12em] text-dim uppercase tabular">
+            <span className="font-mono text-[11px] tracking-[0.12em] text-muted uppercase tabular">
               Lap {siteConfig.flags.storytelling ? "1/1" : "off"}
             </span>
             <span className="font-mono text-[10px] tracking-[0.12em] text-muted uppercase">

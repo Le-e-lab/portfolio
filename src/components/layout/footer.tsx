@@ -20,7 +20,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Footer">
-            <h2 className="font-mono text-[10px] tracking-[0.16em] text-dim uppercase">
+            <h2 className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
               Sections
             </h2>
             <ul className="mt-3 flex flex-col gap-1.5">
@@ -28,7 +28,7 @@ export function Footer() {
                 <li key={s.id}>
                   <Link
                     href={`/#${s.id}`}
-                    className="draw-underline font-body text-sm text-muted transition-colors duration-200 hover:text-ink"
+                    className="draw-underline inline-flex min-h-[44px] items-center font-body text-sm text-muted transition-colors duration-200 hover:text-ink md:min-h-0"
                   >
                     {s.label}
                   </Link>
@@ -38,7 +38,7 @@ export function Footer() {
           </nav>
 
           <div>
-            <h2 className="font-mono text-[10px] tracking-[0.16em] text-dim uppercase">
+            <h2 className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
               Elsewhere
             </h2>
             <ul className="mt-3 flex flex-col gap-1.5">
@@ -49,7 +49,7 @@ export function Footer() {
                     {...(s.href.startsWith("mailto:")
                       ? {}
                       : { target: "_blank", rel: "noopener noreferrer" })}
-                    className="draw-underline font-body text-sm text-muted transition-colors duration-200 hover:text-ink"
+                    className="draw-underline inline-flex min-h-[44px] items-center font-body text-sm text-muted transition-colors duration-200 hover:text-ink md:min-h-0"
                   >
                     {s.label}
                     {s.handle && (
@@ -61,7 +61,7 @@ export function Footer() {
               <li>
                 <a
                   href={siteConfig.cvPath}
-                  className="draw-underline font-body text-sm text-muted transition-colors duration-200 hover:text-ink"
+                  className="draw-underline inline-flex min-h-[44px] items-center font-body text-sm text-muted transition-colors duration-200 hover:text-ink md:min-h-0"
                 >
                   CV
                   <span className="ml-2 font-mono text-[11px] text-dim">PDF</span>
@@ -72,7 +72,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 font-mono text-[10px] tracking-[0.12em] text-dim uppercase sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 font-mono text-[11px] tracking-[0.12em] text-muted uppercase sm:flex-row sm:items-center sm:justify-between">
           <p>
             {siteConfig.location} &middot; {siteConfig.timezoneLabel}
           </p>

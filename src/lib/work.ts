@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { z } from "zod";
-import { getWorkSlotId } from "@/lib/images.manifest";
+import { getSlot, getWorkSlotId } from "@/lib/images.manifest";
 
 /**
  * Case studies are MDX files in content/work. Frontmatter is validated with
@@ -34,6 +34,8 @@ export const workFrontmatterSchema = z.object({
 
 export type WorkMeta = z.infer<typeof workFrontmatterSchema> & {
   coverSlot: string;
+  /** Per-slot CSS filter from the manifest, so the case cover matches the list. */
+  coverGrade?: string;
 };
 
 export type WorkEntry = {
@@ -51,6 +53,8 @@ export type WorkSummary = {
   summary: string;
   links: { label: string; url: string }[];
   coverSlot: string;
+  /** Per-slot CSS filter, so client-rendered covers match ImageSlot. */
+  coverGrade?: string;
   gallerySlots: string[];
 };
 
@@ -86,10 +90,13 @@ function parse(file: string): WorkEntry {
     );
   }
 
+  const coverSlot = getWorkSlotId(parsed.data.slug, "cover");
+
   return {
     meta: {
       ...parsed.data,
-      coverSlot: getWorkSlotId(parsed.data.slug, "cover"),
+      coverSlot,
+      coverGrade: getSlot(coverSlot)?.grade,
     },
     content,
   };
@@ -119,6 +126,7 @@ export function getAllWork(): WorkSummary[] {
       summary: meta.summary,
       links: meta.links,
       coverSlot: meta.coverSlot,
+      coverGrade: meta.coverGrade,
       gallerySlots: meta.gallerySlots,
     }));
 }

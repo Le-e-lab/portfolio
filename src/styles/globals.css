@@ -3,7 +3,8 @@
 /* ---------------------------------------------------------------------------
    Design tokens — Section 6 of AGENTS.md
    Contrast verified (WCAG AA) — see DECISIONS.md for the measured table.
-   --dim is 3.08:1 on --bg: large-text only (24px+), never used for body copy.
+   --dim is 4.53:1 on --bg, which clears AA at the 10-11px mono sizes it is
+   actually used for. It sits below --muted (5.94:1) so hierarchy still reads.
 --------------------------------------------------------------------------- */
 @theme {
   --color-bg: #0a0a0b;
@@ -12,7 +13,7 @@
   --color-line: #26262b;
   --color-ink: #ededea;
   --color-muted: #8c8c95;
-  --color-dim: #5e5e66;
+  --color-dim: #787881;
   --color-accent: #ff4d2e;
   --color-status: #ffb224;
 

@@ -51,14 +51,14 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
       aria-labelledby="work-heading"
       className="mx-auto max-w-[1120px] scroll-mt-24 px-5 py-16 sm:px-8 sm:py-24"
     >
-      <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+      <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <SectionLabel index="01" label="Work" />
           <h2 id="work-heading" className="mt-3 max-w-md text-3xl sm:text-4xl">
             Five things I have actually shipped.
           </h2>
         </div>
-        <p className="max-w-xs font-mono text-[11px] leading-relaxed tracking-[0.06em] text-muted uppercase">
+        <p className="max-w-xs font-mono text-[11px] leading-relaxed tracking-[0.06em] text-muted uppercase md:pb-1 md:text-right">
           Each one has its own page. Nothing here is a redesign exercise.
         </p>
       </div>
@@ -100,14 +100,14 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
                       </span>
                     </div>
                     <p className="mt-2 max-w-md text-sm text-muted">{w.summary}</p>
-                    <p className="mt-3 font-mono text-[10px] tracking-[0.1em] text-dim uppercase">
+                    <p className="mt-3 font-mono text-[11px] leading-relaxed tracking-[0.1em] text-muted uppercase md:text-xs">
                       {w.role} &middot; {w.stack.slice(0, 3).join(" / ")}
                       {w.stack.length > 3 ? ` +${w.stack.length - 3}` : ""}
                     </p>
                   </div>
                   <span
                     aria-hidden="true"
-                    className="shrink-0 self-center font-mono text-xs text-dim transition-transform duration-300 group-hover:translate-x-1 group-hover:text-accent"
+                    className="shrink-0 self-center font-mono text-base text-muted transition-transform duration-300 group-hover:translate-x-1 group-hover:text-accent"
                   >
                     &rarr;
                   </span>
@@ -161,13 +161,18 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
                         alt={w.title}
                         fill
                         sizes="40vw"
-                        className="object-cover [filter:saturate(0.92)_contrast(1.04)]"
+                        className="object-cover"
+                        style={
+                          w.coverGrade
+                            ? { filter: w.coverGrade }
+                            : { filter: "saturate(0.92) contrast(1.04)" }
+                        }
                       />
                       <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-bg/90 to-transparent p-3">
                         <span className="font-mono text-[10px] tracking-[0.12em] text-ink uppercase">
                           {w.title}
                         </span>
-                        <span className="font-mono text-[10px] text-dim tabular">
+                        <span className="font-mono text-[11px] text-muted tabular">
                           {w.year}
                         </span>
                       </div>
@@ -177,14 +182,14 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
               })}
             </div>
 
-            <p className="mt-4 font-mono text-[10px] tracking-[0.12em] text-dim uppercase">
+            <p className="mt-4 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
               Hover or scroll to preview
             </p>
           </div>
         </div>
       </div>
 
-      <p className="mt-10 font-mono text-[10px] tracking-[0.12em] text-dim uppercase">
+      <p className="mt-10 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
         More in{" "}
         <a
           href={`https://github.com/${siteConfig.githubUsername}`}

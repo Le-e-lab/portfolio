@@ -118,7 +118,7 @@ export function CommandPalette({ work = [] }: { work?: PaletteWorkItem[] }) {
                         }}
                       >
                         <span className="truncate">{p.title}</span>
-                        <span className="ml-auto shrink-0 font-mono text-[10px] text-dim tabular">
+                        <span className="ml-auto shrink-0 font-mono text-[11px] text-muted tabular">
                           {p.year}
                         </span>
                       </Item>
@@ -132,24 +132,24 @@ export function CommandPalette({ work = [] }: { work?: PaletteWorkItem[] }) {
                       }}
                     >
                       {copied ? "Email copied" : "Copy my email"}
-                      <span className="ml-auto font-mono text-[10px] text-dim">
+                      <span className="ml-auto font-mono text-[11px] text-muted">
                         {copied ? "done" : siteConfig.email}
                       </span>
                     </Item>
                     <Item onSelect={() => window.open(`https://github.com/${siteConfig.githubUsername}`, "_blank", "noopener")}>
                       Open GitHub
-                      <span className="ml-auto font-mono text-[10px] text-dim">
+                      <span className="ml-auto font-mono text-[11px] text-muted">
                         {siteConfig.githubUsername}
                       </span>
                     </Item>
                     <Item onSelect={() => router.push(siteConfig.cvPath)}>
                       Download CV
-                      <span className="ml-auto font-mono text-[10px] text-dim">PDF</span>
+                      <span className="ml-auto font-mono text-[11px] text-muted">PDF</span>
                     </Item>
                   </Group>
                 </Command.List>
 
-                <div className="flex items-center gap-4 border-t border-line px-4 py-2 font-mono text-[10px] tracking-[0.1em] text-dim uppercase">
+                <div className="flex items-center gap-4 border-t border-line px-4 py-2 font-mono text-[11px] tracking-[0.1em] text-muted uppercase">
                   <span>
                     <kbd className="text-muted">↑</kbd> <kbd className="text-muted">↓</kbd> move
                   </span>
@@ -173,7 +173,7 @@ function Group({ heading, children }: { heading: string; children: React.ReactNo
   return (
     <Command.Group
       heading={heading}
-      className="mb-1 [&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-2 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:tracking-[0.16em] [&_[cmdk-group-heading]]:text-dim [&_[cmdk-group-heading]]:uppercase"
+      className="mb-1 [&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-2 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:tracking-[0.16em] [&_[cmdk-group-heading]]:text-muted [&_[cmdk-group-heading]]:uppercase"
     >
       {children}
     </Command.Group>

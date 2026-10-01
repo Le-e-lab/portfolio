@@ -59,11 +59,8 @@ export function ImageSlot({
         fill
         sizes={sizes}
         priority={priority}
-        className={cn(
-          "object-cover",
-          "[filter:saturate(0.92)_contrast(1.04)]",
-          imgClassName,
-        )}
+        className={cn("object-cover", imgClassName)}
+        style={{ filter: slot.grade ?? "saturate(0.92) contrast(1.04)" }}
       />
     </div>
   );
@@ -91,17 +88,17 @@ function PlaceholderFrame({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-2 border border-dashed border-line bg-surface",
+        "flex flex-col items-center justify-center gap-2 border border-dashed border-line bg-surface p-6",
         className,
       )}
       style={{ aspectRatio: ratio }}
       role="img"
       aria-label={`Placeholder awaiting ${label} at ${spec}`}
     >
-      <span className="font-mono text-[10px] tracking-[0.14em] text-dim uppercase">
+      <span className="text-center font-mono text-[11px] tracking-[0.14em] text-muted uppercase md:text-xs">
         {label}
       </span>
-      <span className="font-mono text-[10px] tracking-[0.14em] text-dim/70 uppercase tabular">
+      <span className="text-center font-mono text-[11px] tracking-[0.14em] text-muted uppercase tabular">
         {spec}
       </span>
     </div>
