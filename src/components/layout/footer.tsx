@@ -15,7 +15,7 @@ export function Footer() {
               <Brand />
             </Link>
             <p className="mt-3 max-w-xs font-body text-sm text-muted">
-              {siteConfig.designLine}
+              {siteConfig.tagline}
             </p>
           </div>
 

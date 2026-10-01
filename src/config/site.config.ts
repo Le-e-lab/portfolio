@@ -72,7 +72,7 @@ export const siteConfig: SiteConfig = {
   tagline:
     "I build web apps from database to interface — AI scoring tools, student portals and payment flows, shipped from Harare.",
   designLine:
-    "I also design, and I'm still learning it properly. The logos and flyers below are mine.",
+    "I also design, and I'm still learning it properly. The logos and flyers in this portfolio are mine.",
   humanLine:
     "BSc Computer Science at Africa University. I run the Google Developer Student Club there, which is why I am usually explaining something to someone.",
 

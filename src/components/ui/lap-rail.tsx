@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import { SECTORS, SECTIONS, siteConfig } from "@/config/site.config";
 
@@ -13,6 +14,7 @@ import { SECTORS, SECTIONS, siteConfig } from "@/config/site.config";
  * is not a per-frame render.
  */
 export function LapRail() {
+  const pathname = usePathname();
   const [pct, setPct] = useState(0);
   const [activeId, setActiveId] = useState<string>(SECTIONS[0].id);
 
@@ -84,6 +86,10 @@ export function LapRail() {
     }
     return () => observer.disconnect();
   }, []);
+
+  // The lap maps to the seven home sections. On 404 there are no sectors to
+  // cross, so a rail frozen at 000% would read as a broken progress meter.
+  if (pathname !== "/") return null;
 
   const current = SECTIONS.find((s) => s.id === activeId) ?? SECTIONS[0];
   const complete = pct >= 99 && current.id === "contact";
