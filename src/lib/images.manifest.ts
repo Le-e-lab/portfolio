@@ -189,8 +189,15 @@ export function getSlot(id: string): ImageSlotDef | undefined {
 
   if (!id.startsWith("work-")) return undefined;
 
-  // "work-<slug>-cover" | "work-<slug>-galleryN"
-  const [, slug, kind] = id.split("-");
+  // "work-<slug>-cover" | "work-<slug>-galleryN". Slugs are kebab-case and can
+  // contain hyphens (job-agent), so the kind is always the LAST segment and the
+  // slug is everything between the prefix and it.
+  const prefix = "work-";
+  const rest = id.slice(prefix.length);
+  const dash = rest.lastIndexOf("-");
+  if (dash === -1) return undefined;
+  const slug = rest.slice(0, dash);
+  const kind = rest.slice(dash + 1);
   if (!slug || !kind) return undefined;
 
   if (kind === "cover") {

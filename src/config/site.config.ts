@@ -98,7 +98,7 @@ export const siteConfig: SiteConfig = {
   ],
 
   cvPath: "/cv.pdf",
-  ogImagePath: "/og.png",
+  ogImagePath: "/og-image.jpg",
 
   flags: {
     storytelling: true,
