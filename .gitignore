@@ -25,3 +25,17 @@ dist-ssr
 
 # Dev/screenshot artifacts
 .see/
+
+# Next.js
+.next/
+next-env.d.ts
+out/
+
+# Env
+.env
+.env.local
+.env*.local
+
+# Snapshot output is committed on purpose (build fallback), keep the file.
+.see/
+qa/

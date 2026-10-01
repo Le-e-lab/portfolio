@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — Section 6 of AGENTS.md
+   Contrast verified (WCAG AA) — see DECISIONS.md for the measured table.
+   --dim is 3.08:1 on --bg: large-text only (24px+), never used for body copy.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-bg: #0a0a0b;
+  --color-surface: #111113;
+  --color-surface-2: #17171a;
+  --color-line: #26262b;
+  --color-ink: #ededea;
+  --color-muted: #8c8c95;
+  --color-dim: #5e5e66;
+  --color-accent: #ff4d2e;
+  --color-status: #ffb224;
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-martian-mono), ui-monospace, monospace;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+
+  --text-display: 3.5rem;
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.03em;
+
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+
+  --radius-sharp: 2px;
+  --radius-soft: 8px;
+}
+
+/* Heatmap ramp — Section 10. Exposed as raw vars so cells can read them
+   from a single scrubbed custom property without Tailwind class churn. */
+:root {
+  --heat-0: #17171a;
+  --heat-1: #3a1b14;
+  --heat-2: #6e2a1c;
+  --heat-3: #b13a22;
+  --heat-4: #ff4d2e;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    background-color: var(--color-bg);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Only when motion is welcome. JS-free anchor jumps stay instant. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 6rem;
+    }
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Mono numbers must not jitter while counters run. */
+  code,
+  kbd,
+  samp,
+  .tabular,
+  time {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Remove the UA outline only where :focus-visible replaces it. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border: 3px solid var(--color-bg);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dim);
+  }
+  html {
+    scrollbar-color: var(--color-line) var(--color-bg);
+    scrollbar-width: thin;
+  }
+}
+
+@layer components {
+  /* Shared surface: hairline border, no shadow. Section 6. */
+  .hairline {
+    border: 1px solid var(--color-line);
+  }
+
+  /* Underline that draws in from the left on hover. Section 6. */
+  .draw-underline {
+    background-image: linear-gradient(var(--color-accent), var(--color-accent));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .draw-underline:hover,
+  .draw-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* Press feedback — 04 Click. */
+  .press {
+    transition: transform 140ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .press:active {
+    transform: scale(0.97);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion: motion is decoration here, never information. Everything
+   renders in its final state.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   No-JS guard lives in src/app/layout.tsx as a <noscript> block, because
+   motion applies its `initial` hidden state as an inline style only after
+   hydration. Server-rendered HTML is therefore already fully visible, and an
+   `!important` rule here would break every reveal animation.
+--------------------------------------------------------------------------- */
