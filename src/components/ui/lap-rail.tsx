@@ -6,7 +6,7 @@ import { useScroll, useMotionValueEvent } from "motion/react";
 import { SECTORS, SECTIONS, siteConfig } from "@/config/site.config";
 
 /**
- * Section 8: the scroll is one lap, sectors are sections.
+ * The scroll is one lap, sectors are groups of sections.
  *
  * Decorative only (aria-hidden) — the header nav is the navigation.
  * The progress fill and the numeric label are driven by one motion value, and

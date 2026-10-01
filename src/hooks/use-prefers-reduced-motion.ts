@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 /**
- * Section 8 requires reduced-motion to render everything in its final state.
+ * Reduced motion must render everything in its final state.
  * Read once on mount: motion components read it before their first paint.
  */
 export function usePrefersReducedMotion(): boolean {

@@ -10,7 +10,7 @@ import {
  * To change the pairing, edit these four blocks. Nothing else imports a font.
  *
  * Latin subset + display:swap + minimum weights.
- * If Lighthouse performance drops below 95, drop `serif` first (Section 6).
+ * If Lighthouse performance drops below 95, drop `serif` first.
  */
 
 export const display = Bricolage_Grotesque({

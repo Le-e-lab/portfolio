@@ -1,6 +1,6 @@
 /**
  * Single typed source of truth for identity, links and behaviour flags.
- * Section 13 of AGENTS.md.
+ * Single source of truth for identity and section metadata.
  */
 
 export type SocialLink = {
@@ -38,18 +38,18 @@ export type SiteConfig = {
 
   githubUsername: string;
   linkedinUrl: string;
-  /** Exactly one design profile. Section 5: no 14-link social rows. */
+  /** Exactly one design profile. No 14-link social rows. */
   designProfileUrl: string;
   designProfileLabel: string;
 
-  /** Max four. Section 5. */
+  /** Max four. */
   socials: SocialLink[];
 
   cvPath: string;
   ogImagePath: string;
 
   flags: {
-    /** Storytelling motion (Section 8). false = fade-ups only. */
+    /** Storytelling motion. false = fade-ups only. */
     storytelling: boolean;
     /** Fail production builds when a required image slot is missing. */
     strictImages: boolean;
@@ -117,7 +117,7 @@ export const siteConfig: SiteConfig = {
   githubRevalidate: 3600,
 } as const;
 
-/** Nav anchors. Section 7. */
+/** Nav anchors, in page order. Seven sections, one lap. */
 export const SECTIONS = [
   { id: "work", index: "01", label: "Work" },
   { id: "activity", index: "02", label: "Activity" },
@@ -130,7 +130,7 @@ export const SECTIONS = [
 
 export type SectionId = (typeof SECTIONS)[number]["id"];
 
-/** Lap rail sectors. Section 8. */
+/** Lap rail sectors: the three laps across the home page. */
 export const SECTORS = [
   { id: "s1", label: "Who I am", spans: ["hero", "work"] },
   { id: "s2", label: "What I ship", spans: ["activity", "services", "stack"] },

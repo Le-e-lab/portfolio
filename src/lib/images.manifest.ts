@@ -1,5 +1,5 @@
 /**
- * Every image slot in the site, in one place. Section 9 of AGENTS.md.
+ * Every image slot in the site, in one place.
  *
  * `file` is a static import under src/assets/images/. Static imports are
  * required so next/image emits blur placeholders and knows the dimensions at

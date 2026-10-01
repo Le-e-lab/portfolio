@@ -1,4 +1,4 @@
-/** Five heat buckets. Section 8 beat 3. Pure, so both sides can import it. */
+/** Five heat buckets. Pure, so both sides can import it. */
 export function heatLevel(count: number, max: number): 0 | 1 | 2 | 3 | 4 {
   if (count <= 0 || max <= 0) return 0;
   const ratio = count / max;

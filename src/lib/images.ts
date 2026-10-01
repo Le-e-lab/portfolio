@@ -1,7 +1,7 @@
 import type { StaticImageData } from "next/image";
 
 /**
- * Static image imports. Section 9 requires static imports so next/image emits
+ * Static imports, so next/image emits
  * blur placeholders and knows intrinsic dimensions at build time.
  *
  * A slot missing from this map has no file yet and ImageSlot renders its

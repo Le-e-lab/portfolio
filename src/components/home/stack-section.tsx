@@ -3,7 +3,7 @@ import { Reveal } from "@/components/ui/motion-primitives";
 import { STACK_GROUPS } from "@/lib/sections.data";
 
 /**
- * Section 8 beat 5. Grouped by what a technology is FOR. A logo wall of
+ * Grouped by what a technology is FOR. A logo wall of
  * thirty icons would say nothing; "these are the rails I run payment flows
  * on" is a claim you can check.
  */

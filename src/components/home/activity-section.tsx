@@ -8,7 +8,7 @@ import type { ActivityData } from "@/lib/github";
 import { cn } from "@/lib/cn";
 
 /**
- * Section 8 beat 3. The contribution calendar scrubs with the lap rail.
+ * The contribution calendar scrubs with the lap rail.
  *
  * The rail writes --lap-progress on :root and nothing else, so this component
  * subscribes to a custom event it raises rather than adding a second scroll

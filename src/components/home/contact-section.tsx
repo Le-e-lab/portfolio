@@ -5,7 +5,7 @@ import { CopyEmailButton } from "@/components/ui/copy-email-button";
 import { siteConfig } from "@/config/site.config";
 
 /**
- * Section 8 beat 8. Close on the one action that matters. Email is the primary
+ * Close on the one action that matters. Email is the primary
  * target, phone is secondary, and every link that has no URL in site.config is
  * omitted rather than rendered as a dead "#".
  */
@@ -76,7 +76,7 @@ export function ContactSection() {
                 href={`https://github.com/${siteConfig.githubUsername}`}
                 external
               />
-              {/* Rendered only once site.config has real URLs. Section 5 caps the
+              {/* Rendered only once site.config has real URLs. The social cap is
                   row at four links and forbids dead anchors. */}
               {siteConfig.linkedinUrl && (
                 <Row

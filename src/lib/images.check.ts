@@ -3,7 +3,7 @@ import { hasImage } from "./images";
 import { siteConfig } from "@/config/site.config";
 
 /**
- * Section 9: with strictImages on, a production build fails when a required
+ * With strictImages on, a production build fails when a required
  * slot has no file. This runs from the root layout so it covers every route.
  *
  * Currently returns [] because the four About photos and four food photos are

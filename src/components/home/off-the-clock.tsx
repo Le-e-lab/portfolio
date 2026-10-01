@@ -5,7 +5,7 @@ import { OFF_THE_CLOCK } from "@/lib/sections.data";
 import { cn } from "@/lib/cn";
 
 /**
- * Section 8 beat 7. The human end of the site. Calisthenics is real and comes
+ * The human end of the site. Calisthenics is real and comes
  * from the resume because it explains GyMPal; the rest are [[FILL]] because
  * the resume says nothing and guessing would be dishonest.
  */

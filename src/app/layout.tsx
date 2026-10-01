@@ -59,7 +59,7 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-/** JSON-LD Person. Section 13. */
+/** JSON-LD Person, matching the visible content. */
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -94,7 +94,7 @@ export default function RootLayout({
   return (
     <html lang="en-ZW" className={fontVariables}>
       <head>
-        {/* JSON-LD Person. Section 13. */}
+        {/* JSON-LD Person. */}
         <script
           type="application/ld+json"
           // Static, owner-controlled object. No user input reaches this.

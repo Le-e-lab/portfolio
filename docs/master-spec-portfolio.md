@@ -1,111 +1,208 @@
 # Lesley Portfolio — Master Project Specification & Guardrails
 
-> **Project:** Portfolio Refactor & Modernization (`lesley.runs-on.dev` / `Le-e-lab.github.io/portfolio/`)  
-> **Brand Persona:** Lesley — Designer & Developer ("Designer who also codes")  
-> **Stack:** React 19, Vite, Vanilla CSS (design tokens), IntersectionObserver-based reveal system (`useReveal`), Embla carousel, Native Playwright for verification.  
-> **Palette (current, live):** Carbon background (`#0E0E12` page / `#18171C` raised), electric violet-blue accent (`#1800AD` → `#2B1AFF` hover), White text (`#FFFFFF`, dimmed `#C9CDD5`, muted `#8B8F99`), hairline borders (`rgba(255,255,255,0.12)` → `0.28` strong), success/download green (`#57e389`). Full tokens in `src/index.css`.  
-> **Typography:** Display Serif (`Playfair Display`), Body Sans (`Outfit`), Monospace (`JetBrains Mono`).
+> **Project:** Portfolio (`lesley.runs-on.dev`)
+> **Owner:** Lesley Mutsambiwa — full-stack developer, Harare (`Le-e-lab`)
+> **Stack:** Next.js 15 App Router, React 19, Tailwind v4 (`@theme` tokens), `motion` (LazyMotion + `domAnimation`), MDX case studies, native Playwright for verification.
+> **Node:** 26.x · **Package manager:** pnpm (npm scripts still work)
+
+This document describes what actually ships. It replaced a Vite-era spec that
+documented a Carbon + violet palette, a honeycomb gallery, and Playfair/Outfit
+type — none of which exist in this repository any more.
 
 ---
 
-> **Legacy note:** Sections marked with ⚠️ describe the *previous* Tangerine/Cream/honeycomb design (2025-era). The shipped 2026 reskin replaced that system with the Carbon + electric violet-blue palette above and a carousel-based Work gallery. Guardrails here override those legacy spec blocks where they conflict.
+## 1. Non-negotiable content policy
 
-## 1. Aesthetic Architecture & Core Features
+**The site never invents facts.** This is the single most important rule and it
+outranks every aesthetic instruction below.
 
-### ⚠️ A. Pointy-Top Interlocking Honeycomb Gallery (`Featured Work`)
-- **Shape & Ratio:** CSS `clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)` on container with `aspect-ratio: 1 / 1.1547`.
-- **Flex-Row Interlock Math:**
-  - Rows are flex containers (`.hexcomb-row`).
-  - Subsequent rows pull upward: `margin-block-start: calc(var(--hex) * -0.3)`.
-  - Alternate rows offset horizontally: `margin-inline-start: calc(var(--hex) / 2)`.
-- **Light-On Hover Effect:**
-  - Behind the hovered cell, a radial glow (`.hex-glow`) fades in with tangerine accent.
-  - Outer hex scales `1.06` and z-indexes above neighbors.
-  - Inner image scales `1.12` without changing container layout boundaries (zero layout shift).
-  - Label overlay slides up showing project title and discipline.
-- **Mobile Graceful Degradation:** Below 480px, interlock math breaks down. Fall back to a clean 2-column grid or single-column stack.
+- Facts come from `src/config/site.config.ts`, `src/lib/sections.data.ts`, and
+  the resume at `public/Lesley_Mutsambiwa_Resume.docx`.
+- Literal `[[FILL]]` markers in `sections.data.ts` and `content/work/*.mdx` are
+  **intentional owner-work placeholders.** Do not delete them, do not replace
+  them with plausible text, and do not report them as bugs.
+- No fabricated metrics, testimonials, client names, project outcomes, or
+  activity numbers.
+- Unsatisfied image slots render a dashed placeholder frame via `ImageSlot`. That
+  is correct behaviour, not a defect.
 
-### ⚠️ B. Liquid-Blend Organic Section Dividers
-- **Canvas Continuity Metaphor:** An organic SVG blob using the *upcoming* section's background color bleeds upward into the previous section.
-- **Multi-Layer Blend:**
-  - Far bleed: `filter: blur(24px)`, opacity `0.3`, screen blend mode (`mix-blend-mode: screen`).
-  - Near bleed: `filter: blur(10px)`, opacity `0.5`.
-  - Crisp contour: opacity `1.0` anchors the physical boundary.
-- **Alternating Sections:**
-  - Hero (Dark Carbon) → Liquid Divider → Services / Work Intro (Light Cream `#F5F2EB`) → Liquid Divider → Honeycomb Featured Work & Design Showcase (Dark Blueprint `#0c0c0c`) → Liquid Divider → Contact Dossier.
+Still owed by the owner before these become real: LinkedIn URL, design profile
+URL, booking URL, About copy and figure captions, F1 rows/team/opinion, gym
+detail beyond GyMPal, food descriptions, anime/manga titles, side projects, and
+defensible case-study outcomes. Required image slots: `about-headshot`,
+`about-workspace`, `about-gym`, `about-candid`, `food-1..4`,
+`work-kwikifund-cover`, `work-job-agent-cover`.
 
----
+`siteConfig.flags.strictImages` stays `false` until every required slot has a
+real file **and** real alt text. The gate in `src/lib/images.check.ts` is live
+but disabled by design; flipping it too early breaks the build.
 
-## 2. ❌ Anti-Vibecoded Design & Code Guardrails (Strictly Enforced)
-
-Actively avoid all generic "AI-generated" / "vibecoded" tropes:
-
-### Visual & Design Clichés (Forbidden)
-- **NO harsh gradients**, NO generic "radial orb" blur shapes, NO dot-grid backgrounds.
-- **NO Lucide icon pack defaults**, NO sparkle (✨) icons, NO emoji used as UI elements (use clean, scalable inline SVGs styled with CSS custom properties).
-- **NO pure white page backgrounds** — deliberate dark Carbon theme throughout.
-- **NO rainbow/neon/basic pastel palettes** — stick strictly to the Carbon + electric violet-blue system documented above (`#1800AD` / `#2B1AFF` on `#0E0E12`). Do NOT reintroduce the old Tangerine/Cream system.
-- **NO drop-shadow-heavy cards**, NO soft-corner-radius-everywhere look — keep sharp, architectural, intentional edges (hairline 1px borders, small radii).
-- **NO "liquid glass" / glassmorphism effect** — solid dark chips (e.g. `rgba(0,0,0,0.55)`) are preferred for legibility overlays; no `backdrop-filter: blur` fros glass.
-- **NO colored left-stripe cards**, NO generic bento grid layout, NO decorative faux terminal windows.
-- **NO 3-cards-in-a-row generic feature layout**, NO 3-tier pricing tables.
-- **NO checkmark bullet lists** as default list styling.
-- **NO animated arrows**, NO default "hover-lift-on-everything" animation — every animation must be purposeful feedback.
-- **NO fake testimonials** or placeholder "customer" quotes.
-- **Font deliberate selection:** display = Playfair Display, body = Outfit, mono = JetBrains Mono. Do not fall back to Inter, Geist, or Space Grotesk.
-
-### Copywriting Clichés (Forbidden)
-- **NO em-dash-heavy** AI-sounding marketing copy.
-- **NO "It's not X, it's Y"** sentence constructions.
-- Keep copy authentic, punchy, and direct to Lesley's real background and projects.
-
-### Functional & Technical Checklist (Mandatory)
-- [ ] **Zero horizontal scroll** on any screen size. Explicitly test at 360px–400px mobile viewports.
-- [ ] **Zero dead/broken links or buttons** — every interactive element must link to a real route or fire an action.
-- [ ] **Zero leftover placeholder text** ("Lorem ipsum", "Your text here") in production builds. Only explicitly-labeled gallery image placeholders until replaced.
-- [ ] **Working footer links** and current copyright year.
-- [ ] **Favicon, descriptive page title, and meta description** present on every route.
-- [ ] **Compressed/optimized images** (WebP/SVG, explicit aspect ratios to prevent CLS).
-- [ ] **Custom 404 page** matching site aesthetic.
-- [ ] **Explicit feedback states** for all interactive components (loading, sending, success, error).
-- [ ] **Clickable contact info:** Logo, phone number, and email must be clickable (`tel:`, `mailto:`).
+`GITHUB_TOKEN` is server/build-only and optional. With no token the Activity
+section shows an honest empty state. Never substitute sample activity data.
 
 ---
 
-## 3. 🎨 Animation Principles (The 4 Feedback Laws)
+## 2. Design system
 
-Animation is feedback and storytelling, never gratuitous decoration:
+### Tokens (`src/styles/globals.css`, `@theme` block)
 
-1. **01 — Scroll → Storytelling:**
-   - *Parallax:* Background geometric lines move at different velocities from foreground tiles.
-   - *Scrub:* Animations tied directly to scroll progress rather than autoplaying timers.
-   - *Pin + Transform:* Focal section pins in place while internal content shifts underneath.
-2. **02 — Reveal → Hierarchy:**
-   - *Fade + Lift:* Default reveal for new content blocks as they enter viewport.
-   - *Stagger:* Grouped tiles enter sequentially with slight stagger delay.
-   - *Clip Reveal:* Image and visual showcases uncover via clip-path masks rather than generic fades.
-   - *Rule:* Never reveal everything at once — pace content with the user's scroll.
-3. **03 — Hover → Feedback:**
-   - *Magnetic CTA:* Primary buttons subtly shift towards cursor within close proximity.
-   - *Image Zoom:* Image itself scales inside the fixed container (zero layout shift).
-   - *Text Shift:* Links react with subtle underline slide-in or color transition.
-4. **04 — Click → Feedback:**
-   - *Press + Spring:* Buttons compress on active press (`scale(0.97)`) and spring back on release.
-   - *State Sequence:* Async actions show full progression (`Send` → `Sending...` → `Sent ✓`). Never leave a click unacknowledged.
+| Token | Value | Role |
+| --- | --- | --- |
+| `--color-bg` | `#0a0a0b` | Page |
+| `--color-surface` | `#111113` | Ledger rows, cards |
+| `--color-surface-2` | `#17171a` | Hover / nested fill |
+| `--color-line` | `#26262b` | 1px hairlines — the only divider |
+| `--color-ink` | `#ededea` | Primary text |
+| `--color-muted` | `#8c8c95` | Body, labels |
+| `--color-dim` | `#787881` | Tertiary, **bg only** (see contrast) |
+| `--color-accent` | `#ff4d2e` | Indices, single emphasis |
+| `--color-status` | `#ffb224` | GitHub activity heat only |
+
+Dark-only. There is no light theme and no `prefers-color-scheme` branch.
+
+### Measured contrast (WCAG AA needs 4.5:1)
+
+| Foreground | on `bg` | on `surface` | on `surface-2` |
+| --- | --- | --- | --- |
+| `ink` | 16.87 | 16.08 | 15.25 |
+| `muted` | 5.94 | 5.66 | 5.37 |
+| `dim` | **4.53** | **4.31 ✗** | **4.09 ✗** |
+| `accent` | 5.99 | 5.71 | 5.41 |
+| `status` | 10.97 | 10.46 | 9.92 |
+
+**`text-dim` is legal only on `bg`.** On `surface` or `surface-2` use
+`text-muted`. This is a measured constraint, not a preference — an earlier pass
+had About facts and Stack cells failing because of it.
+
+### Typography (`src/lib/fonts.ts`)
+
+Bricolage Grotesque (display) · Instrument Sans (body) · Martian Mono (labels) ·
+Instrument Serif (italic accent, at most one word per headline).
+
+11px uppercase mono at `0.14–0.18em` tracking is the label register. At 360px,
+mono labels need `leading-[1.6] tracking-[0.08em]` or they wrap awkwardly —
+prefer widening a label over truncating it.
+
+Radius is 2px max (`--radius-sharp`). Sharp, architectural edges.
+
+### Forbidden
+
+No gradients, glows, radial orbs, dot grids, drop shadows, glassmorphism,
+`backdrop-filter`, emoji as UI, Lucide defaults, generic bento/3-card layouts,
+checkmark bullet lists, or hover-lift-on-everything. No green anywhere — note
+`public/images/projects/gympal.webp` contains `#10B981` and must be verified or
+replaced before reuse. No em-dash-heavy AI copy, no "It's not X, it's Y"
+constructions.
 
 ---
 
-## 4. 🔒 Security, Legal, Compliance & Accessibility
+## 3. Architecture
 
-- **Security:** No hardcoded tokens, secrets, or API keys in code or git history. Enforce HTTPS, sanitized inputs, secure CORS, and error masking in production.
-- **Legal & Compliance:** Verify licensing on all fonts and visual assets. Simple Privacy Policy and Terms of Service. Honest representation of skills and client work.
-- **Accessibility:** Minimum WCAG AA color contrast ratios (checked especially on the dark Carbon backgrounds and form inputs — e.g. `--text-dim` labels on `rgba(20,20,20,0.45)` fields, the `rgba(0,0,0,0.55)` subtitle chip on the portrait shirt). Comprehensive `alt` text on images, full keyboard navigation with visible focus indicators.
+```
+src/app/            layout, page, sitemap.ts, robots.ts, not-found.tsx, work/[slug]
+src/components/
+  home/             hero, work-list, activity-section,
+                    services-section, stack-section, about-section,
+                    off-the-clock, contact-section
+  layout/           header, footer
+  ui/               brand, copy-email-button, image-slot, lap-rail,
+                    motion-primitives, section-label
+  command-palette/  command-palette
+src/lib/            work.ts (fs, MDX), github.ts (fs, server-only),
+                    heat.ts (pure), sections.data.ts, images.manifest.ts,
+                    images.ts, images.check.ts, cn.ts, fonts.ts
+content/work/       five MDX case studies
+scripts/            snapshot-github.ts
+```
+
+Routing is deliberately shallow: `/` and `/work/[slug]`. Services, Stack, About,
+Off the clock and Contact are **sections of the home page**, not routes. Do not
+add routes for them, and do not link to them as if they were.
+
+`src/lib/work.ts` and `src/lib/github.ts` read the filesystem, so they are
+server-only. `src/lib/heat.ts` must stay pure and client-safe.
+
+### Motion
+
+`MotionProvider` (LazyMotion + `domAnimation`) wraps the **entire tree** in
+`src/app/layout.tsx`. This is load-bearing: a provider nested inside `Hero`
+means every `Reveal` below the fold renders nothing. Do not move it back.
+
+`Reveal` honours both `prefers-reduced-motion` and `siteConfig.flags.storytelling`.
+Under reduced motion it renders the final state with no clip and no transform.
+The CSS `[data-reveal]` override inside the reduced-motion media query is
+deliberate — it makes content visible pre-paint and prevents a hydration race
+where a stale inline `opacity:0` survives.
+
+Server HTML is always visible without JS; the no-JS guard is a `<noscript>` block
+in the layout because motion only applies its hidden state after hydration.
+
+`LapRail` dispatches `lap:progress` with `{ pct }`; `ActivitySection` listens and
+maps it to a single `clip-path` on the calendar wrapper. Never reintroduce
+per-cell animation — 371 Motion components was the version that got replaced.
+It renders on `/` only.
 
 ---
 
-## 5. 🤝 Agent Operating Protocols & Interaction Style
+## 4. Animation laws
 
-- **Direct & Honest:** Challenge bad assumptions. If a proposed design hurts mobile performance, increases bundle weight, or harms readability, explain why and present the better alternative.
-- **Uncertainty Transparency:** If browser support for a CSS property is uncertain or a layout requires polyfilling, state it plainly instead of guessing.
-- **Double-Pass Self-Reflection:** Mentally model code, audit against the anti-vibecoding checklist, and only output complete, production-ready code.
-- **Verification Gate:** Verify frontend changes in a real browser via Playwright screenshots at 375px and 1440px viewports before declaring done.
+1. **Scroll → storytelling.** One scroll listener for the whole page, rAF
+   throttled, with `resize` and `load` re-measurement and proper cleanup. The
+   activity calendar scrubs with the lap rather than adding a second listener.
+2. **Reveal → hierarchy.** Fade + lift (`translateY(8px)` → `0`), staggered.
+   Reveal blocks below the fold. Never reveal everything at once.
+3. **Hover → feedback.** Underline draw, background shift, image zoom inside a
+   fixed container (zero layout shift).
+4. **Click → feedback.** `scale(0.97)` on press. Async actions show full state
+   progression (`Send` → `Sending…` → `Sent ✓`).
+
+Never `transition: all` — list properties explicitly. Never unthrottled scroll or
+resize listeners. Never native `alert`/`confirm`.
+
+---
+
+## 5. Accessibility and quality gates
+
+- Zero horizontal scroll at 360–400px. Verify, don't assume.
+- Tap targets ≥44px on real controls. Sentence links inside a paragraph are not
+  controls and must not carry `min-h-[44px]` — it breaks the line box.
+- Exactly one `h1` per route. Section headlines are `h2`.
+- Full keyboard navigation with a visible focus ring. The 404 exposes a strict
+  order: skip link → brand → palette trigger → nav → content links.
+- Every `<img>` has alt text. Zero dead links (`href="#"` or `href=""`).
+- Descriptive title and meta description on every route.
+
+---
+
+## 6. Verification gate
+
+Before declaring any task finished, staging a commit, or opening a PR:
+
+```bash
+bash /home/lee/.config/opencode/scripts/ci-parity.sh .
+```
+
+It runs `tsc --noEmit`, `next build`, the anti-vibecoding lint, the RSC/App
+Router boundary lint, and the test suite. All must pass.
+
+For UI changes, additionally verify in a real browser via Playwright at 1440px
+and 360px: no horizontal overflow, all reveals visible after a **real wheel
+scroll** (a synthetic `scrollTo` loop does not fire `whileInView`), no console
+errors. Delegate pixel review to `@designer` and apply its exact fixes — it
+cannot see the page, only the screenshots.
+
+---
+
+## 7. Operating protocol
+
+- **Direct and honest.** Challenge bad assumptions. If a request hurts mobile
+  performance, bundle weight, accessibility or readability, say so before
+  implementing it.
+- **Admit uncertainty.** No confident guesses about browser support or library
+  behaviour.
+- **No invented content.** Section 1.
+- **Complete deliverables.** No TODOs, no truncated snippets, no placeholders
+  beyond the sanctioned `[[FILL]]` markers.
+- **Reuse before writing.** Search the repo and the standard library first. No
+  new dependency for something existing or a few lines can do.
+- **Keep work local.** Do not deploy or push unless explicitly asked.

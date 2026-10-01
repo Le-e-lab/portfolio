@@ -3,7 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 
 /**
- * Copy-to-clipboard with an explicit confirmation state. Section 5:
+ * Copy-to-clipboard with an explicit confirmation state.
  * "Copy my email" needs a small "Email copied" confirmation.
  */
 export function useCopy(resetAfterMs = 2000) {

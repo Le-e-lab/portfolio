@@ -1,5 +1,5 @@
 /**
- * Copy for the lower home sections. Section 6 of AGENTS.md: content lives in
+ * Copy for the lower home sections. Content lives in
  * config, not in components, so it can be edited without touching layout.
  *
  * Every claim below is traceable to /public/Lesley_Mutsambiwa_Resume.docx or to
@@ -47,7 +47,7 @@ export const SERVICES: Service[] = [
   },
 ];
 
-/** Stack groups. Section 12 — grouped by what it is FOR, not a logo wall. */
+/** Stack groups, by what a tool is FOR here. Not a logo wall. */
 export type StackGroup = {
   id: string;
   label: string;

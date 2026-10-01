@@ -1,7 +1,7 @@
 import { siteConfig } from "@/config/site.config";
 
 /**
- * Section 1.2: no designed logo, monogram, icon or favicon.
+ * No designed logo, monogram, icon or favicon.
  *
  * If the owner later drops src/assets/brand/logo.svg, import it above and swap
  * the return. Until then the name renders in plain body-font text.

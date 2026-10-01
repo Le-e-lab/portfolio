@@ -12,7 +12,7 @@ import type { WorkSummary } from "@/lib/work";
 import { cn } from "@/lib/cn";
 
 /**
- * Section 8 beat 2. List on the left, sticky 16:10 preview on the right that
+ * List on the left, sticky 16:10 preview on the right that
  * crossfades to whichever project is nearest the viewport centre.
  *
  * IntersectionObserver with rootMargin "-45% 0px -45% 0px" reduces to a thin

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 /**
  * Tracks which section is under the header so the nav and the lap rail can
- * highlight it. Section 2: the active section is highlighted with
+ * highlight it. The active section is highlighted with
  * IntersectionObserver, not scroll math.
  */
 export function useActiveSection(ids: readonly string[]): string | null {

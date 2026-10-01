@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 
-/** Section 6: section index labels in mono, e.g. "01 / Work". */
+/** Section index labels in mono, e.g. "01 / Work". */
 export function SectionLabel({
   index,
   label,

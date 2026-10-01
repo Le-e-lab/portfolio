@@ -55,7 +55,7 @@ export function Reveal({
 }
 
 /**
- * Section 8 beat 1: the name rises word by word out of a masked line.
+ * The name rises word by word out of a masked line.
  * Each word sits in an overflow-hidden box so it appears to slide up from
  * behind the baseline.
  */
@@ -108,7 +108,7 @@ export function MaskedWords({
   );
 }
 
-/** Staggered container for lists. Fade + lift only. Section 8 beat 5. */
+/** Staggered container for lists. Fade + lift only. */
 export function Stagger({
   children,
   className,

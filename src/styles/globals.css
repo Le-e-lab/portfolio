@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Design tokens — Section 6 of AGENTS.md
-   Contrast verified (WCAG AA) — see DECISIONS.md for the measured table.
-   --dim is 4.53:1 on --bg, which clears AA at the 10-11px mono sizes it is
-   actually used for. It sits below --muted (5.94:1) so hierarchy still reads.
+   Measured contrast table and the rules that follow from it live in
+   docs/master-spec-portfolio.md section 2.
+
+   Short version: --dim is 4.53:1 on --bg (AA) but 4.31 on --surface and 4.09 on
+   --surface-2, so text-dim is only legal on bg. Use text-muted everywhere else.
 --------------------------------------------------------------------------- */
 @theme {
   --color-bg: #0a0a0b;
@@ -33,7 +34,7 @@
   --radius-soft: 8px;
 }
 
-/* Heatmap ramp — Section 10. Exposed as raw vars so cells can read them
+/* Heatmap ramp, GitHub activity only. Exposed as raw vars so cells can read them
    from a single scrubbed custom property without Tailwind class churn. */
 :root {
   --heat-0: #17171a;
@@ -131,12 +132,12 @@
 }
 
 @layer components {
-  /* Shared surface: hairline border, no shadow. Section 6. */
+  /* Shared surface: hairline border, no shadow. */
   .hairline {
     border: 1px solid var(--color-line);
   }
 
-  /* Underline that draws in from the left on hover. Section 6. */
+  /* Underline that draws in from the left on hover. */
   .draw-underline {
     background-image: linear-gradient(var(--color-accent), var(--color-accent));
     background-repeat: no-repeat;

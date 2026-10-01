@@ -16,7 +16,7 @@ type PaletteWorkItem = {
 };
 
 /**
- * Section 12. Restyled completely from tokens — nothing here should resemble
+ * Restyled from tokens — nothing here should resemble
  * a stock component library. cmdk handles filtering and list semantics; the
  * chrome is ours.
  */
@@ -24,7 +24,7 @@ export function CommandPalette({ work = [] }: { work?: PaletteWorkItem[] }) {
   const [open, setOpen] = useState(false);
   const { copy, copied } = useCopy();
   const router = useRouter();
-  // Focus returns here when the palette closes. Section 12.
+  // Focus returns here when the palette closes.
   const lastFocused = useRef<HTMLElement | null>(null);
 
   useEffect(() => {

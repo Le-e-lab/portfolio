@@ -10,7 +10,7 @@ type ImageSlotProps = {
   priority?: boolean;
   /** Overrides the manifest alt. Only for genuinely different framing. */
   alt?: string;
-  /** Image treatment: hairline outline + gentle grade. Section 9. */
+  /** Image treatment: hairline outline + gentle grade. */
   framed?: boolean;
   imgClassName?: string;
 };

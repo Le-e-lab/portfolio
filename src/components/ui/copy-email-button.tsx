@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/cn";
 
 /**
- * Copy-email with an explicit confirmation. Section 5 and Section 7 both
+ * Copy-email with an explicit confirmation.
  * require the acknowledgement, so the label swaps rather than relying on a
  * transient toast the user might miss.
  */

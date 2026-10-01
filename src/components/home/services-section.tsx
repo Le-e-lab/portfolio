@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site.config";
 import { SERVICES } from "@/lib/sections.data";
 
 /**
- * Section 8 beat 4. Services as a numbered ledger rather than cards — the
+ * Services as a numbered ledger rather than cards — the
  * point is that these are things someone has actually done, so each row
  * carries its provenance.
  */

@@ -5,7 +5,7 @@ import { ABOUT } from "@/lib/sections.data";
 import { siteConfig } from "@/config/site.config";
 
 /**
- * Section 8 beat 6. Text first, figures along the right rail with mono
+ * Text first, figures along the right rail with mono
  * captions — the figures are owner-supplied, so four of the five are dashed
  * placeholder frames until the photos land.
  */
