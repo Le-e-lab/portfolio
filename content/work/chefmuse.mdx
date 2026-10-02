@@ -6,33 +6,65 @@ role: "Developer"
 order: 3
 summary: "Point your phone at what's in the fridge and get a recipe that only uses the ingredients and tools you have."
 stack:
-  - JavaScript
+  - TypeScript
   - AI
   - Web Scraping
-# [[FILL]] Live URL is unverified. The resume only says "GitHub Pages".
-# Add the real deployment URL here once confirmed.
-links: []
+  - PWA deployment
+links:
+  - label: Live site
+    url: https://le-e-lab.github.io/chefs-muse/
+  - label: Source
+    url: https://github.com/Le-e-lab/chefs-muse
 ---
 
 ## Problem
 
-{/*
-  TODO(owner): 2 short paragraphs. Why did you build this? What is genuinely annoying about
-  existing recipe apps — most recipes assume you buy the exact ingredients
-  first?
-*/}
+A recipe is written for a supermarket run, not for a kitchen. The standard
+instruction assumes you have an oven, a stand mixer, a lemon and precisely
+twelve grams of something, so the moment you open the fridge the recipe is
+already wrong.
+
+That is the normal case. Most people cook from a partial shop and a fixed set of
+equipment, and the useful question is not "what should I cook" but "what can I
+cook with what I have, using the two things my kitchen actually contains".
 
 ## Process
 
+The recipe data was collected by scraping rather than written by hand, because
+hand-writing a usable corpus takes longer than the rest of the project combined,
+and the interesting problem was not the corpus.
+
+The interesting problem is the constraint. A generated recipe is worthless if it
+sends you to the shop, so every step has to be checked against what the user
+actually has available before it is returned. If the answer cannot be made to
+work with that pantry and that equipment, the constraint has to hold and the
+dish gets changed, not the ingredient list.
+
+Input is the rear camera, live. The device camera is opened through
+`getUserMedia` and frames are sent straight to a vision model, so the pantry
+gets read rather than typed. Typed input is the fallback for when someone is
+holding three ingredients and cannot get the phone out.
+
+Output is deliberately text rather than images. A step-by-step list works on a
+phone in a kitchen with one hand free, which is the situation the whole thing
+was built for.
+
+TypeScript throughout, deployed to GitHub Pages.
+
 {/*
-  TODO(owner): 2 to 4 short paragraphs. How does the ingredient recognition work? What did
-  you scrape and how? How do you constrain a generated recipe to the tools
-  and pantry someone actually has?
+  TODO(owner): name the model and the recipe corpus. Which vision model, and
+  where the scraped recipe data came from. Both are concrete nouns a reader
+  would want.
 */}
 
 ## Result
 
+Live on GitHub Pages with the source public. It is built to refuse a recipe
+that needs something you do not have, rather than handing you a shopping list
+with instructions attached.
+
 {/*
-  TODO(owner): 1 paragraph. Recipes it actually produced correctly, or feedback you
-  received. Only claims you can defend.
+  TODO(owner): one real signal, if you have one. Recipes people cooked, feedback
+  you got, or people who forked it. If nobody has used it, say so plainly, that
+  is more credible than a padded line.
 */}

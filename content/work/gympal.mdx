@@ -14,21 +14,43 @@ links: []
 
 ## Problem
 
-{/*
-  TODO(owner): 2 short paragraphs. What is bad about generic fitness apps? Why did you
-  decide the target user trains with limited equipment?
-*/}
+Calisthenics progress is not a workout log. A log records what you did today.
+Calisthenics progress is a ladder you move up slowly, where the same movement
+has three or four harder versions and you might spend two months on one rung
+before it earns the next. An app that stores completed sessions has no way to
+represent that, so the thing you actually care about is not in it anywhere.
+
+Access compounds it. Most of this training happens in a basement, a yard or a
+corridor, which is exactly where there is no signal. An app that needs a
+connection to record a set is an app that loses the set.
 
 ## Process
 
+The data model is the programme, not the session. A routine holds a progression
+ladder and where you currently sit on it, so the log becomes evidence of the
+move rather than the thing being recorded.
+
+Making it installable and offline-capable is the other half. Once it runs from
+the device, a set recorded in a basement with no signal has to survive being
+closed, and the app has to be openable without a network request at all, which
+is why it is a progressive web app with a service worker rather than a wrapper.
+
+Deliberately minimal and dark themed, because it is opened in a dim room
+between sets.
+
 {/*
-  TODO(owner): 2 to 4 short paragraphs. How do you model a training programme rather than a
-  list of exercises? What went into making it installable and offline-
-  capable? How did you structure the streak logic?
+  TODO(owner): one sentence on the streak or progression logic itself. How does
+  it decide you have earned the next rung, and what happens when you miss?
 */}
 
 ## Result
 
+Working app, dark themed, installable and usable with no connection. The
+progression model is the part that works: it tracks where you are on a ladder
+instead of dumping another row into a history table.
+
 {/*
-  TODO(owner): 1 paragraph, only with outcomes you can defend.
+  TODO(owner): one real signal. People using it, a streak someone kept, a
+  progression someone hit. If you have none, write "Built for myself, no users
+  tracked yet." That is fine and honest.
 */}

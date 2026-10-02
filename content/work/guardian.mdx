@@ -4,34 +4,72 @@ slug: guardian
 year: "2026"
 role: "Design and development"
 order: 2
-summary: "Scans small business websites for Zimbabwe's data protection law gaps and explains the fix in plain language."
+summary: "Scans small business websites for vulnerabilities and data protection gaps, and explains the fix in plain language."
 stack:
   - Web development
   - CSS
   - Compliance tooling
+  - Cybersecurity
 links: []
 ---
 
 ## Problem
 
-{/*
-  TODO(owner): 2 to 3 short paragraphs. How did you land on this idea? Who asked for it, or
-  what did you notice? Note this project is not on your resume — write it up
-  properly. Explain what Zimbabwe's data protection law actually requires
-  from a small site.
-*/}
+A founder can ship a site that leaks customer data and never find out. Security
+review means hiring someone, which is the first line a startup cuts, and by the
+time it is affordable the data has usually already gone somewhere.
+
+The compliance half is duller and more expensive to ignore. Zimbabwe's Cyber and
+Data Protection Act [Chapter 12:07] puts real obligations on any business
+processing personal data, and S.I. 155 of 2024 requires a data controller
+licence from POTRAZ, registration once you handle the personal data of fifty or
+more people, and a named data protection officer whose details are meant to be
+published. POTRAZ can audit, fine, and issue corrective orders. Most founders
+have never read any of it.
+
+None of that is helped by another tool that reports CVE numbers at a founder who
+cannot read them. A founder needs three things: what is wrong, whether it
+matters for a business their size, and what to change today.
 
 ## Process
 
+The scan runs against the public surface of a site, because that is what a
+founder can act on without commissioning a server-side engagement. Findings come
+back ranked by severity, and each one states the risk in plain terms before it
+states the technical detail. A founder who cannot read a finding will not act on
+it, so the wording is treated as part of the feature rather than as copy.
+
+The compliance mapping is what makes it useful locally rather than generic. A
+finding is tied to the specific obligation it touches under Chapter 12:07, so
+the output reads as a list of things the business is required to do, not as a
+list of things a tool dislikes. That is the difference between a report a
+founder acts on and one they close.
+
+The interface is built in plain CSS with no framework, on the same reasoning:
+it has to load fast on a cheap connection and stay readable when the person
+running it is not technical.
+
 {/*
-  TODO(owner): 2 to 4 short paragraphs. What does the scan actually check? How does it
-  present findings? What did you build the brand and interface around, and
-  what did you have to learn to do it?
+  TODO(owner): name the actual checks. Which of these are real: TLS and
+  certificate problems, security headers, cookie flags, exposed files or
+  directories, form handling and personal data capture, third-party scripts,
+  the published data protection officer detail S.I. 155 asks for.
+*/}
+
+{/*
+  TODO(owner): who has actually run it. A startup you worked with, a GDSC
+  session, a workshop, or only yourself so far. One sentence.
 */}
 
 ## Result
 
+Early stage. Built alongside startup work, and the reason it exists is that
+turning up at a startup and finding a problem the founder could not afford to
+look for kept happening.
+
 {/*
-  TODO(owner): 1 paragraph, only with outcomes you can defend. If Guardian is early-stage,
-  say plainly where it stands — that is more convincing than a padded claim.
+  TODO(owner): the honest version of a result. Sites scanned, findings a
+  founder acted on, or a startup that fixed something because of it. If nothing
+  yet, keep the line above as the whole result. "Early stage, no numbers yet"
+  reads far better on a portfolio than an invented figure.
 */}
