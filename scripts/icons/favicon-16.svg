@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" role="img" aria-label="Lesley Mutsambiwa">
+  <!--
+    16px-only variant. Drawn on a 16-unit grid rather than scaled from the
+    512 master: the master's L-to-dot gap is 16/512 of the canvas, which lands
+    at 0.5px here and fuses the accent into the foot, so the mark reads as a
+    blob at the one size that is almost always the tab icon.
+
+    There is no room for both the dot and a legible gap inside 16 units, so the
+    accent period is dropped at this size only. The L keeps a 4-unit stem and
+    foot on a 3/2 margin, which is the heaviest shape that still reads.
+  -->
+  <rect width="16" height="16" fill="#0a0a0b" />
+  <path d="M3 2 H7 V10 H13 V14 H3 Z" fill="#ededea" />
+</svg>
