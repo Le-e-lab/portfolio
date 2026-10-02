@@ -35,11 +35,13 @@
 - **Priority:** Blocked on owner
 
 ### 3. Empty owner URLs
-- **Location:** `site.config.ts` → `linkedinUrl`, `bookingUrl` are `""`.
-  `designProfileUrl` now points at Kinto Designs.
+- **Location:** `site.config.ts` → `bookingUrl` is `""`. `linkedinUrl` is now set
+  to `https://www.linkedin.com/in/lesley-mutsambiwa/`; `designProfileUrl` points
+  at Kinto Designs.
 - **Status:** Correctly guarded by `{siteConfig.x && (...)}` in
-  `contact-section.tsx`, so no dead links render. The channels are simply absent.
-- **Upgrade path:** Owner supplies the URLs. No code change needed.
+  `contact-section.tsx`, so no dead links render. Booking is simply absent. LinkedIn
+  returns `999` to automated requests, so the link is unverified by machine.
+- **Upgrade path:** Owner supplies the booking URL. No code change needed.
 - **Priority:** Blocked on owner
 
 ### 4. `images.check.ts` is not unit-testable
@@ -83,5 +85,9 @@
 | ChefMuse frontmatter claimed an unverified URL | Verified both `le-e-lab.github.io/chefs-muse` and `github.com/Le-e-lab/chefs-muse` at HTTP 200, then linked them. The `[[FILL]]` note claiming the URL was unconfirmed is retired. |
 | `snapshot-github.ts` never read `.env.local` | `tsx` does not load env files, so the Activity calendar silently froze on the last good snapshot even with a token present. Added `process.loadEnvFile` with ENOENT tolerated. Verified: fresh 720-contribution fetch. |
 | Kwikifund → KreditZW rename | Completed across content, manifest, config and services data. |
+| Site frozen on a 21 Sep Pages artifact | `gh api repos/…/pages` reported `build_type: "workflow"`, so Pages publishes an uploaded artifact and never read `gh-pages`. The repo contained no Pages workflow, so nothing had rebuilt since September. Added `.github/workflows/deploy-pages.yml` (`configure-pages` → `upload-pages-artifact` → `deploy-pages`) with the `pages`/`id-token` permissions that mode requires. Live now at `lesley.runs-on.dev`. |
+| Static export would have shipped unstyled | Added `public/.nojekyll`. Without it the Pages Jekyll build discards `_next/`, so the site would have gone live with no CSS or JS. |
+| `pnpm install` failed in CI with `ERR_PNPM_IGNORED_BUILDS` | `pnpm-workspace.yaml` had `allowBuilds` entries whose values were the literal placeholder text `"set this to true or false"` instead of booleans. Set both to `true`. Note pnpm 11 ignores the `"pnpm"` field in `package.json` entirely. |
+| CV link was broken on every path | Hero and contact wrapped `siteConfig.cvPath` in `next/link`, which prefetched the target as a route and 404ed on `/cv.pdf.txt`. The command palette used `router.push`, so the CV never downloaded at all. All three are plain anchors now. |
 | Hardcoded label sizes | Replaced `text-[11px]` / `text-[10px]` with the `text-label` / `text-label-sm` tokens. |
 

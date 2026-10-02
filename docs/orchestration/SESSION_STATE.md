@@ -41,20 +41,27 @@
 - `bash /home/lee/.config/opencode/scripts/ci-parity.sh .` → **PASSED**. TypeScript,
   ESLint, anti-vibecoding (43 files), RSC boundaries (41 files), production build,
   and 8/8 tests.
-- Home page, all five `/work/[slug]` routes, `sitemap.xml` and `robots.txt` return
-  200. Unknown slugs return 404.
-- 1440px and 360px: no horizontal overflow, no console errors, no dead internal
-  links, one `h1` per route, all tap targets ≥44px.
+- **Live at <https://lesley.runs-on.dev>.** Pages has `build_type: "workflow"`, so
+  `.github/workflows/deploy-pages.yml` publishes the uploaded artifact on every push
+  to `main`. `public/CNAME` claims the domain, so the export uses no `basePath`.
+- The site had been frozen on a 21 Sep artifact because the workflow that built it
+  was no longer in the repo. Confirmed fixed: the live homepage is now 213,887 bytes
+  with the correct title, and `/work/{kreditzw,guardian,chefmuse,gympal,job-agent}`,
+  `sitemap.xml`, `robots.txt`, `cv.pdf` and `og-image.jpg` all return 200.
+- `public/.nojekyll` is required, not optional: without it the Pages Jekyll build
+  discards `_next/` and the site renders unstyled.
+- All 6 routes verified **on the live domain** at 1440px and 360px: no horizontal
+  overflow, no console errors, no failed requests, one `h1` per route, and every
+  reveal fires after a real wheel scroll. Controls are ≥44px; the remaining sub-44px
+  hits are inline links in prose paragraphs, which the master spec exempts.
 - Secret hygiene: zero `ghp_` / `github_pat_` / private-key matches across all
   tracked files *and* across full git history. `.env.local` is untracked and
   gitignored.
-- The GitHub token was pasted in chat during this session. Rotate it, and put the
-  replacement in the hosting platform's secret store as `GITHUB_TOKEN` if live
-  snapshots are wanted on deploy. The build degrades honestly to the committed
-  720-contribution snapshot when the token is absent — it never fabricates data.
+- The GitHub token was pasted in chat during this session. Rotate it. The build
+  degrades honestly to the committed snapshot when the token is absent — it never
+  fabricates data.
 
-**Working tree clean at `0d43edf`, 10 commits ahead of `origin/main`. Nothing has
-been pushed.**
+**Working tree clean, `main` in sync with `origin/main` at `5536c4c`.**
 
 
 ## Investigated and deliberately not shipped
