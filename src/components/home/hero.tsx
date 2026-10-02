@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { ImageSlot } from "@/components/ui/image-slot";
 import { CopyEmailButton } from "@/components/ui/copy-email-button";
 import { MaskedWords, Reveal } from "@/components/ui/motion-primitives";
@@ -67,12 +66,14 @@ export function Hero() {
                     {s.label}
                   </a>
                 ))}
-                <Link
-                  href={siteConfig.cvPath}
-                  className="draw-underline inline-flex min-h-[44px] items-center px-2 font-mono text-label tracking-[0.12em] uppercase md:min-h-0 md:px-0"
-                >
-                  CV
-                </Link>
+                  {/* Plain anchor, not Link: Link prefetches its target as a
+                      route, which 404s on a file like /cv.pdf. */}
+                  <a
+                    href={siteConfig.cvPath}
+                    className="draw-underline inline-flex min-h-[44px] items-center px-2 font-mono text-label tracking-[0.12em] uppercase md:min-h-0 md:px-0"
+                  >
+                    CV
+                  </a>
               </div>
             </Reveal>
           </div>

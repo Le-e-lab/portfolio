@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/motion-primitives";
 import { CopyEmailButton } from "@/components/ui/copy-email-button";
@@ -50,12 +49,14 @@ export function ContactSection() {
                   Email me
                 </a>
                 <CopyEmailButton variant="outline" />
-                <Link
-                  href={siteConfig.cvPath}
-                  className="press inline-flex min-h-[44px] items-center border border-line px-4 font-mono text-label tracking-[0.12em] text-muted uppercase transition-colors duration-200 hover:border-muted hover:text-ink"
-                >
-                  CV
-                </Link>
+                  {/* Plain anchor, not Link: Link prefetches its target as a
+                      route, which 404s on a file like /cv.pdf. */}
+                  <a
+                    href={siteConfig.cvPath}
+                    className="press inline-flex min-h-[44px] items-center border border-line px-4 font-mono text-label tracking-[0.12em] text-muted uppercase transition-colors duration-200 hover:border-muted hover:text-ink"
+                  >
+                    CV
+                  </a>
               </div>
             </Reveal>
           </div>

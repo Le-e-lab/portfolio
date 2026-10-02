@@ -70,6 +70,13 @@ export type SiteConfig = {
   githubRevalidate: number;
 };
 
+/**
+ * Files in public/ are served from the domain root on a Node deployment, but a
+ * GitHub Pages project page serves them from /portfolio. Set once here so a
+ * public asset is never a broken link on one of the two targets.
+ */
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const siteConfig: SiteConfig = {
   name: "Lesley",
   fullName: "Lesley Mutsambiwa",
@@ -81,7 +88,7 @@ export const siteConfig: SiteConfig = {
   humanLine:
     "CTO and Co-Founder at Elevate Value Partners, where we are building KreditZW so people the banks overlook can get scored without walking into a branch. I run the Google Developer Student Club at Africa University, which is why I am usually explaining something to someone.",
 
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://lesley.runs-on.dev",
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://lesley.runs-on.dev",
   locale: "en_ZW",
   email: "mutsambiwalesley@gmail.com",
   phone: "+263789727791",
@@ -119,8 +126,8 @@ export const siteConfig: SiteConfig = {
     { label: "Email", href: "mailto:mutsambiwalesley@gmail.com", handle: "mutsambiwalesley" },
   ],
 
-  cvPath: "/cv.pdf",
-  ogImagePath: "/og-image.jpg",
+  cvPath: `${basePath}/cv.pdf`,
+  ogImagePath: `${basePath}/og-image.jpg`,
 
   flags: {
     storytelling: true,

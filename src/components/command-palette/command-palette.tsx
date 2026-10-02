@@ -142,7 +142,9 @@ export function CommandPalette({ work = [] }: { work?: PaletteWorkItem[] }) {
                         {siteConfig.githubUsername}
                       </span>
                     </Item>
-                    <Item onSelect={() => router.push(siteConfig.cvPath)}>
+                    {/* A file, not a route. router.push would ask the client
+                        router for an RSC payload at /cv.pdf.txt and fail. */}
+                    <Item onSelect={() => window.location.assign(siteConfig.cvPath)}>
                       Download CV
                       <span className="ml-auto font-mono text-label text-muted">PDF</span>
                     </Item>

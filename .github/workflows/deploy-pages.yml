@@ -1,0 +1,44 @@
+name: Deploy to GitHub Pages
+
+# Pushes the static export to the gh-pages branch, which is what this repo's
+# Pages source already points at. Using the branch (rather than the Pages API)
+# means no change to Settings > Pages is required, and lesley.runs-on.dev keeps
+# working through the CNAME in public/.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# The repository is public; this token only needs to write the artifact branch.
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          # No packageManager field in package.json, so pnpm must be pinned.
+          # 11.5.2 is the version verified against this lockfile locally.
+          version: 11.5.2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build and publish to gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          NEXT_PUBLIC_SITE_URL: https://lesley.runs-on.dev
+        run: bash scripts/deploy-pages.sh
