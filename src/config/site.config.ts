@@ -110,7 +110,7 @@ export const siteConfig: SiteConfig = {
   },
 
   githubUsername: "Le-e-lab",
-  linkedinUrl: "",
+  linkedinUrl: "https://www.linkedin.com/in/lesley-mutsambiwa/",
   designProfileUrl: "",
   designProfileLabel: "Kinto Designs",
 

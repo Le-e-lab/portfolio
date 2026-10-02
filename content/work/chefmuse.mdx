@@ -45,23 +45,22 @@ Input is the rear camera, live. The device camera is opened through
 gets read rather than typed. Typed input is the fallback for when someone is
 holding three ingredients and cannot get the phone out.
 
-Output is deliberately text rather than images. A step-by-step list works on a
-phone in a kitchen with one hand free, which is the situation the whole thing
-was built for.
+Output covers the three ways someone actually reads a recipe. The dish gets a
+generated photograph, prompted as professional food photography from the dish
+name and its first ingredient. The steps get read aloud through Gemini's speech
+model, because half the time you are holding a pan you cannot put down. The
+written steps stay the source of truth, since audio is not something you skim.
+
+Gemini does the reading and the writing. `gemini-flash-latest` takes the camera
+frames and returns a recipe as structured JSON against a fixed schema, so the
+front end parses one known shape instead of scraping prose out of a paragraph.
 
 TypeScript throughout, deployed to GitHub Pages.
 
-{/*
-  TODO(owner): name the model and the recipe corpus. Which vision model, and
-  where the scraped recipe data came from. Both are concrete nouns a reader
-  would want.
-*/}
-
 ## Result
 
-Live on GitHub Pages with the source public. It is built to refuse a recipe
-that needs something you do not have, rather than handing you a shopping list
-with instructions attached.
+Live on GitHub Pages with the source public. Camera to pantry to constrained
+recipe in one flow, with a spoken read-through at the end.
 
 {/*
   TODO(owner): one real signal, if you have one. Recipes people cooked, feedback

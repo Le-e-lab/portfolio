@@ -105,7 +105,7 @@ export default async function CaseStudyPage({
                     href={l.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="draw-underline text-accent"
+                    className="inline-flex min-h-[44px] items-center draw-underline text-accent"
                   >
                     {l.label}
                   </a>

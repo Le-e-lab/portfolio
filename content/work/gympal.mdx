@@ -4,53 +4,57 @@ slug: gympal
 year: "2026"
 role: "Developer"
 order: 4
-summary: "A progressive web app for tracking calisthenics and dumbbell routines, built to work offline."
+summary: "A free, local-first calisthenics and skipping tracker that keeps working when there is no signal."
 stack:
   - JavaScript
+  - Vite
   - PWA
-  - Service Workers
-links: []
+  - Local Storage
+links:
+  - label: Source
+    url: https://github.com/Le-e-lab/GyMPal
 ---
 
 ## Problem
 
-Calisthenics progress is not a workout log. A log records what you did today.
-Calisthenics progress is a ladder you move up slowly, where the same movement
-has three or four harder versions and you might spend two months on one rung
-before it earns the next. An app that stores completed sessions has no way to
-represent that, so the thing you actually care about is not in it anywhere.
+Most fitness apps want an account before they will count a rep. That is a bad
+trade for daily bodyweight work, where the whole habit is doing a small amount
+often and the only thing that matters is that you showed up.
 
-Access compounds it. Most of this training happens in a basement, a yard or a
-corridor, which is exactly where there is no signal. An app that needs a
-connection to record a set is an app that loses the set.
+Local-first is not a feature preference here, it is the thing that makes it
+usable. This training happens in a yard or a corridor, which is exactly where
+signal runs out. An app that needs a round trip to record thirty seconds of
+skipping is an app that loses the record.
 
 ## Process
 
-The data model is the programme, not the session. A routine holds a progression
-ladder and where you currently sit on it, so the log becomes evidence of the
-move rather than the thing being recorded.
+Everything lives in local storage under a set of named keys, start date,
+history, daily progress, weight logs, jog logs, timer alerts. No account, no
+sync, no data leaving the device, and the installable PWA shell with its service
+worker means the exercise library is there before a connection is.
 
-Making it installable and offline-capable is the other half. Once it runs from
-the device, a set recorded in a basement with no signal has to survive being
-closed, and the app has to be openable without a network request at all, which
-is why it is a progressive web app with a service worker rather than a wrapper.
+Daily structure is missions rather than a blank log. Each day has a target with
+rest timers and interval support, and jogging sits alongside it as its own mode
+with distance-based tiers. Progress gets a fourteen-day analytics window for
+sessions and jog volume, and weight gets a trend chart, which is the only part
+of fitness logging that reliably changes behaviour over months.
 
-Deliberately minimal and dark themed, because it is opened in a dim room
-between sets.
+The AI workout generator has a local fallback and only reaches for an API key
+when one is supplied, so the core loop does not depend on a network call or a
+paid tier. Plans can be exported, imported and shared as URLs, which makes a
+routine portable without making an account mandatory.
 
-{/*
-  TODO(owner): one sentence on the streak or progression logic itself. How does
-  it decide you have earned the next rung, and what happens when you miss?
-*/}
+Vite and JavaScript, no framework. The app is one bundle and a JSON payload, so
+there was nothing to be gained from a runtime heavier than the problem.
 
 ## Result
 
-Working app, dark themed, installable and usable with no connection. The
-progression model is the part that works: it tracks where you are on a ladder
-instead of dumping another row into a history table.
+Free, MIT licensed, and public on GitHub. It runs as an installable PWA, builds
+to a static bundle that deploys to any static host, and keeps a full fourteen-day
+history with no account and no connection.
 
 {/*
-  TODO(owner): one real signal. People using it, a streak someone kept, a
-  progression someone hit. If you have none, write "Built for myself, no users
-  tracked yet." That is fine and honest.
+  TODO(owner): a usage signal if you have one, someone else's streak or a
+  fourteen-day window that actually happened. Otherwise what is written is the
+  whole honest result and this comment can go.
 */}
