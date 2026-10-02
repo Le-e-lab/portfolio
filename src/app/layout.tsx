@@ -27,7 +27,19 @@ export const metadata: Metadata = {
   },
   description:
     "Full-stack developer in Harare building web apps from database to interface: AI scoring tools, student portals and payment flows.",
-  alternates: { canonical: "/" },
+    alternates: { canonical: "/" },
+    manifest: siteConfig.manifestPath,
+    // Next auto-links src/app/favicon.ico, which is what a bare /favicon.ico
+    // request resolves to. icon.svg is the master mark and stays crisp at any
+    // size; the raster PNGs remain for the manifest and older browsers.
+    icons: {
+      icon: [
+        { url: siteConfig.faviconPath, sizes: "any" },
+        { url: siteConfig.iconSvgPath, type: "image/svg+xml" },
+      ],
+      apple: [{ url: siteConfig.appleTouchIconPath, sizes: "180x180" }],
+    },
+    themeColor: "#0a0a0b",
   openGraph: {
     type: "website",
     locale: siteConfig.locale,

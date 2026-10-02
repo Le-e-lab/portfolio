@@ -52,6 +52,10 @@ export type SiteConfig = {
 
   cvPath: string;
   ogImagePath: string;
+  faviconPath: string;
+  iconSvgPath: string;
+  appleTouchIconPath: string;
+  manifestPath: string;
 
   flags: {
     /** Storytelling motion. false = fade-ups only. */
@@ -128,6 +132,10 @@ export const siteConfig: SiteConfig = {
 
   cvPath: `${basePath}/cv.pdf`,
   ogImagePath: `${basePath}/og-image.jpg`,
+  faviconPath: `${basePath}/favicon.ico`,
+  iconSvgPath: `${basePath}/icon.svg`,
+  appleTouchIconPath: `${basePath}/apple-touch-icon.png`,
+  manifestPath: `${basePath}/site.webmanifest`,
 
   flags: {
     storytelling: true,

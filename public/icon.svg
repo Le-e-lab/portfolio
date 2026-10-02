@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Lesley Mutsambiwa">
+  <!--
+    Brand mark. Master for favicon-16/32/192/512, apple-touch-icon and
+    site.webmanifest — regenerate with scripts/build-icons.sh rather than
+    editing the PNGs.
+
+    Built to survive 16px: a heavy stem and foot with a single open counter,
+    plus an accent period. Colours are the site tokens exactly (bg/ink/accent),
+    flat fills only, no gradient, glow, shadow or rounding.
+  -->
+  <rect width="512" height="512" fill="#0a0a0b" />
+  <path d="M112 112 H208 V304 H320 V400 H112 Z" fill="#ededea" />
+  <rect x="336" y="304" width="96" height="96" fill="#ff4d2e" />
+</svg>
