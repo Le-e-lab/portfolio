@@ -23,19 +23,23 @@ export function StackSection() {
         </h2>
       </Reveal>
 
-      <dl className="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+      <dl className="stack-grid mt-12 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-3">
         {STACK_GROUPS.map((group, i) => (
           /* dl > div > (dt, dd) is valid. dl > div > div > dt is not, so the
              Reveal wrapper IS the cell — no second div. */
-          <Reveal key={group.id} delay={0.04 * i} className="bg-bg p-5 sm:p-6">
-            <dt className="font-mono text-[11px] tracking-[0.16em] text-ink uppercase">
+          <Reveal
+            key={group.id}
+            delay={0.04 * i}
+            className="border-r border-b border-line p-5 sm:p-6"
+          >
+            <dt className="font-mono text-label tracking-[0.16em] text-ink uppercase">
               {group.label}
             </dt>
             <dd className="mt-4 flex flex-wrap gap-2">
               {group.items.map((item) => (
                 <span
                   key={item}
-                  className="border border-line bg-surface px-2 py-1 font-mono text-[11px] tracking-[0.02em] text-muted"
+                  className="border border-line bg-surface px-2 py-1 font-mono text-label tracking-[0.02em] text-muted"
                 >
                   {item}
                 </span>
@@ -43,16 +47,6 @@ export function StackSection() {
             </dd>
           </Reveal>
         ))}
-
-        <Reveal delay={0.2} className="bg-surface p-5 sm:p-6">
-          <dt className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
-            [[FILL]]
-          </dt>
-          <dd className="mt-4 text-sm leading-[1.7] text-muted">
-            Anything you want added or removed from this list. Right now it
-            mirrors the resume.
-          </dd>
-        </Reveal>
       </dl>
     </section>
   );

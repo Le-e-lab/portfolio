@@ -40,5 +40,18 @@ out/
 .see/
 qa/
 
+# NOT REAL ASSETS. These are screenshots of this site's own dashed placeholder
+# frames, saved into public/ as if they were supplied photography and product
+# shots. Proven by colour histogram: the pixels are --color-bg (#0a0a0b),
+# --color-line (#26262b) and --color-muted (#8c8c95), 149-207 unique colours,
+# standard deviation ~0.01. The four about/* files are byte-identical to each
+# other, as are the four food/* files. Wiring them in would replace eight
+# intentional dashed frames with eight flat black rectangles.
+# Real assets belong in src/assets/images/ and are registered in src/lib/images.ts.
+# See docs/orchestration/SESSION_STATE.md.
+public/images/about/
+public/images/food/
+public/images/projects/
+
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo

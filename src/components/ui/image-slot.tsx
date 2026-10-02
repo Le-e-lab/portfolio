@@ -88,17 +88,21 @@ function PlaceholderFrame({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-2 border border-dashed border-line bg-bg p-6",
+        // A hairline dashed border in --color-line on --color-bg measures
+        // 1.31:1 and disappears in a screenshot, which made these read as
+        // broken images rather than as a slot waiting on a file. Lifting both
+        // the border and the fill one step keeps it quiet but visibly a frame.
+        "flex flex-col items-center justify-center gap-2 border border-dashed border-[#3a3a41] bg-[#0e0e10] p-6",
         className,
       )}
       style={{ aspectRatio: ratio }}
       role="img"
       aria-label={`Placeholder awaiting ${label} at ${spec}`}
     >
-      <span className="text-center font-mono text-[10px] leading-[1.5] tracking-[0.1em] text-muted uppercase sm:text-[11px] sm:tracking-[0.14em]">
+      <span className="text-center font-mono text-label-sm leading-[1.5] tracking-[0.1em] text-muted uppercase sm:text-label sm:tracking-[0.14em]">
         {label}
       </span>
-      <span className="text-center font-mono text-[10px] leading-[1.5] tracking-[0.1em] text-muted uppercase tabular sm:text-[11px] sm:tracking-[0.14em]">
+      <span className="text-center font-mono text-label-sm leading-[1.5] tracking-[0.1em] text-muted uppercase tabular sm:text-label sm:tracking-[0.14em]">
         {spec}
       </span>
     </div>

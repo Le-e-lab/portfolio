@@ -60,7 +60,7 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
             Five things I have actually shipped.
           </h2>
         </div>
-        <p className="max-w-xs font-mono text-[11px] leading-relaxed tracking-[0.06em] text-muted uppercase md:pb-1 md:text-right">
+        <p className="max-w-xs font-mono text-label leading-relaxed tracking-[0.06em] text-muted uppercase md:pb-1 md:text-right">
           Each one has its own page. Nothing here is a redesign exercise.
         </p>
       </div>
@@ -89,7 +89,7 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
                 className="group block py-6 focus-visible:outline-none"
               >
                 <div className="flex items-baseline gap-4">
-                  <span className="font-mono text-[11px] text-dim tabular">
+                  <span className="font-mono text-label text-dim tabular">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -97,14 +97,14 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
                       <h3 className="text-xl text-ink sm:text-2xl">
                         <span className="draw-underline">{w.title}</span>
                       </h3>
-                      <span className="font-mono text-[11px] text-dim tabular">
+                      <span className="font-mono text-label text-dim tabular">
                         {w.year}
                       </span>
                     </div>
                     <p className="mt-2 max-w-md text-sm text-muted">
                       {w.summary}
                     </p>
-                    <p className="mt-3 font-mono text-[11px] leading-relaxed tracking-[0.1em] text-muted uppercase md:text-xs">
+                    <p className="mt-3 font-mono text-label leading-relaxed tracking-[0.1em] text-muted uppercase md:text-xs">
                       {w.role} &middot; {w.stack.slice(0, 3).join(" / ")}
                       {w.stack.length > 3 ? ` +${w.stack.length - 3}` : ""}
                     </p>
@@ -177,10 +177,10 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
                         }
                       />
                       <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-bg/90 to-transparent p-3">
-                        <span className="font-mono text-[10px] tracking-[0.12em] text-ink uppercase">
+                        <span className="font-mono text-label-sm tracking-[0.12em] text-ink uppercase">
                           {w.title}
                         </span>
-                        <span className="font-mono text-[11px] text-muted tabular">
+                        <span className="font-mono text-label text-muted tabular">
                           {w.year}
                         </span>
                       </div>
@@ -190,14 +190,14 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
               })}
             </div>
 
-            <p className="mt-4 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
+            <p className="mt-4 font-mono text-label tracking-[0.12em] text-muted uppercase">
               Hover or scroll to preview
             </p>
           </div>
         </div>
       </div>
 
-      <p className="mt-10 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
+      <p className="mt-10 font-mono text-label tracking-[0.12em] text-muted uppercase">
         More in{" "}
         <a
           href={`https://github.com/${siteConfig.githubUsername}`}

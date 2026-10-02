@@ -10,6 +10,12 @@ import { siteConfig } from "@/config/site.config";
  * omitted rather than rendered as a dead "#".
  */
 export function ContactSection() {
+  // encodeURIComponent on each half, not the joined string, so the body keeps
+  // its real newlines once the mail client decodes it.
+  const inquiryMailto =
+    `mailto:${siteConfig.email}` +
+    `?subject=${encodeURIComponent(siteConfig.inquiry.subject)}` +
+    `&body=${encodeURIComponent(siteConfig.inquiry.body)}`;
   return (
     <section
       id="contact"
@@ -38,15 +44,15 @@ export function ContactSection() {
             <Reveal delay={0.15}>
               <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">
                 <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="press inline-flex min-h-[44px] items-center rounded-[2px] border border-accent bg-accent px-5 font-mono text-[11px] tracking-[0.12em] text-bg uppercase transition-opacity duration-200 hover:opacity-85"
+                  href={inquiryMailto}
+                  className="press inline-flex min-h-[44px] items-center rounded-[2px] border border-accent bg-accent px-5 font-mono text-label tracking-[0.12em] text-bg uppercase transition-opacity duration-200 hover:opacity-85"
                 >
                   Email me
                 </a>
                 <CopyEmailButton variant="outline" />
                 <Link
                   href={siteConfig.cvPath}
-                  className="press inline-flex min-h-[44px] items-center border border-line px-4 font-mono text-[11px] tracking-[0.12em] text-muted uppercase transition-colors duration-200 hover:border-muted hover:text-ink"
+                  className="press inline-flex min-h-[44px] items-center border border-line px-4 font-mono text-label tracking-[0.12em] text-muted uppercase transition-colors duration-200 hover:border-muted hover:text-ink"
                 >
                   CV
                 </Link>
@@ -59,7 +65,7 @@ export function ContactSection() {
               <Row
                 label="Email"
                 value={siteConfig.email}
-                href={`mailto:${siteConfig.email}`}
+                href={inquiryMailto}
               />
               <Row
                 label="Phone"
@@ -105,13 +111,6 @@ export function ContactSection() {
             </dl>
           </Reveal>
         </div>
-
-        <Reveal delay={0.24}>
-          <p className="mt-12 border-t border-line pt-6 text-sm text-muted">
-            [[FILL]] Booking link, if you want one. A Calendly or Cal.com URL
-            here removes a round of email.
-          </p>
-        </Reveal>
       </div>
     </section>
   );
@@ -130,7 +129,7 @@ function Row({
 }) {
   const body = (
     <>
-      <dt className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
+      <dt className="font-mono text-label tracking-[0.14em] text-muted uppercase">
         {label}
       </dt>
       <dd

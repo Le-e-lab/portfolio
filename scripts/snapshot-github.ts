@@ -1,6 +1,18 @@
 import fs from "node:fs";
 import path from "node:path";
 
+/**
+ * `tsx` does not load .env files — only Next.js does. Without this the token
+ * sits in .env.local and the snapshot silently freezes on whatever the last
+ * successful fetch left behind. Values already in the environment win, so CI
+ * and one-off overrides are unaffected. ENOENT is the normal fresh-clone case.
+ */
+try {
+  process.loadEnvFile(".env.local");
+} catch {
+  /* no .env.local: fall through to the no-token path */
+}
+
 const DATA_DIR = path.join(process.cwd(), "data");
 const SNAPSHOT = path.join(DATA_DIR, "github-snapshot.json");
 

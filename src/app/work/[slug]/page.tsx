@@ -75,7 +75,7 @@ export default async function CaseStudyPage({
     <div className="mx-auto max-w-[1120px] px-5 pt-24 pb-16 sm:px-8 sm:pt-32">
       <Link
         href="/#work"
-        className="draw-underline inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] text-muted uppercase"
+        className="draw-underline inline-flex min-h-[44px] items-center gap-2 font-mono text-label tracking-[0.12em] text-muted uppercase md:min-h-0"
       >
         <span aria-hidden="true">&larr;</span> All work
       </Link>
@@ -86,7 +86,7 @@ export default async function CaseStudyPage({
         </h1>
         <p className="mt-5 max-w-2xl text-lg text-muted">{meta.summary}</p>
 
-        <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-line py-5 font-mono text-[11px] tracking-[0.08em] uppercase sm:grid-cols-4">
+        <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-line py-5 font-mono text-label tracking-[0.08em] uppercase sm:grid-cols-4">
           <Meta term="Year">{meta.year}</Meta>
           <Meta term="Role">{meta.role}</Meta>
           <div>
@@ -121,7 +121,7 @@ export default async function CaseStudyPage({
         {index.length > 0 && (
           <nav aria-label="On this page" className="hidden lg:col-span-3 lg:block">
             <div className="sticky top-28">
-              <p className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+              <p className="font-mono text-label tracking-[0.16em] text-muted uppercase">
                 On this page
               </p>
               <ul className="mt-3 flex flex-col gap-2 border-l border-line pl-4">
@@ -129,7 +129,7 @@ export default async function CaseStudyPage({
                   <li key={h.id}>
                     <a
                       href={`#${h.id}`}
-                      className="font-mono text-[11px] tracking-[0.06em] text-muted transition-colors duration-200 hover:text-accent"
+                      className="font-mono text-label tracking-[0.06em] text-muted transition-colors duration-200 hover:text-accent"
                     >
                       {h.label}
                     </a>
@@ -193,7 +193,7 @@ export default async function CaseStudyPage({
 
           {meta.gallerySlots.length > 0 && (
             <div className="mt-14">
-              <h2 className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+              <h2 className="font-mono text-label tracking-[0.16em] text-muted uppercase">
                 Gallery
               </h2>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -249,7 +249,7 @@ function ProjectLink({
       href={`/work/${item.slug}`}
       className="group flex flex-col gap-3 bg-bg p-6 transition-colors duration-300 hover:bg-surface sm:p-8"
     >
-      <span className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+      <span className="font-mono text-label tracking-[0.16em] text-muted uppercase">
         {direction === "prev" ? "Previous" : "Next"}
       </span>
       <span className="text-2xl tracking-[-0.02em] sm:text-3xl">

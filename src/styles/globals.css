@@ -16,7 +16,6 @@
   --color-muted: #8c8c95;
   --color-dim: #787881;
   --color-accent: #ff4d2e;
-  --color-status: #ffb224;
 
   --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
@@ -26,6 +25,14 @@
   --text-display: 3.5rem;
   --text-display--line-height: 1.02;
   --text-display--letter-spacing: -0.03em;
+
+  /* The 11px mono label register, in rem so it scales with the reader's
+     browser font size. A px value here silently ignored accessibility text
+     scaling while every rem size around it grew, which is what made the page
+     look cramped. `text-label` is the label size; `text-label-sm` is the
+     reduced variant used inside tight controls and placeholders. */
+  --text-label: 0.6875rem;
+  --text-label-sm: 0.625rem;
 
   --spacing-18: 4.5rem;
   --spacing-22: 5.5rem;
@@ -206,3 +213,16 @@
    every reveal animation. The reduced-motion rule above is the one exception:
    it is scoped to a media query the browser honours pre-paint.
 --------------------------------------------------------------------------- */
+/* Five stack groups do not tile a 3-column or 2-column grid evenly. Without
+   this the trailing slot reads as missing content rather than a deliberate
+   edge, so the last group absorbs the remainder of its row. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .stack-grid > *:last-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 1024px) {
+  .stack-grid > *:last-child {
+    grid-column: span 2;
+  }
+}

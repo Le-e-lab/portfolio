@@ -16,8 +16,8 @@ export function Hero() {
         <div className="flex flex-wrap items-center justify-between gap-8 sm:gap-10">
           <div className="max-w-2xl space-y-6">
             <Reveal delay={0}>
-              <span className="inline-flex items-center gap-2 border border-line bg-surface px-3 py-1.5 font-mono text-[11px] tracking-[0.14em] uppercase">
-                <span className="h-2 w-2 rounded-full bg-status" />
+              <span className="inline-flex items-center gap-2 border border-line bg-surface px-3 py-1.5 font-mono text-label tracking-[0.14em] uppercase">
+                <span className="h-2 w-2 rounded-full bg-accent" />
                 {siteConfig.availability}
               </span>
             </Reveal>
@@ -36,7 +36,7 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={0.25}>
-              <p className="max-w-[46ch] text-sm leading-[1.7] text-muted">
+              <p className="max-w-[58ch] text-sm leading-[1.7] text-muted">
                 {siteConfig.humanLine}
               </p>
             </Reveal>
@@ -45,7 +45,7 @@ export function Hero() {
               <div className="flex flex-wrap items-center gap-3">
                 <a
                   href="#work"
-                  className="press inline-flex min-h-[44px] items-center border border-accent bg-accent px-5 font-mono text-[11px] tracking-[0.12em] text-bg uppercase transition-opacity duration-200 hover:opacity-85"
+                  className="press inline-flex min-h-[44px] items-center border border-accent bg-accent px-5 font-mono text-label tracking-[0.12em] text-bg uppercase transition-opacity duration-200 hover:opacity-85"
                 >
                   See work
                 </a>
@@ -62,14 +62,14 @@ export function Hero() {
                     {...(s.href.startsWith("mailto:")
                       ? {}
                       : { target: "_blank", rel: "noopener noreferrer" })}
-                    className="draw-underline inline-flex min-h-[44px] items-center font-mono text-[11px] tracking-[0.12em] uppercase"
+                    className="draw-underline inline-flex min-h-[44px] items-center px-2 font-mono text-label tracking-[0.12em] uppercase md:min-h-0 md:px-0"
                   >
                     {s.label}
                   </a>
                 ))}
                 <Link
                   href={siteConfig.cvPath}
-                  className="draw-underline inline-flex min-h-[44px] items-center font-mono text-[11px] tracking-[0.12em] uppercase"
+                  className="draw-underline inline-flex min-h-[44px] items-center px-2 font-mono text-label tracking-[0.12em] uppercase md:min-h-0 md:px-0"
                 >
                   CV
                 </Link>
@@ -83,8 +83,8 @@ export function Hero() {
               priority
               framed
               sizes="(max-width: 768px) 96vw, 280px"
-              className="mx-auto w-40 rounded-full sm:w-56 md:w-64"
-              imgClassName="rounded-full"
+              className="mx-auto w-40 sm:w-56 md:w-64"
+              imgClassName=""
             />
           </Reveal>
         </div>

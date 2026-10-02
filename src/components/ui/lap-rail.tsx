@@ -95,7 +95,7 @@ export function LapRail() {
   const complete = pct >= 99 && current.id === "contact";
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-40">
+    <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-20">
       {/* Mobile: 2px top progress bar. */}
       <div className="h-0.5 w-full bg-line lg:hidden">
         <div
@@ -105,7 +105,7 @@ export function LapRail() {
       </div>
 
       {/* Desktop: thin vertical rail with sector marks. */}
-      <div className="fixed top-1/2 right-5 hidden -translate-y-1/2 lg:block">
+      <div className="fixed top-1/2 right-5 hidden -translate-y-1/2 will-change-transform 2xl:block 2xl:right-10">
         <div className="flex items-stretch gap-3">
           <div className="flex flex-col justify-between py-1">
             {SECTORS.map((sector) => {
@@ -141,13 +141,13 @@ export function LapRail() {
           </div>
 
           <div className="flex w-28 flex-col justify-between py-0.5">
-            <span className="font-mono text-[11px] tracking-[0.12em] text-muted uppercase tabular">
+            <span className="font-mono text-label tracking-[0.12em] text-muted uppercase tabular">
               Lap {siteConfig.flags.storytelling ? "1/1" : "off"}
             </span>
-            <span className="font-mono text-[10px] tracking-[0.12em] text-muted uppercase">
+            <span className="font-mono text-label-sm tracking-[0.12em] text-muted uppercase">
               {complete ? "Lap complete" : current.label}
             </span>
-            <span className="font-mono text-[10px] tracking-[0.12em] text-accent uppercase tabular">
+            <span className="font-mono text-label-sm tracking-[0.12em] text-accent uppercase tabular">
               {String(pct).padStart(3, "0")}%
             </span>
           </div>

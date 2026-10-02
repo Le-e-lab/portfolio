@@ -28,7 +28,7 @@ export const workFrontmatterSchema = z.object({
   order: z.number().int().optional(),
   /** Shown in the work list. Defaults to every case study. */
   featured: z.boolean().optional().default(true),
-  /** Slot ids, e.g. work-kwikifund-gallery-1 */
+  /** Slot ids, e.g. work-kreditzw-gallery-1 */
   gallerySlots: z.array(z.string()).max(4).optional().default([]),
 });
 

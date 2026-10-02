@@ -19,7 +19,8 @@ export type ImageSlotDef = {
   ratio: AspectRatio;
   minWidth: number;
   minHeight: number;
-  /** Guidance shown in PLACEHOLDERS.md until the owner supplies real alt. */
+  /** Owner-supplied. `[[FILL]]` means "still owed" — see §1 of the master
+   *  spec. A slot with a file but placeholder alt renders decorative. */
   alt: string;
   /** short mono caption used under About images */
   caption?: string;
@@ -159,8 +160,8 @@ const WORK_GRADE: Record<string, string | undefined> = {
 
 /** Work slots we have real descriptions for but no file yet. */
 const WORK_PENDING_ALT: Record<string, string> = {
-  "work-kwikifund-cover":
-    "[[FILL]] Kwikifund mobile screen showing the credit scoring result",
+  "work-kreditzw-cover":
+    "[[FILL]] KreditZW mobile screen showing the credit scoring result",
   "work-job-agent-cover":
     "[[FILL]] Screenshot of the job automation agent's output",
 };

@@ -31,7 +31,7 @@ URL, booking URL, About copy and figure captions, F1 rows/team/opinion, gym
 detail beyond GyMPal, food descriptions, anime/manga titles, side projects, and
 defensible case-study outcomes. Required image slots: `about-headshot`,
 `about-workspace`, `about-gym`, `about-candid`, `food-1..4`,
-`work-kwikifund-cover`, `work-job-agent-cover`.
+`work-kreditzw-cover`, `work-job-agent-cover`.
 
 `siteConfig.flags.strictImages` stays `false` until every required slot has a
 real file **and** real alt text. The gate in `src/lib/images.check.ts` is live
@@ -55,8 +55,7 @@ section shows an honest empty state. Never substitute sample activity data.
 | `--color-ink` | `#ededea` | Primary text |
 | `--color-muted` | `#8c8c95` | Body, labels |
 | `--color-dim` | `#787881` | Tertiary, **bg only** (see contrast) |
-| `--color-accent` | `#ff4d2e` | Indices, single emphasis |
-| `--color-status` | `#ffb224` | GitHub activity heat only |
+| `--color-accent` | `#ff4d2e` | Indices, single emphasis, heat ramp top |
 
 Dark-only. There is no light theme and no `prefers-color-scheme` branch.
 
@@ -68,7 +67,6 @@ Dark-only. There is no light theme and no `prefers-color-scheme` branch.
 | `muted` | 5.94 | 5.66 | 5.37 |
 | `dim` | **4.53** | **4.31 ✗** | **4.09 ✗** |
 | `accent` | 5.99 | 5.71 | 5.41 |
-| `status` | 10.97 | 10.46 | 9.92 |
 
 **`text-dim` is legal only on `bg`.** On `surface` or `surface-2` use
 `text-muted`. This is a measured constraint, not a preference — an earlier pass

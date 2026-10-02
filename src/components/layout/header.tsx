@@ -18,12 +18,12 @@ export function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-bg/85 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-[1120px] items-center gap-6 px-5 sm:px-8">
-        <Link href="/" aria-label={`${siteConfig.fullName}, home`} className="shrink-0 text-[15px]">
+        <Link href="/" aria-label={`${siteConfig.fullName}, home`} className="inline-flex min-h-[44px] shrink-0 items-center text-[0.9375rem] md:min-h-0">
           <Brand />
         </Link>
 
         {onHome && (
-          <nav aria-label="Sections" className="hidden md:block">
+          <nav aria-label="Sections" className="hidden lg:block">
             <ul className="flex items-center gap-5">
               {SECTIONS.map((s) => (
                 <li key={s.id}>
@@ -31,7 +31,7 @@ export function Header() {
                     href={`/#${s.id}`}
                     aria-current={active === s.id ? "true" : undefined}
                     className={cn(
-                      "font-mono text-[11px] tracking-[0.12em] uppercase transition-colors duration-200",
+                      "inline-flex min-h-[44px] items-center font-mono text-label tracking-[0.12em] whitespace-nowrap uppercase transition-colors duration-200",
                       active === s.id ? "text-ink" : "text-muted hover:text-ink",
                     )}
                   >
@@ -47,7 +47,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => openCommandPalette()}
-            className="press hidden min-h-[32px] cursor-pointer items-center gap-2 border border-line px-2.5 py-1.5 font-mono text-[10px] tracking-[0.12em] text-muted uppercase transition-colors duration-200 hover:border-muted hover:text-ink sm:inline-flex"
+            className="press hidden min-h-[44px] cursor-pointer items-center gap-2 border border-line px-2.5 font-mono text-label-sm tracking-[0.12em] text-muted uppercase transition-colors duration-200 hover:border-muted hover:text-ink sm:inline-flex"
           >
             <span className="sr-only">Open command palette</span>
             <kbd className="text-ink">Ctrl</kbd>
@@ -59,7 +59,7 @@ export function Header() {
 
           <a
             href={`mailto:${siteConfig.email}`}
-            className="press border border-accent bg-accent px-3 py-1.5 font-mono text-[11px] tracking-[0.12em] text-bg uppercase transition-opacity duration-200 hover:opacity-85"
+            className="press inline-flex min-h-[44px] items-center border border-accent bg-accent px-3 font-mono text-label tracking-[0.12em] text-bg uppercase transition-opacity duration-200 hover:opacity-85"
           >
             Contact
           </a>
@@ -75,9 +75,9 @@ function MobileNav({ onHome }: { onHome: boolean }) {
   return (
     <>
       {/* Anchor jump is all mobile needs; no drawer required for 7 sections. */}
-      <details className="md:hidden">
+      <details className="lg:hidden">
         <summary
-          className="press cursor-pointer list-none border border-line px-2.5 py-1.5 font-mono text-[10px] tracking-[0.12em] text-muted uppercase transition-colors duration-200 hover:text-ink [&::-webkit-details-marker]:hidden"
+          className="press inline-flex min-h-[44px] cursor-pointer list-none items-center border border-line px-2.5 font-mono text-label-sm tracking-[0.12em] text-muted uppercase transition-colors duration-200 hover:text-ink [&::-webkit-details-marker]:hidden"
           aria-label="Open section menu"
         >
           Menu
@@ -91,7 +91,7 @@ function MobileNav({ onHome }: { onHome: boolean }) {
               <li key={s.id}>
                 <a
                   href={onHome ? `#${s.id}` : `/#${s.id}`}
-                  className="flex items-baseline gap-3 border-b border-line/60 py-3 font-mono text-[12px] tracking-[0.1em] uppercase last:border-0"
+                  className="flex min-h-[44px] items-baseline gap-3 border-b border-line/60 py-3 font-mono text-[0.75rem] tracking-[0.1em] uppercase last:border-0"
                 >
                   <span className="text-accent tabular">{s.index}</span>
                   <span className="text-muted">{s.label}</span>

@@ -30,7 +30,7 @@ export function ServicesSection() {
           <li key={service.id} className="border-b border-line">
             <Reveal delay={0.04 * i}>
               <div className="grid gap-3 py-7 sm:grid-cols-[3rem_1fr] sm:gap-6 sm:py-8">
-                <span className="font-mono text-[11px] tracking-[0.14em] text-accent uppercase tabular">
+                <span className="font-mono text-label tracking-[0.14em] text-accent uppercase tabular">
                   {service.index}
                 </span>
 
@@ -41,7 +41,7 @@ export function ServicesSection() {
                   <p className="max-w-[62ch] text-sm leading-[1.7] text-muted sm:text-[0.95rem]">
                     {service.body}
                   </p>
-                  <p className="font-mono text-[11px] leading-[1.6] tracking-[0.08em] text-muted uppercase">
+                  <p className="font-mono text-label leading-[1.6] tracking-[0.08em] text-muted uppercase">
                     {service.evidence}
                   </p>
                 </div>

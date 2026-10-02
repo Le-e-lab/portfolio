@@ -87,7 +87,7 @@ export function CommandPalette({ work = [] }: { work?: PaletteWorkItem[] }) {
                 />
 
                 <Command.List className="max-h-[52vh] overflow-y-auto overscroll-contain p-1.5">
-                  <Command.Empty className="px-3 py-6 font-mono text-[11px] tracking-[0.1em] text-dim uppercase">
+                  <Command.Empty className="px-3 py-6 font-mono text-label tracking-[0.1em] text-dim uppercase">
                     Nothing matches
                   </Command.Empty>
 
@@ -100,7 +100,7 @@ export function CommandPalette({ work = [] }: { work?: PaletteWorkItem[] }) {
                           router.push(`/#${s.id}`);
                         }}
                       >
-                        <span className="w-6 shrink-0 font-mono text-[10px] text-accent tabular">
+                        <span className="w-6 shrink-0 font-mono text-label-sm text-accent tabular">
                           {s.index}
                         </span>
                         {s.label}
@@ -118,7 +118,7 @@ export function CommandPalette({ work = [] }: { work?: PaletteWorkItem[] }) {
                         }}
                       >
                         <span className="truncate">{p.title}</span>
-                        <span className="ml-auto shrink-0 font-mono text-[11px] text-muted tabular">
+                        <span className="ml-auto shrink-0 font-mono text-label text-muted tabular">
                           {p.year}
                         </span>
                       </Item>
@@ -132,24 +132,24 @@ export function CommandPalette({ work = [] }: { work?: PaletteWorkItem[] }) {
                       }}
                     >
                       {copied ? "Email copied" : "Copy my email"}
-                      <span className="ml-auto font-mono text-[11px] text-muted">
+                      <span className="ml-auto font-mono text-label text-muted">
                         {copied ? "done" : siteConfig.email}
                       </span>
                     </Item>
                     <Item onSelect={() => window.open(`https://github.com/${siteConfig.githubUsername}`, "_blank", "noopener")}>
                       Open GitHub
-                      <span className="ml-auto font-mono text-[11px] text-muted">
+                      <span className="ml-auto font-mono text-label text-muted">
                         {siteConfig.githubUsername}
                       </span>
                     </Item>
                     <Item onSelect={() => router.push(siteConfig.cvPath)}>
                       Download CV
-                      <span className="ml-auto font-mono text-[11px] text-muted">PDF</span>
+                      <span className="ml-auto font-mono text-label text-muted">PDF</span>
                     </Item>
                   </Group>
                 </Command.List>
 
-                <div className="flex items-center gap-4 border-t border-line px-4 py-2 font-mono text-[11px] tracking-[0.1em] text-muted uppercase">
+                <div className="flex items-center gap-4 border-t border-line px-4 py-2 font-mono text-label tracking-[0.1em] text-muted uppercase">
                   <span>
                     <kbd className="text-muted">↑</kbd> <kbd className="text-muted">↓</kbd> move
                   </span>
@@ -173,7 +173,7 @@ function Group({ heading, children }: { heading: string; children: React.ReactNo
   return (
     <Command.Group
       heading={heading}
-      className="mb-1 [&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-2 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:tracking-[0.16em] [&_[cmdk-group-heading]]:text-muted [&_[cmdk-group-heading]]:uppercase"
+      className="mb-1 [&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-2 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:text-label [&_[cmdk-group-heading]]:tracking-[0.16em] [&_[cmdk-group-heading]]:text-muted [&_[cmdk-group-heading]]:uppercase"
     >
       {children}
     </Command.Group>

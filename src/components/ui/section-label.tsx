@@ -13,7 +13,7 @@ export function SectionLabel({
   return (
     <p
       className={cn(
-        "flex items-baseline gap-2 font-mono text-[11px] tracking-[0.18em] text-muted uppercase",
+        "flex items-baseline gap-2 font-mono text-label tracking-[0.18em] text-muted uppercase",
         className,
       )}
     >

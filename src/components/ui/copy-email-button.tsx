@@ -24,7 +24,7 @@ export function CopyEmailButton({
       onClick={() => void copy(siteConfig.email)}
       aria-live="polite"
       className={cn(
-        "press inline-flex min-h-[44px] cursor-pointer items-center gap-2 font-mono text-[11px] tracking-[0.12em] uppercase transition-colors duration-200",
+        "press inline-flex min-h-[44px] cursor-pointer items-center gap-2 font-mono text-label tracking-[0.12em] uppercase transition-colors duration-200",
         variant === "outline" &&
           "border border-line px-4 text-muted hover:border-muted hover:text-ink",
         variant === "ghost" && "px-0 text-muted hover:text-ink",

@@ -64,7 +64,7 @@ function ActivityCalendar({
             What I actually typed.
           </h2>
         </div>
-        <p className="max-w-xs font-mono text-[11px] leading-relaxed tracking-[0.06em] text-muted uppercase md:pb-1 md:text-right">
+        <p className="max-w-xs font-mono text-label leading-relaxed tracking-[0.06em] text-muted uppercase md:pb-1 md:text-right">
           Twelve months of commits, read from GitHub at build time.
         </p>
       </div>
@@ -83,7 +83,7 @@ function ActivityCalendar({
         />
       </dl>
 
-      <p className="mb-3 font-mono text-[10px] tracking-[0.14em] text-muted uppercase md:hidden">
+      <p className="mb-3 font-mono text-label-sm tracking-[0.14em] text-muted uppercase md:hidden">
         Scroll to see the full year
       </p>
 
@@ -126,10 +126,10 @@ function ActivityCalendar({
       </p>
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-        <p className="font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
+        <p className="font-mono text-label tracking-[0.12em] text-muted uppercase">
           {monthRange(first, through)}
         </p>
-        <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
+        <div className="flex items-center gap-2 font-mono text-label tracking-[0.12em] text-muted uppercase">
           <span>Less</span>
           {[0, 1, 2, 3, 4].map((l) => (
             <span
@@ -143,7 +143,7 @@ function ActivityCalendar({
         </div>
       </div>
 
-      <p className="mt-8 max-w-md font-mono text-[11px] leading-relaxed tracking-[0.06em] text-muted">
+      <p className="mt-8 max-w-md font-mono text-label leading-relaxed tracking-[0.06em] text-muted">
         <a
           href={`https://github.com/${login}`}
           target="_blank"
@@ -171,7 +171,7 @@ function Stat({
     <div className="min-h-[112px] bg-bg p-4 sm:p-5">
       {/* nowrap matters: "Longest streak" wrapped to two lines at 360px and
           pushed that tile's number off the shared baseline. */}
-      <dt className="whitespace-nowrap font-mono text-[11px] leading-4 tracking-[0.12em] text-muted uppercase">
+      <dt className="whitespace-nowrap font-mono text-label leading-4 tracking-[0.12em] text-muted uppercase">
         {term}
       </dt>
       <dd
@@ -202,10 +202,10 @@ function ActivityEmpty({ login }: { login: string }) {
         className="mt-8 flex flex-col items-center justify-center gap-3 border border-dashed border-line bg-surface p-10 text-center"
         role="status"
       >
-        <span className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
+        <span className="font-mono text-label tracking-[0.14em] text-muted uppercase">
           Activity / contribution calendar
         </span>
-        <p className="max-w-md font-mono text-[11px] leading-relaxed tracking-[0.06em] text-muted">
+        <p className="max-w-md font-mono text-label leading-relaxed tracking-[0.06em] text-muted">
           The calendar fills in once the build machine has{" "}
           <code className="border border-line bg-surface-2 px-1.5 py-0.5 text-ink">
             GITHUB_TOKEN
@@ -216,7 +216,7 @@ function ActivityEmpty({ login }: { login: string }) {
           href={`https://github.com/${login}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="draw-underline mt-1 font-mono text-[11px] tracking-[0.12em] text-ink uppercase"
+          className="draw-underline inline-flex min-h-[44px] items-center font-mono text-label tracking-[0.12em] text-ink uppercase"
         >
           github.com/{login}
         </a>

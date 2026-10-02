@@ -29,7 +29,7 @@ export const SERVICES: Service[] = [
     index: "02",
     title: "Fintech rails that work where the users are",
     body: "USSD, digital wallets and AI credit scoring for microloans, BNPL and financial tooling across Africa.",
-    evidence: "Resume: Kwikifund, Elevate Value Partners",
+    evidence: "Resume: KreditZW, Elevate Value Partners",
   },
   {
     id: "ai",
@@ -58,7 +58,7 @@ export const STACK_GROUPS: StackGroup[] = [
   {
     id: "languages",
     label: "Languages",
-    items: ["TypeScript", "JavaScript", "Python"],
+    items: ["TypeScript", "JavaScript", "Python", "Dart"],
   },
   {
     id: "web",
@@ -67,6 +67,8 @@ export const STACK_GROUPS: StackGroup[] = [
       "React",
       "Next.js",
       "React Native",
+      "Expo",
+      "Flutter",
       "Node.js",
       "REST APIs",
       "Web scraping",
@@ -75,12 +77,12 @@ export const STACK_GROUPS: StackGroup[] = [
   {
     id: "data",
     label: "Data",
-    items: ["MongoDB", "SQL", "AI / ML", "NLP"],
+    items: ["MongoDB", "SQL", "SQLite", "Supabase", "AI / ML", "NLP"],
   },
   {
     id: "platform",
     label: "Platform",
-    items: ["PWA", "Service Workers", "USSD", "Digital wallets", "Bootstrap"],
+    items: ["PWA", "Service Workers", "USSD", "Digital wallets", "Linux", "Fedora KDE"],
   },
   {
     id: "tooling",
@@ -89,7 +91,6 @@ export const STACK_GROUPS: StackGroup[] = [
       "Git",
       "GitHub",
       "Postman",
-      "Linux",
       "Agile",
       "Vercel",
       "Playwright",
@@ -99,10 +100,10 @@ export const STACK_GROUPS: StackGroup[] = [
 
 /** About. The resume gives the career; the rest is the owner's to write. */
 export const ABOUT = {
-  lead: "I am a BSc Computer Science student at Africa University and the Lead Developer at two startups. Most of my work sits in the gap between a database and a person trying to use it.",
+  lead: "I am a BSc Computer Science student at Africa University, the CTO and Co-Founder at Elevate Value Partners, and the lead behind Kinto Designs. Most of my work sits in the gap between a database and a person trying to use it.",
   body: [
     "I started out explaining things. Running the Google Developer Student Club at Africa University means I run the workshops, define what everyone is building, and then read the code when it does not work. That is a better way to learn a stack than tutorials, and it is why I am usually the one explaining something to someone.",
-    "Before that I was building. Kwikifund scores credit for people the banking system has historically ignored, over USSD and mobile wallets, because that is how the users actually bank. The job-automation agent reads job boards, ranks what is worth applying to, and tells me on WhatsApp instead of making me check. GyMPal is a dark-themed PWA that tracks calisthenics and works with the doorbell off.",
+    "Before that, I was building. At Elevate Value Partners, we built KreditZW to score credit for people the banking system has historically ignored, over USSD and mobile wallets, because that is how the users actually bank. For my own workflow, my job-automation agent reads job boards, ranks what is worth applying to, and tells me on WhatsApp instead of making me check. And GyMPal is a dark-themed PWA that tracks my skipping and bodyweight routines while working completely offline.",
     "I care about the unglamorous parts. Responsive layout at 360px. Keyboard focus that survives. A build that fails loudly instead of shipping something broken. The interface is the part everyone sees, but it is the last thing I decide.",
   ],
   facts: [
@@ -112,13 +113,13 @@ export const ABOUT = {
       value: "BSc Honours Computer Science, Africa University, 2028",
     },
     { label: "Academic standing", value: "GPA 3.78, Dean's List" },
-    { label: "Currently", value: "Lead Developer, Tarisai" },
-    { label: "Also", value: "Co-Founder, Elevate Value Partners" },
+    { label: "Currently", value: "CTO & Co-Founder, Elevate Value Partners" },
+    { label: "Also", value: "Lead Developer, Tarisai | Designer, Kinto Designs" },
     { label: "In the club", value: "GDSC Lead, Africa University" },
   ],
 } as const;
 
-/** Off the clock. Resume says nothing about these; they are the owner's. */
+/** Off the clock. The resume says nothing about these; all five are the owner's. */
 export type ClockBlock = {
   id: string;
   index: string;
@@ -133,35 +134,35 @@ export const OFF_THE_CLOCK: ClockBlock[] = [
     id: "f1",
     index: "01",
     label: "Formula 1",
-    body: "[[FILL]] Which season, which team, and what you actually argue about. One driver, one team, one opinion about the last race.",
+    body: "Lewis Hamilton. It's about the drive and the relentless persistence that made him a seven-time world champion.",
     slots: [],
   },
   {
     id: "gym",
     index: "02",
     label: "Calisthenics",
-    body: "The reason GyMPal exists. Dumbbells and bodyweight, long-term routines rather than a list of exercises. I built the tracker because every app assumed a gym I do not have.",
+    body: "The reason GyMPal exists. A 30-minute skipping routine followed by push-ups and bodyweight work. I built the tracker because every app assumed a gym I do not have.",
     slots: ["about-gym"],
   },
   {
     id: "food",
     index: "03",
     label: "Food",
-    body: "[[FILL]] What you cook, what you order when you have given up, and the one dish you would claim is better than it is.",
+    body: "I love unique foods. I'm always exploring and trying to identify new things, stepping outside the usual comfort zone to see what else is out there.",
     slots: ["food-1", "food-2", "food-3", "food-4"],
   },
   {
     id: "anime",
     index: "04",
     label: "Anime and manga",
-    body: "[[FILL]] Titles, and the one that made you start learning something technical.",
+    body: "Dragon Ball Z. I absolutely love everything about DBZ - the energy, the characters, and the sheer scale of it.",
     slots: [],
   },
   {
     id: "side",
     index: "05",
     label: "Side projects",
-    body: "[[FILL]] The things with no deadline that taught you the most.",
+    body: "Building and maintaining the GDSC web platform. It's a space I'm creating where students can interact, find free courses, and access online schedules so they can learn and connect outside of formal classes.",
     slots: [],
   },
 ];

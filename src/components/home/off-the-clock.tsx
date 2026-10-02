@@ -5,9 +5,9 @@ import { OFF_THE_CLOCK } from "@/lib/sections.data";
 import { cn } from "@/lib/cn";
 
 /**
- * The human end of the site. Calisthenics is real and comes
- * from the resume because it explains GyMPal; the rest are [[FILL]] because
- * the resume says nothing and guessing would be dishonest.
+ * The human end of the site. Every entry is owner-supplied: Calisthenics
+ * because it explains GyMPal, the rest because the resume says nothing about
+ * them and guessing would be dishonest.
  */
 export function OffTheClock() {
   return (
@@ -29,7 +29,7 @@ export function OffTheClock() {
         {OFF_THE_CLOCK.map((block, i) => (
           <Reveal key={block.id} delay={0.05 * i}>
             <div className="grid gap-x-2 gap-y-3 border-t border-line py-6 sm:grid-cols-[4rem_14rem_1fr] sm:gap-6 sm:py-7">
-              <span className="font-mono text-[11px] tracking-[0.14em] text-accent uppercase tabular">
+              <span className="font-mono text-label tracking-[0.14em] text-accent uppercase tabular">
                 {block.index}
               </span>
 

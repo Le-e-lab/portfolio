@@ -11,7 +11,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           <div>
-            <Link href="/" className="text-[15px]">
+            <Link href="/" className="inline-flex min-h-[44px] items-center text-[0.9375rem] md:min-h-0">
               <Brand />
             </Link>
             <p className="mt-3 max-w-xs font-body text-sm text-muted">
@@ -20,7 +20,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Footer">
-            <h2 className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+            <h2 className="font-mono text-label tracking-[0.16em] text-muted uppercase">
               Sections
             </h2>
             <ul className="mt-3 flex flex-col gap-1.5">
@@ -38,7 +38,7 @@ export function Footer() {
           </nav>
 
           <div>
-            <h2 className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+            <h2 className="font-mono text-label tracking-[0.16em] text-muted uppercase">
               Elsewhere
             </h2>
             <ul className="mt-3 flex flex-col gap-1.5">
@@ -53,7 +53,7 @@ export function Footer() {
                   >
                     {s.label}
                     {s.handle && (
-                      <span className="ml-2 font-mono text-[11px] text-dim">{s.handle}</span>
+                      <span className="ml-2 font-mono text-label text-dim">{s.handle}</span>
                     )}
                   </a>
                 </li>
@@ -61,10 +61,10 @@ export function Footer() {
               <li>
                 <a
                   href={siteConfig.cvPath}
-                  className="draw-underline inline-flex min-h-[44px] items-center font-body text-sm text-muted transition-colors duration-200 hover:text-ink md:min-h-0"
+                  className="draw-underline inline-flex min-h-[44px] items-center px-2 font-body text-sm text-muted transition-colors duration-200 hover:text-ink md:min-h-0 md:px-0"
                 >
                   CV
-                  <span className="ml-2 font-mono text-[11px] text-dim">PDF</span>
+                  <span className="ml-2 font-mono text-label text-dim">PDF</span>
                 </a>
               </li>
             </ul>
@@ -72,7 +72,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 font-mono text-[11px] tracking-[0.12em] text-muted uppercase sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 font-mono text-label tracking-[0.12em] text-muted uppercase sm:flex-row sm:items-center sm:justify-between">
           <p>
             {siteConfig.location} &middot; {siteConfig.timezoneLabel}
           </p>

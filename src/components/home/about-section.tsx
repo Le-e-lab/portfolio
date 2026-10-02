@@ -10,6 +10,7 @@ import { siteConfig } from "@/config/site.config";
  * placeholder frames until the photos land.
  */
 export function AboutSection() {
+  const mailHref = `mailto:${siteConfig.email}`;
   return (
     <section
       id="about"
@@ -40,7 +41,7 @@ export function AboutSection() {
               <dl className="grid gap-px border border-line bg-line sm:grid-cols-2">
                 {ABOUT.facts.map((fact) => (
                   <div key={fact.label} className="bg-surface px-4 py-3 sm:py-4">
-                    <dt className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
+                    <dt className="font-mono text-label tracking-[0.14em] text-muted uppercase">
                       {fact.label}
                     </dt>
                     <dd className="mt-1.5 text-sm text-ink">{fact.value}</dd>
@@ -51,10 +52,16 @@ export function AboutSection() {
 
             <Reveal delay={0.24}>
               <p className="max-w-[58ch] text-[0.95rem] leading-[1.75] text-muted">
-                [[FILL]] Anything the resume does not say and you want on the
-                record — what you are aiming at after 2028, whether you are
-                looking for work or taking contract work, and anything a reader
-                should know before they email.
+                I am open to freelance and contract work while I finish my
+                degree, so if you have something that needs building,{" "}
+                <a
+                  href={mailHref}
+                  className="text-ink underline decoration-line underline-offset-4 transition-colors duration-200 hover:decoration-accent"
+                >
+                  email me
+                </a>{" "}
+                and I will tell you honestly whether I am the right person for
+                it.
               </p>
             </Reveal>
           </div>
@@ -70,7 +77,7 @@ export function AboutSection() {
         </div>
 
         <Reveal delay={0.2}>
-          <p className="mt-12 border-t border-line pt-6 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
+          <p className="mt-12 border-t border-line pt-6 font-mono text-label tracking-[0.12em] text-muted uppercase">
             {siteConfig.timezoneLabel} — {siteConfig.availability}
           </p>
         </Reveal>
@@ -87,7 +94,7 @@ function Figure({ id, className }: { id: string; className?: string }) {
         sizes="(max-width: 1024px) 50vw, 320px"
         className="w-full"
       />
-      <figcaption className="mt-2 font-mono text-[11px] tracking-[0.1em] text-muted uppercase">
+      <figcaption className="mt-2 font-mono text-label tracking-[0.1em] text-muted uppercase">
         {FIGURE_CAPTIONS[id]}
       </figcaption>
     </figure>
@@ -95,13 +102,15 @@ function Figure({ id, className }: { id: string; className?: string }) {
 }
 
 /**
- * ImageSlot renders its own dashed frame until the file lands, so captions
- * stay visible and the section reads as intentionally incomplete rather than
- * broken. Both are [[FILL]] in the manifest until the owner supplies alt text.
+ * ImageSlot renders its own dashed frame until the file lands, so a caption
+ * line stays visible and the section reads as intentionally incomplete rather
+ * than broken. These are the owner's to write; the owed content is tracked in
+ * docs/orchestration/SESSION_STATE.md. The raw [[FILL]] marker stays in the
+ * manifest as the owner-facing flag but is never rendered.
  */
 const FIGURE_CAPTIONS: Record<string, string> = {
-  "about-headshot": "Fig. 01: [[FILL]]",
-  "about-workspace": "Fig. 02: [[FILL]]",
-  "about-gym": "Fig. 03: [[FILL]]",
-  "about-candid": "Fig. 04: [[FILL]]",
+  "about-headshot": "Fig. 01 — caption pending",
+  "about-workspace": "Fig. 02 — caption pending",
+  "about-gym": "Fig. 03 — caption pending",
+  "about-candid": "Fig. 04 — caption pending",
 };

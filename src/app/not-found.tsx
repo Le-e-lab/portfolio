@@ -41,7 +41,7 @@ export default function NotFound() {
               href="/"
               className="group grid min-h-[72px] grid-cols-[4.5rem_1fr_auto] items-center gap-3 px-4 transition-colors duration-200 hover:bg-surface-2"
             >
-              <span className="font-mono text-[11px] tracking-[0.16em] text-accent uppercase tabular">
+              <span className="font-mono text-label tracking-[0.16em] text-accent uppercase tabular">
                 Index
               </span>
               <span className="text-[1.15rem] leading-[1.3] tracking-[-0.015em] text-ink">
@@ -57,7 +57,7 @@ export default function NotFound() {
                 href={`/work/${entry.slug}`}
                 className="group grid min-h-[72px] grid-cols-[4.5rem_1fr_auto] items-center gap-3 px-4 transition-colors duration-200 hover:bg-surface"
               >
-                <span className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase tabular">
+                <span className="font-mono text-label tracking-[0.16em] text-muted uppercase tabular">
                   {entry.year}
                 </span>
                 <span className="text-[1.15rem] leading-[1.3] tracking-[-0.015em]">
@@ -78,7 +78,7 @@ function Arrow() {
   return (
     <span
       aria-hidden="true"
-      className="font-mono text-[11px] text-dim opacity-40 transition-[color,opacity] duration-200 group-hover:text-ink group-hover:opacity-100 group-focus-visible:text-ink group-focus-visible:opacity-100"
+      className="font-mono text-label text-dim opacity-40 transition-[color,opacity] duration-200 group-hover:text-ink group-hover:opacity-100 group-focus-visible:text-ink group-focus-visible:opacity-100"
     >
       &rarr;
     </span>

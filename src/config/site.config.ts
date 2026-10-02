@@ -15,8 +15,8 @@ export type SiteConfig = {
   /** Used for <title>, OG, JSON-LD Person. */
   fullName: string;
   role: string;
-  /** Short plain sentence for the hero. See COPY.md — all three options
-   *  were drafted from the owner's resume; the chosen one needs sign-off. */
+  /** Short plain sentence for the hero. Drafted from the owner's resume;
+   *  still needs the owner's sign-off. */
   tagline: string;
   /** The one honest design line. Appears once, in Services. */
   designLine: string;
@@ -35,6 +35,11 @@ export type SiteConfig = {
   /** Contact block. */
   responseTime: string;
   bookingUrl: string;
+  /** Prefilled email inquiry. Built into a mailto: href by ContactSection. */
+  inquiry: {
+    subject: string;
+    body: string;
+  };
 
   githubUsername: string;
   linkedinUrl: string;
@@ -72,9 +77,9 @@ export const siteConfig: SiteConfig = {
   tagline:
     "I build web apps from database to interface — AI scoring tools, student portals and payment flows, shipped from Harare.",
   designLine:
-    "I also design, and I'm still learning it properly. The logos and flyers in this portfolio are mine.",
+    "I also design, working under Kinto Designs. The logos and flyers in this portfolio are mine.",
   humanLine:
-    "BSc Computer Science at Africa University. I run the Google Developer Student Club there, which is why I am usually explaining something to someone.",
+    "CTO and Co-Founder at Elevate Value Partners, where we are building KreditZW so people the banks overlook can get scored without walking into a branch. I run the Google Developer Student Club at Africa University, which is why I am usually explaining something to someone.",
 
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://lesley.runs-on.dev",
   locale: "en_ZW",
@@ -86,11 +91,28 @@ export const siteConfig: SiteConfig = {
   availability: "Open to freelance and contract work",
   responseTime: "Usually replies within 24 hours",
   bookingUrl: "",
+  inquiry: {
+    subject: "Freelance or Contract Inquiry",
+    body: [
+      "Hi Lesley,",
+      "",
+      "I'm reaching out to discuss a freelance or contract opportunity.",
+      "",
+      "A bit about the work:",
+      "What I'm building:",
+      "Timeline:",
+      "Budget range:",
+      "",
+      "Thanks,",
+      "My name:",
+      "Company (if applicable):",
+    ].join("\n"),
+  },
 
   githubUsername: "Le-e-lab",
   linkedinUrl: "",
   designProfileUrl: "",
-  designProfileLabel: "Design",
+  designProfileLabel: "Kinto Designs",
 
   socials: [
     { label: "GitHub", href: "https://github.com/Le-e-lab", handle: "Le-e-lab" },
@@ -106,7 +128,8 @@ export const siteConfig: SiteConfig = {
      * strictImages ships FALSE on purpose. The four About photos and four
      * food photos are still unsupplied, and a true value blocks every build.
      * The gate itself is implemented and live in src/lib/images.check.ts.
-     * Flip this to true once those eight files exist. See PLACEHOLDERS.md.
+     * Flip this to true once those eight files exist and have real alt text.
+     * See docs/orchestration/debt_ledger.md.
      */
     strictImages: false,
     contactForm: false,
