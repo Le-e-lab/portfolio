@@ -11,21 +11,63 @@ stack:
   - AI
   - Web Scraping
   - WhatsApp API
+# Work in progress with no public URL by choice. Do not add one until there is
+# something a stranger can open without an account.
 links: []
 ---
 
 ## Problem
 
-[[FILL: 2 short paragraphs. Why did you build this for yourself? How many applications
-were you actually missing by the time you read the email?]]
+Job alerts arrive in the same inbox as everything else, and the deadline is
+usually shorter than the attention they deserve. By the time a promising posting
+has been read and judged, the applicants who needed no thought are already in.
+The loss is rarely a job that was winnable. It is the ones that never got an
+application at all.
+
+The second problem is quieter. An application written in a hurry reads like an
+application written in a hurry, and the reader can tell. More applications is
+not the fix. Arriving earlier, and arriving with something tailored, is.
 
 ## Process
 
-[[FILL: 2 to 4 short paragraphs. How does the classifier decide priority? What signals
-did you train or prompt on? How does the WhatsApp alert work, and what do you do when
-the API is down? How does it scrape job boards without getting blocked?]]
+The agent watches the inbox, decides what actually matters, and pushes only the
+urgent items out of email and onto WhatsApp, where there is a chance of acting
+on them before the posting closes.
+
+{/*
+  TODO(owner): one sentence on how the priority decision is made. Trained classifier or
+  prompted model, and which signals carry the most weight in the ranking?
+*/}
+
+From there it pulls the posting and drafts an application against the actual
+requirements, rather than against one template stretched over everything.
+{/*
+  TODO(owner): one sentence on the part that made this interesting. Handling the
+  WhatsApp API going down, or scraping job boards without getting blocked?
+*/}
+
+Python throughout: the scraping and the NLP do the retrieval, and the model
+handles both the triage and the drafting.
+
+{/*
+  TODO(owner): name the real components. Which model, which NLP library, and
+  WhatsApp through which provider or gateway. One concrete noun each fixes the
+  vague "AI" and "Web Scraping" stack tokens too.
+*/}
 
 ## Result
 
-[[FILL: 1 paragraph, only with outcomes you can defend. Applications submitted, hours
-saved per week — measured, not estimated.]]
+Running since August 2025. The target was deliberately narrow: reach the posting
+before the deadline, and send something worth reading when it does.
+
+{/*
+  TODO(owner): this section needs one outcome, not one status line. Any single
+  one of these is enough:
+    - applications sent
+    - hours a week it saves you
+    - how far ahead of the closing time the alert lands
+    - how many postings a month you now reach that you used to miss
+  If none of them are measured, write "Built for my own use, no numbers tracked."
+  That is honest and perfectly acceptable.
+*/}
+

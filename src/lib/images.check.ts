@@ -3,6 +3,14 @@ import { hasImage } from "./images";
 import { siteConfig } from "@/config/site.config";
 
 /**
+ * Alt text the owner still owes. A supplied slot whose alt is still one of
+ * these is a build blocker, not a warning: hasImage() only proves a file
+ * landed, so without this check dropping the file in and flipping
+ * strictImages would ship alt="[[FILL]] Describe the person" to production.
+ */
+const OWNER_MARKER = "[[FILL";
+
+/**
  * With strictImages on, a production build fails when a required
  * slot has no file. This runs from the root layout so it covers every route.
  *
@@ -15,8 +23,14 @@ export function findMissingRequiredImages(): string[] {
   for (const id of Object.keys(IMAGE_SLOTS) as StaticImageSlotId[]) {
     const slot = IMAGE_SLOTS[id];
     if (!slot.required) continue;
-    if (hasImage(id)) continue;
-    missing.push(`${id} (${slot.ratio}, ${slot.minWidth}x${slot.minHeight} min)`);
+    if (!hasImage(id)) {
+      missing.push(`${id} (${slot.ratio}, ${slot.minWidth}x${slot.minHeight} min)`);
+      continue;
+    }
+    // The file landed but the alt is still a placeholder.
+    if (slot.alt.includes(OWNER_MARKER)) {
+      missing.push(`${id} (file supplied, but alt text is still owner-owed)`);
+    }
   }
   return missing;
 }
@@ -31,11 +45,13 @@ export function assertRequiredImages() {
   throw new Error(
     [
       "",
-      "strictImages is enabled but these required image slots have no file:",
+      "strictImages is enabled but these required image slots are unfinished:",
       ...missing.map((m) => `  - ${m}`),
       "",
       "Add the files under src/assets/images/ and register them in src/lib/images.ts,",
-      "or set flags.strictImages to false in src/config/site.config.ts for a preview build.",
+      "and replace any [[FILL]] alt text in src/lib/images.manifest.ts with real",
+      "description of the photo.",
+      "Or set flags.strictImages to false in src/config/site.config.ts for a preview build.",
       "",
     ].join("\n"),
   );

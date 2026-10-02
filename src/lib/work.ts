@@ -58,6 +58,27 @@ export type WorkSummary = {
   gallerySlots: string[];
 };
 
+/**
+ * Drops headings that have nothing under them.
+ *
+ * A case study being written renders as "## Problem / ## Process / ## Result"
+ * with no body, which reads as a broken page rather than as work in progress.
+ * Owner prompts are MDX comments and count as no content, so a section holding
+ * only a TODO is dropped too. Sections disappear as prose lands.
+ */
+function dropEmptySections(body: string): string {
+  return body
+    .split(/^(?=##\s)/m)
+    .filter((chunk) => {
+      const m = /^##\s+.*$/m.exec(chunk);
+      if (!m) return chunk.trim().length > 0;
+      const prose = chunk.slice(m.index + m[0].length).trim();
+      return prose.length > 0 && !/^\{\/\*[\s\S]*\*\/\}$/.test(prose);
+    })
+    .join("")
+    .trim();
+}
+
 function readDir(): string[] {
   if (!fs.existsSync(CONTENT_DIR)) return [];
   return fs
@@ -98,7 +119,7 @@ function parse(file: string): WorkEntry {
       coverSlot,
       coverGrade: getSlot(coverSlot)?.grade,
     },
-    content,
+    content: dropEmptySections(content),
   };
 }
 

@@ -12,25 +12,72 @@ stack:
   - MongoDB
   - REST APIs
   - USSD
-# [[FILL]] No project-specific repo URL confirmed. A link to the GitHub profile
-# would read as a repository link, so it stays empty until the real URL exists.
+# No project-specific repo URL confirmed. A link to the GitHub profile would read
+# as a repository link, so links stays empty until the real URL exists.
 links: []
 ---
 
 ## Problem
 
-[[FILL: 1 short paragraph. Who specifically struggled to get a loan, and what did
-they have to show for it? Write from your own memory of building this — no
-research-style framing.]]
+Small-ticket credit gets gated on paperwork most borrowers do not have: a
+payslip, a formal bank account, something to pledge. Lenders score on paper, so
+the applicants carrying the least documentation get priced out instead of
+assessed.
+
+They are not unbanked, though. They already transact, over USSD and mobile
+wallets, because that is where the money actually moves for them. The gap is not
+access to financial services. It is that the lenders serving this market will
+not underwrite a customer who cannot produce a document trail.
 
 ## Process
 
-[[FILL: 2 to 4 short paragraphs. What did you actually build? How did the AI credit
-scoring work? What were the USSD and wallet flows? What did you have to learn
-while building it?]]
+Three things had to work as a single product: microloans, buy-now-pay-later,
+and the financial tooling around them. Underwriting was the hard part, because
+the applicants arrive with the thinnest paper trail of any customer a lender
+normally sees.
+
+{/*
+  TODO(owner): one sentence on how the scoring actually decides a borrower. What does the
+  model read, and what happens when it is not confident enough to approve?
+*/}
+
+Payment is where the product meets reality. A borrower frequently has no bank
+account to fund from, so settlement runs over USSD and mobile wallets, and every
+step has to survive a dropped connection and resume later on the same phone.
+
+{/*
+  TODO(owner): one sentence on the hardest part of making USSD work. The provider, the
+  callback handling, or the state machine you had to get right?
+*/}
+
+Underneath it is TypeScript end to end: React in the client, Node.js and REST
+APIs behind it, MongoDB holding the records a lender actually has to keep.
+
+{/*
+  TODO(owner): one sentence on something you had to learn to ship this. A
+  protocol, a deployment constraint, or a mistake that cost you real time.
+*/}
+
+{/*
+  TODO(owner): name the actual model or scoring approach in the stack list and
+  in the paragraph above. "AI" as a stack token tells a reader nothing.
+*/}
+
 
 ## Result
 
-[[FILL: 1 paragraph, only with outcomes you can defend. Users reached, transactions
-processed, or something you personally verified. If you have no numbers, describe
-what changed concretely instead and delete this line rather than inventing one.]]
+Running since May 2025 and still active, covering microloans and BNPL with
+settlement over USSD and mobile wallets.
+
+{/*
+  TODO(owner): this section needs one outcome, not one status line. Answer any
+  single one of these and the section is done:
+    - users onboarded
+    - loans disbursed
+    - transactions settled
+    - repayment or default rate
+    - one thing that got measurably faster or cheaper because it shipped
+  If you genuinely have none of them, write "Early stage, no numbers worth
+  quoting yet." That reads far better than a vague claim.
+*/}
+
