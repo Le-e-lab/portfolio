@@ -1,24 +1,26 @@
 name: Deploy to GitHub Pages
 
-# Pushes the static export to the gh-pages branch, which is what this repo's
-# Pages source already points at. Using the branch (rather than the Pages API)
-# means no change to Settings > Pages is required, and lesley.runs-on.dev keeps
-# working through the CNAME in public/.
+# Pages for this repo has build_type "workflow", so it publishes the artifact
+# this workflow uploads — not the gh-pages branch. It previously served a
+# September artifact because the workflow that built it was no longer in the
+# repo, and nothing had rebuilt since.
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-# The repository is public; this token only needs to write the artifact branch.
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
+# Let an in-flight deploy finish rather than cancelling it halfway.
 concurrency:
-  group: pages-deploy
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +28,7 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           # No packageManager field in package.json, so pnpm must be pinned.
-          # 11.5.2 is the version verified against this lockfile locally.
+          # 11.5.2 is the version verified against this lockfile.
           version: 11.5.2
 
       - uses: actions/setup-node@v4
@@ -36,9 +38,25 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Build and publish to gh-pages
+      - name: Build static export
+        run: pnpm run build:pages
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
+          # public/CNAME claims this domain, so Pages serves it at the root and
+          # no basePath is needed.
           NEXT_PUBLIC_SITE_URL: https://lesley.runs-on.dev
-        run: bash scripts/deploy-pages.sh
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

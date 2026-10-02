@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "build:pages": "pnpm run snapshot:github && NEXT_OUTPUT_EXPORT=1 next build",
-    "deploy:pages": "bash scripts/deploy-pages.sh",
+    "deploy:pages": "gh workflow run deploy-pages.yml",
     "snapshot:github": "tsx scripts/snapshot-github.ts"
   },
   "dependencies": {
