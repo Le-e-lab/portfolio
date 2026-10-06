@@ -55,16 +55,13 @@
   real on every `next build`.
 - **Priority:** Closed, documented
 
-### 5. Dead Vite-era assets (design pieces now live in Services; the rest still dead)
-- **Location:** `public/images/design/` (14 files), `public/images/projects/`
-  (6), `public/images/hero-portrait.{jpg,webp}`, `public/design-projects.json`,
-  `public/projects.json`, `src/assets/images/design/` (3 files)
-- **Status:** Zero references anywhere in `src/` or `content/`. The only live
-  `public/` asset is `og-image.jpg` via `siteConfig.ogImagePath`. The fake
-  screenshots under `public/images/` are now gitignored so they cannot ship.
-- **Upgrade path:** Delete, or move the design pieces somewhere deliberate if
-  the portfolio is ever meant to show graphic work.
-- **Priority:** Low — harmless, just weight in the repo
+### 5. Dead Vite-era assets
+- **Status:** Closed 2026-10-06. The design pieces, Vite-era screenshots,
+  `projects.json`, `design-projects.json` and the old hero portrait were removed
+  when the site narrowed to full-stack work only. Untracked fake SVG files may
+  still sit in `public/images/{about,food,projects}/` locally; they are
+  gitignored and never ship.
+- **Priority:** Closed
 
 ### 6. Cover `minWidth` is aspirational
 - **Location:** `images.manifest.ts` → `WORK_COVER_MIN = { 2400, 1500 }`

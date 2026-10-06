@@ -100,7 +100,7 @@ export const STACK_GROUPS: StackGroup[] = [
 
 /** About. The resume gives the career; the rest is the owner's to write. */
 export const ABOUT = {
-  lead: "I am a BSc Computer Science student at Africa University, the CTO and Co-Founder at Elevate Value Partners, and the lead behind Kinto Designs. Most of my work sits in the gap between a database and a person trying to use it.",
+  lead: "I am a BSc Computer Science student at Africa University, the CTO and Co-Founder at Elevate Value Partners, and Lead Developer at Tarisai. Most of my work sits in the gap between a database and a person trying to use it.",
   body: [
     "I started out explaining things. Running the Google Developer Student Club at Africa University means I run the workshops, define what everyone is building, and then read the code when it does not work. That is a better way to learn a stack than tutorials, and it is why I am usually the one explaining something to someone.",
     "Before that, I was building. At Elevate Value Partners, we built KreditZW to score credit for people the banking system has historically ignored, over USSD and mobile wallets, because that is how the users actually bank. For my own workflow, my job-automation agent reads job boards, ranks what is worth applying to, and tells me on WhatsApp instead of making me check. And GyMPal is a dark-themed PWA that tracks my skipping and bodyweight routines while working completely offline.",
@@ -114,7 +114,7 @@ export const ABOUT = {
     },
     { label: "Academic standing", value: "GPA 3.78, Dean's List" },
     { label: "Currently", value: "CTO & Co-Founder, Elevate Value Partners" },
-    { label: "Also", value: "Lead Developer, Tarisai | Designer, Kinto Designs" },
+    { label: "Also", value: "Lead Developer, Tarisai" },
     { label: "In the club", value: "GDSC Lead, Africa University" },
   ],
 } as const;

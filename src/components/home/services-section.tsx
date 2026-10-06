@@ -1,12 +1,4 @@
 import Link from "next/link";
-import Image, { type StaticImageData } from "next/image";
-import auFlyer from "@/assets/images/design/africa-university-flyer.webp";
-import gdgWelcome from "@/assets/images/design/gdg-3.webp";
-import gdgJoin from "@/assets/images/design/join-93-8.webp";
-import goldenLogo from "@/assets/images/design/logo-93-8.webp";
-import goldenFlyer from "@/assets/images/design/gold-brand.webp";
-import hubLogo from "@/assets/images/design/studio-2.webp";
-import labLogo from "@/assets/images/design/studio-logo.webp";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Reveal, ScrollWords } from "@/components/ui/motion-primitives";
 import { siteConfig } from "@/config/site.config";
@@ -29,7 +21,7 @@ export function ServicesSection() {
 
       <Reveal delay={0.05}>
         <h2 className="mt-6 max-w-[34ch] text-[1.5rem] leading-[1.25] tracking-[-0.02em] text-ink sm:text-[2rem]">
-          <ScrollWords text={siteConfig.designLine} />
+          <ScrollWords text={siteConfig.servicesLine} />
         </h2>
       </Reveal>
 
@@ -59,40 +51,6 @@ export function ServicesSection() {
         ))}
       </ul>
 
-      <div className="mt-14">
-        <Reveal>
-          <p className="font-mono text-label tracking-[0.14em] text-muted uppercase">
-            Design work
-          </p>
-        </Reveal>
-        {/* Columns, not a grid: flyers are tall and logos square, so each
-            piece keeps its own shape instead of being cropped to a cell. */}
-        <div className="mt-5 columns-2 gap-4 sm:columns-3 lg:columns-4">
-          {DESIGN.map((piece) => (
-            <Reveal key={piece.title} className="mb-4 break-inside-avoid">
-              <figure>
-                <a
-                  href={piece.src.src}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block overflow-hidden border border-line"
-                >
-                  <Image
-                    src={piece.src}
-                    alt={piece.alt}
-                    sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 260px"
-                    className="h-auto w-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
-                  />
-                </a>
-                <figcaption className="mt-2 font-mono text-label tracking-[0.1em] text-muted uppercase">
-                  {piece.title}
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-
       <Reveal delay={0.1}>
         <p className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
           <span>Currently</span>
@@ -109,40 +67,3 @@ export function ServicesSection() {
   );
 }
 
-const DESIGN: { title: string; alt: string; src: StaticImageData }[] = [
-  {
-    title: "93.8 FM competition flyer",
-    alt: "Flyer for Africa University's 93.8 FM Design the Sound competition",
-    src: auFlyer,
-  },
-  {
-    title: "Golden Pieces logo",
-    alt: "Golden Pieces Investments logo in black and gold",
-    src: goldenLogo,
-  },
-  {
-    title: "GDG welcome flyer",
-    alt: "Google Developers Group Africa University flyer: New semester, new build",
-    src: gdgWelcome,
-  },
-  {
-    title: "The Hub logo",
-    alt: "The Hub logo with a microphone mark",
-    src: hubLogo,
-  },
-  {
-    title: "Golden Pieces flyer",
-    alt: "Golden Pieces Investments flyer listing stationery, printing, binding and laminating",
-    src: goldenFlyer,
-  },
-  {
-    title: "LAB logo",
-    alt: "LAB logo, white on black",
-    src: labLogo,
-  },
-  {
-    title: "GDG recruitment flyer",
-    alt: "Google Developers Group Africa University flyer: Why join us",
-    src: gdgJoin,
-  },
-];

@@ -18,8 +18,8 @@ export type SiteConfig = {
   /** Short plain sentence for the hero. Drafted from the owner's resume;
    *  still needs the owner's sign-off. */
   tagline: string;
-  /** The one honest design line. Appears once, in Services. */
-  designLine: string;
+  /** Services headline. */
+  servicesLine: string;
   /** One human detail. Appears in the hero bio line. */
   humanLine: string;
 
@@ -43,9 +43,6 @@ export type SiteConfig = {
 
   githubUsername: string;
   linkedinUrl: string;
-  /** Exactly one design profile. No 14-link social rows. */
-  designProfileUrl: string;
-  designProfileLabel: string;
 
   /** Max four. */
   socials: SocialLink[];
@@ -87,8 +84,7 @@ export const siteConfig: SiteConfig = {
   role: "Full-stack developer.",
   tagline:
     "I build web apps from database to interface — AI scoring tools, student portals and payment flows, shipped from Harare.",
-  designLine:
-    "I also design, working under Kinto Designs. The logos and flyers in this portfolio are mine.",
+  servicesLine: "What I take on, and where I have already done it.",
   humanLine:
     "CTO and Co-Founder at Elevate Value Partners, where we are building KreditZW so people the banks overlook can get scored without walking into a branch. I run the Google Developer Student Club at Africa University, which is why I am usually explaining something to someone.",
 
@@ -122,8 +118,6 @@ export const siteConfig: SiteConfig = {
 
   githubUsername: "Le-e-lab",
   linkedinUrl: "https://www.linkedin.com/in/lesley-mutsambiwa/",
-  designProfileUrl: "",
-  designProfileLabel: "Kinto Designs",
 
   socials: [
     { label: "GitHub", href: "https://github.com/Le-e-lab", handle: "Le-e-lab" },

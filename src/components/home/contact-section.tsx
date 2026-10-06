@@ -93,14 +93,6 @@ export function ContactSection() {
                   external
                 />
               )}
-              {siteConfig.designProfileUrl && (
-                <Row
-                  label={siteConfig.designProfileLabel}
-                  value="Design work"
-                  href={siteConfig.designProfileUrl}
-                  external
-                />
-              )}
               {siteConfig.bookingUrl && (
                 <Row
                   label="Booking"
