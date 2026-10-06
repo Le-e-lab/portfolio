@@ -65,7 +65,7 @@ function ActivityCalendar({
           </h2>
         </div>
         <p className="max-w-xs font-mono text-label leading-relaxed tracking-[0.06em] text-muted uppercase md:pb-1 md:text-right">
-          Twelve months of commits, read from GitHub at build time.
+          Twelve months of commits, refreshed from GitHub every day.
         </p>
       </div>
 

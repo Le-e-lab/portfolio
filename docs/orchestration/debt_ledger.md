@@ -55,7 +55,7 @@
   real on every `next build`.
 - **Priority:** Closed, documented
 
-### 5. Dead Vite-era assets
+### 5. Dead Vite-era assets (design pieces now live in Services; the rest still dead)
 - **Location:** `public/images/design/` (14 files), `public/images/projects/`
   (6), `public/images/hero-portrait.{jpg,webp}`, `public/design-projects.json`,
   `public/projects.json`, `src/assets/images/design/` (3 files)

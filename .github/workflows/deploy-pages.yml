@@ -7,6 +7,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Daily rebuild so the Activity section refetches the contribution calendar.
+  # 04:00 UTC is 06:00 in Harare.
+  schedule:
+    - cron: "0 4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -44,6 +48,9 @@ jobs:
           # public/CNAME claims this domain, so Pages serves it at the root and
           # no basePath is needed.
           NEXT_PUBLIC_SITE_URL: https://lesley.runs-on.dev
+          # GH_PAT is a personal token, so private contributions are counted the
+          # way the profile shows them. The built-in token is the fallback.
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
       - uses: actions/configure-pages@v5
 
