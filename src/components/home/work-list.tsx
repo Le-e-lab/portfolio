@@ -5,9 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { m, useReducedMotion } from "motion/react";
 import { SectionLabel } from "@/components/ui/section-label";
+import { ScrollWords } from "@/components/ui/motion-primitives";
 import { ImageSlot } from "@/components/ui/image-slot";
 import { siteConfig } from "@/config/site.config";
-import { getImage } from "@/lib/images";
+import { getImage, showSlot, SHOW_PLACEHOLDERS } from "@/lib/images";
 import type { WorkSummary } from "@/lib/work";
 import { cn } from "@/lib/cn";
 
@@ -57,7 +58,7 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
         <div>
           <SectionLabel index="01" label="Work" />
           <h2 id="work-heading" className="mt-3 max-w-md text-3xl sm:text-4xl">
-            Five things I have actually shipped.
+            <ScrollWords text="Five things I have actually shipped." />
           </h2>
         </div>
         <p className="max-w-xs font-mono text-label leading-relaxed tracking-[0.06em] text-muted uppercase md:pb-1 md:text-right">
@@ -118,13 +119,15 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
                 </div>
 
                 {/* Mobile: inline image. Hidden on desktop where the panel handles it. */}
-                <div className="mt-5 lg:hidden">
-                  <ImageSlot
-                    id={w.coverSlot}
-                    sizes="(max-width: 1024px) 92vw, 0px"
-                    className="w-full"
-                  />
-                </div>
+                {showSlot(w.coverSlot) && (
+                  <div className="mt-5 lg:hidden">
+                    <ImageSlot
+                      id={w.coverSlot}
+                      sizes="(max-width: 1024px) 92vw, 0px"
+                      className="w-full"
+                    />
+                  </div>
+                )}
               </Link>
             </li>
           ))}
@@ -139,7 +142,8 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
                 const isActive = active?.slug === w.slug;
 
                 if (!src) {
-                  return isActive ? (
+                  if (!isActive) return null;
+                  return SHOW_PLACEHOLDERS ? (
                     <div key={w.slug} className="absolute inset-0">
                       <ImageSlot
                         id={w.coverSlot}
@@ -147,7 +151,28 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
                         className="h-full w-full"
                       />
                     </div>
-                  ) : null;
+                  ) : (
+                    // No cover yet: a type-only card, so the panel never goes blank.
+                    <div
+                      key={w.slug}
+                      className="absolute inset-0 flex flex-col justify-between border border-line bg-surface p-6"
+                    >
+                      <span className="font-mono text-label tracking-[0.14em] text-muted uppercase tabular">
+                        {w.year} &middot; {w.role}
+                      </span>
+                      <div>
+                        <p className="font-display text-4xl tracking-[-0.03em] text-ink">
+                          {w.title}
+                        </p>
+                        <p className="mt-3 max-w-[36ch] text-sm text-muted">
+                          {w.summary}
+                        </p>
+                      </div>
+                      <span className="font-mono text-label tracking-[0.1em] text-muted uppercase">
+                        {w.stack.join(" / ")}
+                      </span>
+                    </div>
+                  );
                 }
 
                 return (

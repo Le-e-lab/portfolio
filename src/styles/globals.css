@@ -183,6 +183,59 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Scroll -> storytelling, native scroll-driven animations. Compositor-only
+   (transform/opacity), no JS listeners. Browsers without animation-timeline
+   (Firefox today) simply get the static layout, which is the final state.
+--------------------------------------------------------------------------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Hero copy rises and quiets as the page takes over; the portrait moves
+       slower, so the two planes separate. */
+    .hero-drift,
+    .hero-lag {
+      animation: linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 80vh;
+    }
+    .hero-drift {
+      animation-name: hero-drift;
+    }
+    .hero-lag {
+      animation-name: hero-lag;
+    }
+
+    /* Section label hairline draws across as the section enters. */
+    .label-rule {
+      transform-origin: left;
+      animation: label-rule linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 35%;
+    }
+  }
+}
+
+@keyframes hero-drift {
+  to {
+    transform: translateY(-72px);
+    opacity: 0.25;
+  }
+}
+@keyframes hero-lag {
+  to {
+    transform: translateY(40px);
+  }
+}
+@keyframes label-rule {
+  from {
+    transform: scaleX(0);
+    background-color: var(--color-accent);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------------------------------------------------------------------------
    Reduced motion: motion is decoration here, never information. Everything
    renders in the final state.
 --------------------------------------------------------------------------- */

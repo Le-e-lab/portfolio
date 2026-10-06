@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
-import { Reveal } from "@/components/ui/motion-primitives";
+import { Reveal, ScrollWords } from "@/components/ui/motion-primitives";
 import { siteConfig } from "@/config/site.config";
 import { SERVICES } from "@/lib/sections.data";
 
@@ -21,7 +21,7 @@ export function ServicesSection() {
 
       <Reveal delay={0.05}>
         <h2 className="mt-6 max-w-[34ch] text-[1.5rem] leading-[1.25] tracking-[-0.02em] text-ink sm:text-[2rem]">
-          {siteConfig.designLine}
+          <ScrollWords text={siteConfig.designLine} />
         </h2>
       </Reveal>
 

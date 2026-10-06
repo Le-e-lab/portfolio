@@ -1,8 +1,10 @@
 import { SectionLabel } from "@/components/ui/section-label";
-import { Reveal } from "@/components/ui/motion-primitives";
+import { Reveal, ScrollWords } from "@/components/ui/motion-primitives";
 import { ImageSlot } from "@/components/ui/image-slot";
 import { ABOUT } from "@/lib/sections.data";
 import { siteConfig } from "@/config/site.config";
+import { showSlot } from "@/lib/images";
+import { cn } from "@/lib/cn";
 
 /**
  * Text first, figures along the right rail with mono
@@ -11,6 +13,7 @@ import { siteConfig } from "@/config/site.config";
  */
 export function AboutSection() {
   const mailHref = `mailto:${siteConfig.email}`;
+  const figures = FIGURES.filter((f) => showSlot(f.id));
   return (
     <section
       id="about"
@@ -21,11 +24,16 @@ export function AboutSection() {
           <SectionLabel index="05" label="About" />
         </Reveal>
 
-        <div className="mt-8 grid gap-10 sm:mt-10 lg:grid-cols-[1fr_20rem] lg:gap-16">
+        <div
+          className={cn(
+            "mt-8 grid gap-10 sm:mt-10 lg:gap-16",
+            figures.length > 0 && "lg:grid-cols-[1fr_20rem]",
+          )}
+        >
           <div className="space-y-5 sm:space-y-6">
             <Reveal delay={0.05}>
               <p className="max-w-[40ch] text-[1.35rem] leading-[1.3] tracking-[-0.02em] text-ink sm:text-[1.75rem]">
-                {ABOUT.lead}
+                <ScrollWords text={ABOUT.lead} />
               </p>
             </Reveal>
 
@@ -66,14 +74,15 @@ export function AboutSection() {
             </Reveal>
           </div>
 
-          <Reveal delay={0.1}>
-            <div className="grid grid-cols-2 gap-4">
-              <Figure id="about-headshot" className="col-span-2" />
-              <Figure id="about-workspace" className="col-span-2" />
-              <Figure id="about-gym" />
-              <Figure id="about-candid" />
-            </div>
-          </Reveal>
+          {figures.length > 0 && (
+            <Reveal delay={0.1}>
+              <div className="grid grid-cols-2 gap-4">
+                {figures.map((f) => (
+                  <Figure key={f.id} id={f.id} className={f.wide ? "col-span-2" : undefined} />
+                ))}
+              </div>
+            </Reveal>
+          )}
         </div>
 
         <Reveal delay={0.2}>
@@ -108,6 +117,13 @@ function Figure({ id, className }: { id: string; className?: string }) {
  * docs/orchestration/SESSION_STATE.md. The raw [[FILL]] marker stays in the
  * manifest as the owner-facing flag but is never rendered.
  */
+const FIGURES = [
+  { id: "about-headshot", wide: true },
+  { id: "about-workspace", wide: true },
+  { id: "about-gym", wide: false },
+  { id: "about-candid", wide: false },
+];
+
 const FIGURE_CAPTIONS: Record<string, string> = {
   "about-headshot": "Fig. 01 — caption pending",
   "about-workspace": "Fig. 02 — caption pending",

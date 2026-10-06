@@ -1,7 +1,8 @@
 import { SectionLabel } from "@/components/ui/section-label";
-import { Reveal } from "@/components/ui/motion-primitives";
+import { Reveal, ScrollWords } from "@/components/ui/motion-primitives";
 import { ImageSlot } from "@/components/ui/image-slot";
 import { OFF_THE_CLOCK } from "@/lib/sections.data";
+import { showSlot } from "@/lib/images";
 import { cn } from "@/lib/cn";
 
 /**
@@ -21,12 +22,14 @@ export function OffTheClock() {
 
       <Reveal delay={0.05}>
         <h2 className="mt-6 max-w-[28ch] text-[1.5rem] leading-[1.25] tracking-[-0.02em] text-ink sm:text-[2rem]">
-          Five things that have nothing to do with the work.
+          <ScrollWords text="Five things that have nothing to do with the work." />
         </h2>
       </Reveal>
 
       <div className="mt-12 space-y-px border-b border-line">
-        {OFF_THE_CLOCK.map((block, i) => (
+        {OFF_THE_CLOCK.map((block, i) => {
+          const slots = block.slots.filter(showSlot);
+          return (
           <Reveal key={block.id} delay={0.05 * i}>
             <div className="grid gap-x-2 gap-y-3 border-t border-line py-6 sm:grid-cols-[4rem_14rem_1fr] sm:gap-6 sm:py-7">
               <span className="font-mono text-label tracking-[0.14em] text-accent uppercase tabular">
@@ -42,18 +45,18 @@ export function OffTheClock() {
                   {block.body}
                 </p>
 
-                {block.slots.length > 0 && (
+                {slots.length > 0 && (
                   <div
                     className={cn(
                       "grid gap-4",
-                      block.slots.length > 2
+                      slots.length > 2
                         ? "grid-cols-2 sm:grid-cols-4"
-                        : block.slots.length === 1
+                        : slots.length === 1
                           ? "grid-cols-1 max-w-[320px]"
                           : "grid-cols-2",
                     )}
                   >
-                    {block.slots.map((id) => (
+                    {slots.map((id) => (
                       <ImageSlot
                         key={id}
                         id={id}
@@ -65,7 +68,8 @@ export function OffTheClock() {
               </div>
             </div>
           </Reveal>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

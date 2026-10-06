@@ -6,7 +6,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { getWork, getWorkSlugs, getAdjacent } from "@/lib/work";
 import { ImageSlot } from "@/components/ui/image-slot";
 import { siteConfig } from "@/config/site.config";
-import { getImage } from "@/lib/images";
+import { getImage, showSlot } from "@/lib/images";
 import { cn } from "@/lib/cn";
 
 export function generateStaticParams() {
@@ -191,13 +191,13 @@ export default async function CaseStudyPage({
             />
           </div>
 
-          {meta.gallerySlots.length > 0 && (
+          {meta.gallerySlots.some(showSlot) && (
             <div className="mt-14">
               <h2 className="font-mono text-label tracking-[0.16em] text-muted uppercase">
                 Gallery
               </h2>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                {meta.gallerySlots.map((slot) => (
+                {meta.gallerySlots.filter(showSlot).map((slot) => (
                   <ImageSlot key={slot} id={slot} sizes="(max-width: 640px) 92vw, 40vw" />
                 ))}
               </div>

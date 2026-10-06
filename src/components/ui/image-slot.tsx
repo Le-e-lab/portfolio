@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getSlot, isPlaceholderAlt } from "@/lib/images.manifest";
-import { getImage } from "@/lib/images";
+import { getImage, SHOW_PLACEHOLDERS } from "@/lib/images";
 import { cn } from "@/lib/cn";
 
 type ImageSlotProps = {
@@ -17,8 +17,8 @@ type ImageSlotProps = {
 
 /**
  * Renders the real image when a file exists, otherwise a dashed frame at the
- * correct aspect ratio with a mono spec label. The placeholder is part of the
- * design, not an error state — it reads as intentional.
+ * correct aspect ratio with a mono spec label. Dev only: production renders
+ * nothing until the file lands.
  */
 export function ImageSlot({
   id,
@@ -33,6 +33,7 @@ export function ImageSlot({
   const src = getImage(id);
 
   if (!slot || !src) {
+    if (!SHOW_PLACEHOLDERS) return null;
     return (
       <PlaceholderFrame
         id={id}

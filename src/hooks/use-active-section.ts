@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
  * IntersectionObserver, not scroll math.
  */
 export function useActiveSection(ids: readonly string[]): string | null {
-  const [active, setActive] = useState<string | null>(ids[0] ?? null);
+  const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
     if (ids.length === 0) return;
@@ -32,7 +32,8 @@ export function useActiveSection(ids: readonly string[]): string | null {
             best = id;
           }
         }
-        if (best) setActive(best);
+        // Null over the hero, so the nav does not claim "Work" before it starts.
+        setActive(best);
       },
       {
         // A thin band near the top of the viewport decides "current".

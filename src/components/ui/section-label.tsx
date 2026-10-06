@@ -22,6 +22,7 @@ export function SectionLabel({
         /
       </span>
       <span>{label}</span>
+      <span aria-hidden="true" className="label-rule ml-2 h-px max-w-24 flex-1 self-center bg-line" />
     </p>
   );
 }

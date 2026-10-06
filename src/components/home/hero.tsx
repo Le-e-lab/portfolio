@@ -9,11 +9,11 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="mx-auto max-w-[1120px] px-5 pt-24 pb-16 sm:px-8 sm:pt-32 sm:pb-24"
+      className="mx-auto max-w-[1120px] px-5 pt-24 pb-8 sm:px-8 sm:pt-32 sm:pb-12"
     >
       <Reveal delay={0}>
         <div className="flex flex-wrap items-center justify-between gap-8 sm:gap-10">
-          <div className="max-w-2xl space-y-6">
+          <div className="hero-drift max-w-2xl space-y-6">
             <Reveal delay={0}>
               <span className="inline-flex items-center gap-2 border border-line bg-surface px-3 py-1.5 font-mono text-label tracking-[0.14em] uppercase">
                 <span className="h-2 w-2 rounded-full bg-accent" />
@@ -53,7 +53,7 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={0.45}>
-              <div className="-my-1 flex flex-wrap items-center gap-x-6 gap-y-1 text-muted">
+              <div className="-mx-2 -my-1 flex flex-wrap items-center gap-x-6 md:mx-0 gap-y-1 text-muted">
                 {siteConfig.socials.map((s) => (
                   <a
                     key={s.href}
@@ -79,14 +79,16 @@ export function Hero() {
           </div>
 
           <Reveal delay={0.1} className="shrink-0">
-            <ImageSlot
-              id="hero-avatar"
-              priority
-              framed
-              sizes="(max-width: 768px) 96vw, 280px"
-              className="mx-auto w-40 sm:w-56 md:w-64"
-              imgClassName=""
-            />
+            <div className="hero-lag">
+              <ImageSlot
+                id="hero-avatar"
+                priority
+                framed
+                sizes="(max-width: 768px) 96vw, 280px"
+                className="mx-auto w-40 sm:w-56 md:w-64"
+                imgClassName=""
+              />
+            </div>
           </Reveal>
         </div>
       </Reveal>

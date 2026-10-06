@@ -27,3 +27,12 @@ export function getImage(slotId: string): StaticImageData | undefined {
 export function hasImage(slotId: string): boolean {
   return slotId in STATIC_IMAGES;
 }
+/**
+ * Dashed spec frames are a reminder for the owner, not something a visitor
+ * should see. Production builds drop any slot that has no file yet.
+ */
+export const SHOW_PLACEHOLDERS = process.env.NODE_ENV !== "production";
+
+export function showSlot(slotId: string): boolean {
+  return SHOW_PLACEHOLDERS || hasImage(slotId);
+}

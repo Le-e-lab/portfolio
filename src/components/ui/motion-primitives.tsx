@@ -1,6 +1,15 @@
 "use client";
 
-import { LazyMotion, domAnimation, m, type Variants } from "motion/react";
+import { useRef } from "react";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  useScroll,
+  useTransform,
+  type MotionValue,
+  type Variants,
+} from "motion/react";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/cn";
@@ -167,4 +176,63 @@ export function StaggerItem({
       {children}
     </m.div>
   );
+}
+
+/**
+ * Scroll -> storytelling. Each word brightens from dim to full ink as the line
+ * travels up through the viewport, so a statement reads at the pace of the
+ * scroll. The real text stays in the DOM, so screen readers and copy-paste see
+ * one plain sentence.
+ */
+export function ScrollWords({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const reduced = usePrefersReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.9", "end 0.55"],
+  });
+
+  if (reduced || !siteConfig.flags.storytelling) {
+    return (
+      <span ref={ref} className={className}>
+        {text}
+      </span>
+    );
+  }
+
+  const words = text.split(" ");
+  return (
+    <span ref={ref} className={className}>
+      {words.map((word, i) => (
+        <ScrollWord
+          key={`${word}-${i}`}
+          progress={scrollYProgress}
+          range={[i / words.length, (i + 1) / words.length]}
+        >
+          {word}
+          {i < words.length - 1 ? " " : ""}
+        </ScrollWord>
+      ))}
+    </span>
+  );
+}
+
+function ScrollWord({
+  children,
+  progress,
+  range,
+}: {
+  children: React.ReactNode;
+  progress: MotionValue<number>;
+  range: [number, number];
+}) {
+  // Floor of 0.28 keeps the unread words legible, just quieter.
+  const opacity = useTransform(progress, range, [0.28, 1]);
+  return <m.span style={{ opacity }}>{children}</m.span>;
 }
