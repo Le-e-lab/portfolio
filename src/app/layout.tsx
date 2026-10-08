@@ -19,15 +19,17 @@ const paletteWork = getAllWork().map((w) => ({
   year: w.year,
 }));
 
+// role ends in a full stop for the hero sentence; a search result title should not.
+const siteTitle = `${siteConfig.fullName} — Full-stack developer in Harare`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.fullName} — ${siteConfig.role}`,
+    default: siteTitle,
     template: `%s — ${siteConfig.fullName}`,
   },
   description:
     "Full-stack developer in Harare building web apps from database to interface: AI scoring tools, student portals and payment flows.",
-    alternates: { canonical: "/" },
     manifest: siteConfig.manifestPath,
     // Next auto-links src/app/favicon.ico, which is what a bare /favicon.ico
     // request resolves to. icon.svg is the master mark and stays crisp at any
@@ -40,12 +42,15 @@ export const metadata: Metadata = {
       apple: [{ url: siteConfig.appleTouchIconPath, sizes: "180x180" }],
     },
     themeColor: "#0a0a0b",
+  // Meta tag, not DNS: runs-on.dev is a shared free-subdomain zone, and
+  // lesley.runs-on.dev is a CNAME, which cannot also carry a TXT record.
+  verification: { google: "owwiK-sc-d9pjNPPZxxBO2EvEmpb0q4JzInMFmiIzf8" },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
     url: siteConfig.url,
     siteName: siteConfig.fullName,
-    title: `${siteConfig.fullName} — ${siteConfig.role}`,
+    title: siteTitle,
     description:
       "Full-stack developer in Harare building web apps from database to interface.",
     images: [
@@ -59,11 +64,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.fullName} — ${siteConfig.role}`,
+    title: siteTitle,
     description: "Full-stack developer in Harare building web apps end to end.",
     images: [siteConfig.ogImagePath],
   },
-  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {

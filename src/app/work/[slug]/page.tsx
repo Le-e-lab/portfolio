@@ -28,12 +28,12 @@ export async function generateMetadata({
   return {
     title: meta.title,
     description: meta.summary,
-    alternates: { canonical: `/work/${meta.slug}` },
+    alternates: { canonical: `/work/${meta.slug}/` },
     openGraph: {
       type: "article",
       title: `${meta.title} — ${siteConfig.fullName}`,
       description: meta.summary,
-      url: `/work/${meta.slug}`,
+      url: `/work/${meta.slug}/`,
       images: cover
         ? [{ url: cover.src, width: cover.width, height: cover.height, alt: meta.title }]
         : undefined,
@@ -246,7 +246,7 @@ function ProjectLink({
 }) {
   return (
     <Link
-      href={`/work/${item.slug}`}
+      href={`/work/${item.slug}/`}
       className="group flex flex-col gap-3 bg-bg p-6 transition-colors duration-300 hover:bg-surface sm:p-8"
     >
       <span className="font-mono text-label tracking-[0.16em] text-muted uppercase">

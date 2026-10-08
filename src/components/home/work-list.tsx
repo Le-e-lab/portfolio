@@ -86,7 +86,7 @@ export function WorkList({ work }: { work: WorkSummary[] }) {
               )}
             >
               <Link
-                href={`/work/${w.slug}`}
+                href={`/work/${w.slug}/`}
                 className="group block py-6 focus-visible:outline-none"
               >
                 <div className="flex items-baseline gap-4">

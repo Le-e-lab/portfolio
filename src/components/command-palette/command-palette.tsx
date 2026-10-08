@@ -114,7 +114,7 @@ export function CommandPalette({ work = [] }: { work?: PaletteWorkItem[] }) {
                         key={p.slug}
                         onSelect={() => {
                           setOpen(false);
-                          router.push(`/work/${p.slug}`);
+                          router.push(`/work/${p.slug}/`);
                         }}
                       >
                         <span className="truncate">{p.title}</span>

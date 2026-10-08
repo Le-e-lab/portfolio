@@ -54,7 +54,7 @@ export default function NotFound() {
           {work.map((entry) => (
             <li key={entry.slug} className="border-b border-line">
               <Link
-                href={`/work/${entry.slug}`}
+                href={`/work/${entry.slug}/`}
                 className="group grid min-h-[72px] grid-cols-[4.5rem_1fr_auto] items-center gap-3 px-4 transition-colors duration-200 hover:bg-surface"
               >
                 <span className="font-mono text-label tracking-[0.16em] text-muted uppercase tabular">

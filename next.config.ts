@@ -24,6 +24,9 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // GitHub Pages 404s /work/x/ for a flat work/x.html, but 301s /work/x to the
+  // folder form, so the folder form is the one URL that works typed either way.
+  trailingSlash: true,
   output: isExport ? "export" : undefined,
   basePath,
   assetPrefix: basePath || undefined,

@@ -7,6 +7,10 @@ import { getWorkSlugs } from "@/lib/work";
  * is discoverable without a hand-edited XML file going stale. The root page is
  * the only other URL: Services, Stack, About, Off the clock and Contact are
  * sections of it, not separate routes.
+ *
+ * Only the root carries lastModified: the daily rebuild refreshes its Activity
+ * section, but stamping build time on unchanged case studies teaches Google to
+ * ignore lastmod entirely.
  */
 export const dynamic = "force-static";
 
@@ -15,14 +19,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: siteConfig.url,
+      url: `${siteConfig.url}/`,
       lastModified,
       changeFrequency: "monthly",
       priority: 1,
     },
     ...getWorkSlugs().map((slug) => ({
-      url: `${siteConfig.url}/work/${slug}`,
-      lastModified,
+      url: `${siteConfig.url}/work/${slug}/`,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
