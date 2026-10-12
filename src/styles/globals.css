@@ -229,19 +229,23 @@
 --------------------------------------------------------------------------- */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    /* Hero copy rises and quiets as the page takes over; the portrait moves
-       slower, so the two planes separate. */
-    .hero-drift,
-    .hero-lag {
-      animation: linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0 80vh;
-    }
-    .hero-drift {
-      animation-name: hero-drift;
-    }
-    .hero-lag {
-      animation-name: hero-lag;
+    /* Hero copy rises and quiets as the page takes over; the card moves
+       slower, so the two planes separate. Desktop only: on mobile the copy
+       sits below the card, so a fade keyed to the top of the page would dim
+       it before anyone has scrolled to it. */
+    @media (min-width: 1024px) {
+      .hero-drift,
+      .hero-lag {
+        animation: linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 80vh;
+      }
+      .hero-drift {
+        animation-name: hero-drift;
+      }
+      .hero-lag {
+        animation-name: hero-lag;
+      }
     }
 
     /* Section label hairline draws across as the section enters. */
