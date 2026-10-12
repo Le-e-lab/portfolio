@@ -12,9 +12,17 @@ export type Service = {
   index: string;
   title: string;
   body: string;
-  /** Short mono provenance tag, e.g. where the claim comes from. */
-  evidence: string;
+  /** Where this was done. Names only; a role or project title does not belong here. */
+  at: Workplace[];
 };
+
+export type Workplace = { name: string; href?: string };
+
+export const WORKPLACES = {
+  tarisai: { name: "Tarisai", href: "https://www.tarisai.co.zw/" },
+  elevate: { name: "Elevate Value Partners" },
+  gdsc: { name: "GDSC Africa University" },
+} satisfies Record<string, Workplace>;
 
 export const SERVICES: Service[] = [
   {
@@ -22,28 +30,28 @@ export const SERVICES: Service[] = [
     index: "01",
     title: "Product engineering, database to interface",
     body: "Full-stack builds where the schema and the screen are the same job. Auth, payments and admin surfaces included, not deferred.",
-    evidence: "Resume: Lead Developer, Tarisai",
+    at: [WORKPLACES.tarisai],
   },
   {
     id: "fintech",
     index: "02",
     title: "Fintech rails that work where the users are",
     body: "USSD, digital wallets and AI credit scoring for microloans, BNPL and financial tooling across Africa.",
-    evidence: "Resume: KreditZW, Elevate Value Partners",
+    at: [WORKPLACES.elevate],
   },
   {
     id: "ai",
     index: "03",
     title: "AI wired into an actual workflow",
     body: "Email triage over WhatsApp, NLP over job boards, web scraping that feeds a decision. Scored and prioritised, not chat-window wrappers.",
-    evidence: "Resume: AI-Powered Email and Job Automation Agent",
+    at: [],
   },
   {
     id: "leadership",
     index: "04",
     title: "Technical leadership and mentoring",
     body: "Setting the architecture, defining team roles, and running the workshops that turn students into people who can ship.",
-    evidence: "Resume: GDSC Lead, Africa University",
+    at: [WORKPLACES.gdsc],
   },
 ];
 
@@ -113,9 +121,9 @@ export const ABOUT = {
       value: "BSc Honours Computer Science, Africa University, 2028",
     },
     { label: "Academic standing", value: "GPA 3.78, Dean's List" },
-    { label: "Currently", value: "CTO & Co-Founder, Elevate Value Partners" },
-    { label: "Also", value: "Lead Developer, Tarisai" },
-    { label: "In the club", value: "GDSC Lead, Africa University" },
+    { label: "Currently", value: "CTO & Co-Founder", place: WORKPLACES.elevate },
+    { label: "Also", value: "Lead Developer", place: WORKPLACES.tarisai },
+    { label: "In the club", value: "Lead", place: WORKPLACES.gdsc },
   ],
 } as const;
 

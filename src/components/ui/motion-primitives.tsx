@@ -232,7 +232,7 @@ function ScrollWord({
   progress: MotionValue<number>;
   range: [number, number];
 }) {
-  // Floor of 0.28 keeps the unread words legible, just quieter.
-  const opacity = useTransform(progress, range, [0.28, 1]);
+  // Floor of 0.55 keeps unread words at ~5:1 on bg: quieter, still readable.
+  const opacity = useTransform(progress, range, [0.55, 1]);
   return <m.span style={{ opacity }}>{children}</m.span>;
 }

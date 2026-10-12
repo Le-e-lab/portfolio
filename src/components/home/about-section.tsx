@@ -1,6 +1,7 @@
 import { SectionLabel } from "@/components/ui/section-label";
 import { Reveal, ScrollWords } from "@/components/ui/motion-primitives";
 import { ImageSlot } from "@/components/ui/image-slot";
+import { WorkplaceName } from "@/components/ui/workplace";
 import { ABOUT } from "@/lib/sections.data";
 import { siteConfig } from "@/config/site.config";
 import { showSlot } from "@/lib/images";
@@ -52,7 +53,14 @@ export function AboutSection() {
                     <dt className="font-mono text-label tracking-[0.14em] text-muted uppercase">
                       {fact.label}
                     </dt>
-                    <dd className="mt-1.5 text-sm text-ink">{fact.value}</dd>
+                    <dd className="mt-1.5 text-sm text-ink">
+                      {fact.value}
+                      {"place" in fact && (
+                        <>
+                          , <WorkplaceName place={fact.place} />
+                        </>
+                      )}
+                    </dd>
                   </div>
                 ))}
               </dl>
@@ -87,7 +95,7 @@ export function AboutSection() {
 
         <Reveal delay={0.2}>
           <p className="mt-12 border-t border-line pt-6 font-mono text-label tracking-[0.12em] text-muted uppercase">
-            {siteConfig.timezoneLabel} — {siteConfig.availability}
+            {siteConfig.timezoneLabel}
           </p>
         </Reveal>
       </div>

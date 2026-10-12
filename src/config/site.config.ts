@@ -30,8 +30,6 @@ export type SiteConfig = {
   location: string;
   timezone: string;
   timezoneLabel: string;
-  /** Availability pill in the hero. */
-  availability: string;
   /** Contact block. */
   responseTime: string;
   bookingUrl: string;
@@ -95,7 +93,6 @@ export const siteConfig: SiteConfig = {
   location: "Harare, Zimbabwe",
   timezone: "UTC+2",
   timezoneLabel: "CAT (UTC+2), Harare",
-  availability: "Open to freelance and contract work",
   responseTime: "Usually replies within 24 hours",
   bookingUrl: "",
   inquiry: {

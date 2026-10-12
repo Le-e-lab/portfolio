@@ -96,14 +96,7 @@ export function LapRail() {
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-20">
-      {/* Mobile: 2px top progress bar. */}
-      <div className="h-0.5 w-full bg-line lg:hidden">
-        <div
-          className="h-full origin-left bg-accent"
-          style={{ transform: "scaleX(var(--lap, 0))" }}
-        />
-      </div>
-
+      {/* Mobile progress lives on the bottom dock's top edge (header.tsx). */}
       {/* Desktop: thin vertical rail with sector marks. */}
       <div className="fixed top-1/2 right-5 hidden -translate-y-1/2 will-change-transform 2xl:block 2xl:right-10">
         <div className="flex items-stretch gap-3">

@@ -41,7 +41,7 @@ export const metadata: Metadata = {
       ],
       apple: [{ url: siteConfig.appleTouchIconPath, sizes: "180x180" }],
     },
-    themeColor: "#0a0a0b",
+    themeColor: "#0b0a09",
   // Meta tag, not DNS: runs-on.dev is a shared free-subdomain zone, and
   // lesley.runs-on.dev is a CNAME, which cannot also carry a TXT record.
   verification: { google: "owwiK-sc-d9pjNPPZxxBO2EvEmpb0q4JzInMFmiIzf8" },
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0B",
+  themeColor: "#0b0a09",
   colorScheme: "dark",
 };
 

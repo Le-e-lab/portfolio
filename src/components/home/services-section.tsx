@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Reveal, ScrollWords } from "@/components/ui/motion-primitives";
 import { siteConfig } from "@/config/site.config";
 import { SERVICES } from "@/lib/sections.data";
+import { WorkplaceName } from "@/components/ui/workplace";
 
 /**
  * Services as a numbered ledger rather than cards — the
@@ -41,28 +41,22 @@ export function ServicesSection() {
                   <p className="max-w-[62ch] text-sm leading-[1.7] text-muted sm:text-[0.95rem]">
                     {service.body}
                   </p>
-                  <p className="font-mono text-label leading-[1.6] tracking-[0.08em] text-muted uppercase">
-                    {service.evidence}
-                  </p>
+                  {service.at.length > 0 && (
+                    <p className="font-mono text-label leading-[1.6] tracking-[0.08em] text-muted uppercase">
+                      {service.at.map((place, j) => (
+                        <span key={place.name}>
+                          {j > 0 && " · "}
+                          <WorkplaceName place={place} />
+                        </span>
+                      ))}
+                    </p>
+                  )}
                 </div>
               </div>
             </Reveal>
           </li>
         ))}
       </ul>
-
-      <Reveal delay={0.1}>
-        <p className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
-          <span>Currently</span>
-          <Link
-            href="#contact"
-            className="draw-underline text-ink"
-          >
-            {siteConfig.availability.toLowerCase()}
-          </Link>
-          <span aria-hidden="true">.</span>
-        </p>
-      </Reveal>
     </section>
   );
 }

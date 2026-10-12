@@ -35,7 +35,7 @@ export function ContactSection() {
 
             <Reveal delay={0.1}>
               <p className="mt-6 max-w-[52ch] text-[0.95rem] leading-[1.75] text-muted">
-                {siteConfig.responseTime}. {siteConfig.availability}. Based in{" "}
+                {siteConfig.responseTime}. Based in{" "}
                 {siteConfig.location}.
               </p>
             </Reveal>

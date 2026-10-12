@@ -1,35 +1,28 @@
 import Link from "next/link";
-import { Brand } from "@/components/ui/brand";
 import { SECTIONS, siteConfig } from "@/config/site.config";
-import { CopyEmailButton } from "@/components/ui/copy-email-button";
+import { HarareClock } from "@/components/ui/harare-clock";
+import { WorkplaceName } from "@/components/ui/workplace";
+import { WORKPLACES, type Workplace } from "@/lib/sections.data";
+
+const colHeading = "font-mono text-label tracking-[0.16em] text-muted uppercase";
+const colLink =
+  "draw-underline inline-flex min-h-[44px] items-center text-sm text-muted transition-colors duration-200 hover:text-ink md:min-h-0";
 
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 border-t border-line">
-      <div className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          <div>
-            <Link href="/" className="inline-flex min-h-[44px] items-center text-[0.9375rem] md:min-h-0">
-              <Brand />
-            </Link>
-            <p className="mt-3 max-w-xs font-body text-sm text-muted">
-              {siteConfig.tagline}
-            </p>
-          </div>
-
+    // Bottom padding clears the mobile dock.
+    <footer className="overflow-hidden border-t border-line pb-16 lg:pb-0">
+      <div className="mx-auto max-w-[1120px] px-5 sm:px-8">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-12 lg:grid-cols-4">
           <nav aria-label="Footer">
-            <h2 className="font-mono text-label tracking-[0.16em] text-muted uppercase">
-              Sections
-            </h2>
-            <ul className="mt-3 flex flex-col gap-1.5">
+            <h2 className={colHeading}>Sections</h2>
+            <ul className="mt-3 flex flex-col md:gap-1.5">
               {SECTIONS.map((s) => (
                 <li key={s.id}>
-                  <Link
-                    href={`/#${s.id}`}
-                    className="draw-underline inline-flex min-h-[44px] items-center font-body text-sm text-muted transition-colors duration-200 hover:text-ink md:min-h-0"
-                  >
+                  <Link href={`/#${s.id}`} className={colLink}>
+                    <span className="mr-2 font-mono text-label text-dim tabular">{s.index}</span>
                     {s.label}
                   </Link>
                 </li>
@@ -38,10 +31,19 @@ export function Footer() {
           </nav>
 
           <div>
-            <h2 className="font-mono text-label tracking-[0.16em] text-muted uppercase">
-              Elsewhere
-            </h2>
-            <ul className="mt-3 flex flex-col gap-1.5">
+            <h2 className={colHeading}>Worked at</h2>
+            <ul className="mt-3 flex flex-col gap-3 text-sm text-muted md:gap-2">
+              {Object.values<Workplace>(WORKPLACES).map((place) => (
+                <li key={place.name}>
+                  <WorkplaceName place={place} />
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className={colHeading}>Elsewhere</h2>
+            <ul className="mt-3 flex flex-col md:gap-1.5">
               {siteConfig.socials.map((s) => (
                 <li key={s.href}>
                   <a
@@ -49,37 +51,49 @@ export function Footer() {
                     {...(s.href.startsWith("mailto:")
                       ? {}
                       : { target: "_blank", rel: "noopener noreferrer" })}
-                    className="draw-underline inline-flex min-h-[44px] items-center font-body text-sm text-muted transition-colors duration-200 hover:text-ink md:min-h-0"
+                    className={colLink}
                   >
                     {s.label}
-                    {s.handle && (
-                      <span className="ml-2 font-mono text-label text-dim">{s.handle}</span>
-                    )}
                   </a>
                 </li>
               ))}
               <li>
-                <a
-                  href={siteConfig.cvPath}
-                  className="draw-underline inline-flex min-h-[44px] items-center px-2 font-body text-sm text-muted transition-colors duration-200 hover:text-ink md:min-h-0 md:px-0"
-                >
-                  CV
-                  <span className="ml-2 font-mono text-label text-dim">PDF</span>
+                <a href={siteConfig.cvPath} className={colLink}>
+                  CV <span className="ml-2 font-mono text-label text-dim">PDF</span>
                 </a>
               </li>
             </ul>
-            <CopyEmailButton className="mt-4" />
+          </div>
+
+          <div>
+            <h2 className={colHeading}>Local time</h2>
+            <p className="mt-3 font-display text-[2rem] leading-none tracking-[-0.03em] tabular">
+              <HarareClock />
+            </p>
+            <p className="mt-2 font-mono text-label tracking-[0.12em] text-muted uppercase">
+              {siteConfig.timezoneLabel}
+            </p>
           </div>
         </div>
+      </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 font-mono text-label tracking-[0.12em] text-muted uppercase sm:flex-row sm:items-center sm:justify-between">
+      {/* The name as the floor of the page. Decorative: the brand is already
+          announced by the header link. */}
+      <div aria-hidden="true" className="mx-auto max-w-[1120px] px-5 sm:px-8">
+        <p className="pt-4 font-display text-[clamp(5rem,27vw,19rem)] leading-[0.82] font-semibold tracking-[-0.06em] text-surface-2 select-none">
+          {siteConfig.name}
+          <span className="text-accent">.</span>
+        </p>
+      </div>
+
+      <div className="border-t border-line">
+        <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-4 font-mono text-label tracking-[0.12em] text-muted uppercase sm:px-8">
           <p>
-            {siteConfig.location} &middot; {siteConfig.timezoneLabel}
+            &copy; {year} {siteConfig.fullName}
           </p>
-          <p>
-            Built with Next.js, Tailwind and motion &middot; &copy; {year}{" "}
-            {siteConfig.fullName}
-          </p>
+          <a href="#main" className="draw-underline inline-flex min-h-[44px] items-center">
+            Back to the start ↑
+          </a>
         </div>
       </div>
     </footer>

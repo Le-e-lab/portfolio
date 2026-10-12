@@ -4,8 +4,8 @@
   "description": "Portfolio of Lesley Mutsambiwa — full-stack developer in Harare building web apps from database to interface.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a0b",
-  "theme_color": "#0a0a0b",
+  "background_color": "#0b0a09",
+  "theme_color": "#0b0a09",
   "icons": [
     {
       "src": "/favicon-192.png",
