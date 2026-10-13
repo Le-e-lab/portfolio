@@ -10,24 +10,28 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
  * <name>-poster.webp still. Decorative only, so it is hidden from assistive
  * tech.
  *
- * It plays only while on screen, and never under reduced motion, where the
- * poster stands in for it.
+ * Only the ~10KB poster ships with the page. The clip is fetched the first
+ * time it scrolls on screen, plays only while visible, and is never fetched
+ * under reduced motion, Save-Data or a 2G connection.
  */
 export function LoopVideo({ name, className }: { name: string; className?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
+  const src = `${basePath}/media/${name}`;
 
   useEffect(() => {
     const video = ref.current;
-    if (!video || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!video || !canAffordVideo()) return;
     const io = new IntersectionObserver((entries) => {
-      if (entries[0]?.isIntersecting) video.play().catch(() => {});
-      else video.pause();
+      if (!entries[0]?.isIntersecting) return video.pause();
+      if (!video.getAttribute("src")) {
+        video.src = `${src}.${video.canPlayType("video/webm") ? "webm" : "mp4"}`;
+      }
+      video.play().catch(() => {});
     });
     io.observe(video);
     return () => io.disconnect();
-  }, []);
+  }, [src]);
 
-  const src = `${basePath}/media/${name}`;
   return (
     <video
       ref={ref}
@@ -35,12 +39,19 @@ export function LoopVideo({ name, className }: { name: string; className?: strin
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="none"
       poster={`${src}-poster.webp`}
       className={cn("block aspect-square w-full bg-surface-2 object-cover", className)}
-    >
-      <source src={`${src}.webm`} type="video/webm" />
-      <source src={`${src}.mp4`} type="video/mp4" />
-    </video>
+    />
   );
+}
+
+type Connection = { saveData?: boolean; effectiveType?: string };
+
+function canAffordVideo(): boolean {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
+  // Chromium only; Safari and Firefox have no signal, so they get the clip.
+  const conn = (navigator as Navigator & { connection?: Connection }).connection;
+  if (conn?.saveData) return false;
+  return !conn?.effectiveType?.endsWith("2g");
 }
