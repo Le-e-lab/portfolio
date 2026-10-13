@@ -14,9 +14,10 @@ const IDLE_AFTER_MS = 60_000;
  *
  * 1. A big "hey" beside the name the first time the hero is in view: he pops
  *    in, waves once, and is gone.
- * 2. After a full minute with no input anywhere on the page, he appears in the
- *    bottom corner and idles, blinking out at the visitor. Any input and he
- *    vanishes again.
+ * 2. After a full minute with no input anywhere on the page, he peeks up from
+ *    the bottom corner and idles, blinking out at the visitor. The clip is cut
+ *    at his legs, so the cut sits on the screen edge (or under the mobile
+ *    dock, which stacks above him). Any input and he vanishes again.
  *
  * The clips' backgrounds are graded to --color-bg and blended with `lighten`,
  * so the box around him disappears into the page. Under reduced motion,
@@ -111,7 +112,7 @@ export function HeroPit() {
         ref={spot}
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute right-0 bottom-[calc(100%_-_0.95*clamp(3.25rem,13vw,6rem))] aspect-[5/4] w-[clamp(120px,32vw,180px)] origin-bottom-right select-none",
+          "pointer-events-none absolute right-0 bottom-[calc(100%_-_0.95*clamp(3.25rem,13vw,6rem))] aspect-[5/4] w-[clamp(104px,27vw,180px)] origin-bottom-right lg:w-[240px] xl:w-[270px] select-none",
           pop,
           waving ? "scale-100 opacity-100 duration-500" : "scale-50 opacity-0 duration-300",
         )}
@@ -128,7 +129,7 @@ export function HeroPit() {
           <div
             aria-hidden="true"
             className={cn(
-              "pointer-events-none fixed right-4 bottom-[calc(76px_+_env(safe-area-inset-bottom))] z-40 aspect-[5/4] w-[120px] origin-bottom-right select-none mix-blend-lighten lg:right-8 lg:bottom-8 lg:w-[160px]",
+              "pointer-events-none fixed right-4 bottom-[calc(52px_+_env(safe-area-inset-bottom))] z-40 aspect-[5/4] w-[120px] origin-bottom-right select-none mix-blend-lighten lg:right-8 lg:bottom-0 lg:w-[220px] xl:w-[260px]",
               pop,
               idling ? "scale-100 opacity-100 duration-500" : "scale-75 opacity-0 duration-300",
             )}
