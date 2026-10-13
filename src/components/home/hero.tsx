@@ -9,7 +9,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="mx-auto max-w-[1120px] px-5 pt-24 pb-8 sm:px-8 sm:pt-32 sm:pb-16"
+      className="mx-auto max-w-[1120px] overflow-x-clip px-5 pt-24 pb-8 sm:px-8 sm:pt-32 sm:pb-16"
     >
       <div className="grid items-start gap-10 lg:grid-cols-[1fr_300px] lg:gap-16">
         <div className="hero-drift max-w-2xl space-y-6 lg:pt-16">

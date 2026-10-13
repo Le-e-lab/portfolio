@@ -19,6 +19,14 @@ const STRAP = { desktop: 300, mobile: 140 };
 const SWING = { type: "spring", stiffness: 160, damping: 7, mass: 0.9 } as const;
 /** Below this many px of travel a press is a tap, and a tap turns the card. */
 const TAP_SLOP = 6;
+/** Phone tilt is clamped to this many degrees either way. */
+const TILT_MAX = 25;
+
+const clamp = (v: number, max: number) => Math.max(-max, Math.min(max, v));
+
+type OrientationCtor = typeof DeviceOrientationEvent & {
+  requestPermission?: () => Promise<"granted" | "denied">;
+};
 
 /**
  * A hanging staff ID. Drag it and the lanyard follows, let go and it swings
@@ -28,6 +36,10 @@ const TAP_SLOP = 6;
  * ships domAnimation, and domMax would cost ~10KB for this one card. Touch
  * drags are horizontal only (touch-action: pan-y), so a thumb resting on the
  * card still scrolls the page.
+ *
+ * On touch screens the card also follows the phone: tilt it side to side and
+ * the card swings and turns with it. iOS gates motion behind a permission
+ * prompt, so it is asked for on the first tap on the card.
  */
 export function IdCard({ className }: { className?: string }) {
   const reduced = usePrefersReducedMotion();
@@ -47,11 +59,40 @@ export function IdCard({ className }: { className?: string }) {
     return () => mq.removeEventListener("change", sync);
   }, [strap]);
   // The card hangs in line with its strap: angle from the anchor to the clip.
-  const hang = useTransform(() => (-Math.atan2(x.get(), strap.get() + y.get()) * 180) / Math.PI);
-  const rotate = useSpring(hang, { stiffness: 260, damping: 14 });
-  const strapPath = useTransform(() => `M 0 ${-strap.get()} L ${x.get()} ${y.get()}`);
-
   const drag = useRef<{ id: number; sx: number; sy: number; moved: boolean; touch: boolean } | null>(null);
+
+  // Phone tilt adds its own sway on top of the drag offset.
+  const sway = useSpring(0, { stiffness: 60, damping: 9 });
+  const cardX = useTransform(() => x.get() + sway.get());
+  const hang = useTransform(() => (-Math.atan2(cardX.get(), strap.get() + y.get()) * 180) / Math.PI);
+  const rotate = useSpring(hang, { stiffness: 260, damping: 14 });
+  const strapPath = useTransform(() => `M 0 ${-strap.get()} L ${cardX.get()} ${y.get()}`);
+
+  const [motionAsked, setMotionAsked] = useState(false);
+  useEffect(() => {
+    if (reduced || !window.matchMedia("(hover: none)").matches) return;
+    let baseBeta: number | null = null;
+    const onTilt = (e: DeviceOrientationEvent) => {
+      if (e.gamma == null || e.beta == null || drag.current) return;
+      // Whatever angle the phone is held at first is "level".
+      baseBeta ??= e.beta;
+      const side = clamp(e.gamma, TILT_MAX);
+      const pitch = clamp(e.beta - baseBeta, TILT_MAX);
+      sway.set(side * 1.2);
+      tiltY.set(side * 0.6);
+      tiltX.set(pitch * -0.4);
+    };
+    window.addEventListener("deviceorientation", onTilt);
+    return () => window.removeEventListener("deviceorientation", onTilt);
+  }, [reduced, motionAsked, sway, tiltX, tiltY]);
+
+  /** iOS 13+ needs a user gesture before it sends orientation events. */
+  function askForMotion() {
+    if (motionAsked) return;
+    setMotionAsked(true);
+    const ctor = window.DeviceOrientationEvent as OrientationCtor | undefined;
+    ctor?.requestPermission?.().catch(() => {});
+  }
 
   function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
     if (reduced || drag.current || e.button !== 0) return;
@@ -89,6 +130,7 @@ export function IdCard({ className }: { className?: string }) {
   }
 
   function onPointerUp(e: React.PointerEvent<HTMLDivElement>) {
+    if (e.pointerType !== "mouse" && !reduced) askForMotion();
     const d = drag.current;
     if (!d || d.id !== e.pointerId) return;
     drag.current = null;
@@ -125,7 +167,7 @@ export function IdCard({ className }: { className?: string }) {
       </svg>
 
       <m.div
-        style={{ x, y, rotate, transformOrigin: "50% 0%" }}
+        style={{ x: cardX, y, rotate, transformOrigin: "50% 0%" }}
         initial={reduced ? false : { y: -140, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 120, damping: 9, delay: 0.2 }}
@@ -163,6 +205,11 @@ export function IdCard({ className }: { className?: string }) {
       <p aria-hidden="true" className="mt-4 hidden text-center font-mono text-label-sm tracking-[0.14em] text-dim uppercase lg:block">
         Drag it · Click to turn over
       </p>
+      {!reduced && (
+        <p aria-hidden="true" className="mt-4 text-center font-mono text-label-sm tracking-[0.14em] text-dim uppercase [@media(hover:hover)]:hidden lg:hidden">
+          Tilt your phone · Tap to turn over
+        </p>
+      )}
     </div>
   );
 }
