@@ -17,7 +17,8 @@ const IDLE_AFTER_MS = 60_000;
  * 2. After a full minute with no input anywhere on the page, he peeks up from
  *    the bottom corner and idles, blinking out at the visitor. The clip is cut
  *    at his legs, so the cut sits on the screen edge (or under the mobile
- *    dock, which stacks above him). Any input and he vanishes again.
+ *    dock, which stacks above him). Hover or tap him and he waves back.
+ *    Scrolling, typing or clicking elsewhere and he vanishes again.
  *
  * The clips' backgrounds are graded to --color-bg and blended with `lighten`,
  * so the box around him disappears into the page. Under reduced motion,
@@ -27,8 +28,11 @@ export function HeroPit() {
   const spot = useRef<HTMLDivElement>(null);
   const wave = useRef<HTMLVideoElement>(null);
   const idle = useRef<HTMLVideoElement>(null);
+  const corner = useRef<HTMLDivElement>(null);
+  const poke = useRef<HTMLVideoElement>(null);
   const [waving, setWaving] = useState(false);
   const [idling, setIdling] = useState(false);
+  const [poked, setPoked] = useState(false);
   // The corner Pit is portalled to <body>: a transformed ancestor would turn
   // `fixed` into `absolute` and isolate the blend.
   const [portal, setPortal] = useState<HTMLElement | null>(null);
@@ -41,7 +45,9 @@ export function HeroPit() {
     const el = spot.current;
     const w = wave.current;
     const i = idle.current;
-    if (!portal || !el || !w || !i) return;
+    const c = corner.current;
+    const p = poke.current;
+    if (!portal || !el || !w || !i || !c || !p) return;
 
     let lastInput = performance.now();
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -53,19 +59,44 @@ export function HeroPit() {
         const left = IDLE_AFTER_MS - (performance.now() - lastInput);
         if (left > 0) return arm(left);
         if (document.hidden || !w.paused) return arm();
-        if (!i.getAttribute("src")) i.src = `${media}/pit-hero-idle.mp4`;
+        if (!i.getAttribute("src")) {
+          i.src = `${media}/pit-hero-idle.mp4`;
+          // Same clip as the hero wave, so usually already cached.
+          p.src = `${media}/pit-hero-wave.mp4`;
+          p.preload = "auto";
+        }
         i.play().catch(() => {});
       }, ms);
     };
 
-    const onInput = () => {
+    const onMove = () => {
       lastInput = performance.now();
-      if (i.paused) return;
+    };
+
+    // Moving the mouse keeps him around so it can reach him; scrolling,
+    // typing or clicking anywhere but on him sends him away.
+    const onInput = (e: Event) => {
+      lastInput = performance.now();
+      if (i.paused || (e.target instanceof Node && c.contains(e.target))) return;
       setIdling(false);
-      // Let him fade before freezing the clip.
-      setTimeout(() => i.pause(), 300);
+      setPoked(false);
+      // Let him fade before freezing the clips.
+      setTimeout(() => {
+        i.pause();
+        p.pause();
+      }, 300);
       arm();
     };
+
+    // Touch or hover him and he waves back, every time. A wave already
+    // running plays out first.
+    const onPoke = () => {
+      if (!p.paused) return;
+      p.currentTime = 0;
+      p.play().catch(() => {});
+    };
+    const onPokePlaying = () => setPoked(true);
+    const onPokeEnd = () => setPoked(false);
 
     const onIdlePlaying = () => setIdling(true);
     const onWavePlaying = () => setWaving(true);
@@ -85,8 +116,12 @@ export function HeroPit() {
     );
 
     const opts = { passive: true } as const;
-    const events = ["pointermove", "pointerdown", "keydown", "scroll", "touchstart"] as const;
+    const events = ["pointerdown", "keydown", "scroll", "touchstart"] as const;
     events.forEach((e) => window.addEventListener(e, onInput, opts));
+    window.addEventListener("pointermove", onMove, opts);
+    c.addEventListener("pointerenter", onPoke);
+    p.addEventListener("playing", onPokePlaying);
+    p.addEventListener("ended", onPokeEnd);
     w.addEventListener("playing", onWavePlaying);
     w.addEventListener("ended", onWaveEnd);
     i.addEventListener("playing", onIdlePlaying);
@@ -100,6 +135,10 @@ export function HeroPit() {
       w.removeEventListener("ended", onWaveEnd);
       i.removeEventListener("playing", onIdlePlaying);
       events.forEach((e) => window.removeEventListener(e, onInput));
+      window.removeEventListener("pointermove", onMove);
+      c.removeEventListener("pointerenter", onPoke);
+      p.removeEventListener("playing", onPokePlaying);
+      p.removeEventListener("ended", onPokeEnd);
     };
   }, [portal]);
 
@@ -127,14 +166,24 @@ export function HeroPit() {
       {portal &&
         createPortal(
           <div
+            ref={corner}
             aria-hidden="true"
             className={cn(
-              "pointer-events-none fixed right-4 bottom-[calc(52px_+_env(safe-area-inset-bottom))] z-40 aspect-[5/4] w-[120px] origin-bottom-right select-none mix-blend-lighten lg:right-8 lg:bottom-0 lg:w-[220px] xl:w-[260px]",
+              "fixed right-4 bottom-[calc(52px_+_env(safe-area-inset-bottom))] z-40 aspect-[5/4] w-[120px] origin-bottom-right select-none mix-blend-lighten lg:right-8 lg:bottom-0 lg:w-[220px] xl:w-[260px]",
               pop,
-              idling ? "scale-100 opacity-100 duration-500" : "scale-75 opacity-0 duration-300",
+              idling
+                ? "scale-100 opacity-100 duration-500"
+                : "pointer-events-none scale-75 opacity-0 duration-300",
             )}
           >
             <video ref={idle} muted loop playsInline preload="none" className="h-full w-full object-cover" />
+            <video
+              ref={poke}
+              muted
+              playsInline
+              preload="none"
+              className={cn("absolute inset-0 h-full w-full object-cover", !poked && "opacity-0")}
+            />
           </div>,
           portal,
         )}
