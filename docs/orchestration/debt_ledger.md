@@ -26,11 +26,11 @@
 
 ### 2. `strictImages` ships false
 - **Location:** `src/config/site.config.ts` → `flags.strictImages`
-- **Status:** The gate in `src/lib/images.check.ts` is live but disabled. Correct:
-  all eight About/food slots still have `[[FILL]]` alt text, which now also fails
-  the gate for any slot that *does* have a file. Correct behaviour.
-- **Upgrade path:** Owner supplies the four About photos and four food photos
-  with real alt text → flip to `true`. `tests/portfolio.test.ts` fails with a
+- **Status:** The gate in `src/lib/images.check.ts` is live but disabled. The
+  four food slots landed 2026-10-13; the four About slots still have `[[FILL]]`
+  alt text, which also fails the gate for any slot that *does* have a file.
+- **Upgrade path:** Owner supplies the four About photos with real alt text →
+  flip to `true`. `tests/portfolio.test.ts` fails with a
   readable list until that happens, so the flip cannot silently break layout.
 - **Priority:** Blocked on owner
 
