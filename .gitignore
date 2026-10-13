@@ -55,3 +55,6 @@ public/images/projects/
 
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
+
+# Raw Gemini exports. Resized WebP copies live in src/assets/images/.
+/images/

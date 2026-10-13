@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/motion-primitives";
 import { getAllWork } from "@/lib/work";
+import { ImageSlot } from "@/components/ui/image-slot";
 
 /**
  * 404. Same editorial register as the home sections rather than a stock apology
@@ -18,18 +19,26 @@ export default function NotFound() {
         <SectionLabel index="404" label="Not found" />
       </Reveal>
 
-      <Reveal delay={0.05}>
-        <h1 className="mt-6 max-w-[16ch] text-[clamp(2rem,5vw,3.5rem)] leading-[1.02] tracking-[-0.02em]">
-          That page is not here.
-        </h1>
-      </Reveal>
+      <div className="mt-6 flex flex-col-reverse gap-8 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <Reveal delay={0.05}>
+            <h1 className="max-w-[16ch] text-[clamp(2rem,5vw,3.5rem)] leading-[1.02] tracking-[-0.02em]">
+              That page is not here.
+            </h1>
+          </Reveal>
 
-      <Reveal delay={0.1}>
-        <p className="mt-6 max-w-[52ch] text-[0.95rem] leading-[1.7] text-muted">
-          The address you followed does not match anything on this site. The
-          work below is the shortest way back to something useful.
-        </p>
-      </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 max-w-[52ch] text-[0.95rem] leading-[1.7] text-muted">
+              The address you followed does not match anything on this site. The
+              work below is the shortest way back to something useful.
+            </p>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.1}>
+          <ImageSlot id="mascot-pit" priority sizes="200px" className="w-[140px] shrink-0 sm:w-[200px]" />
+        </Reveal>
+      </div>
 
       <Reveal delay={0.15}>
         <ul className="mt-12 border-t border-line">

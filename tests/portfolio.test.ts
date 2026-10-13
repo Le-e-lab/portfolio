@@ -140,11 +140,8 @@ test("the slots strictImages still gates on are the owner-owed ones", () => {
       "about-gym",
       "about-headshot",
       "about-workspace",
-      "food-1",
-      "food-2",
-      "food-3",
       "food-4",
     ],
-    "the four About and four food photos are still owed. Update this when they land.",
+    "the four About photos and food-4 are still owed. Update this when they land.",
   );
 });

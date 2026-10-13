@@ -143,7 +143,7 @@ export const OFF_THE_CLOCK: ClockBlock[] = [
     index: "01",
     label: "Formula 1",
     body: "Lewis Hamilton. It's about the drive and the relentless persistence that made him a seven-time world champion.",
-    slots: [],
+    slots: ["clock-f1"],
   },
   {
     id: "gym",
@@ -164,13 +164,13 @@ export const OFF_THE_CLOCK: ClockBlock[] = [
     index: "04",
     label: "Anime and manga",
     body: "Dragon Ball Z. I absolutely love everything about DBZ - the energy, the characters, and the sheer scale of it.",
-    slots: [],
+    slots: ["clock-anime"],
   },
   {
     id: "side",
     index: "05",
     label: "Side projects",
     body: "Building and maintaining the GDSC web platform. It's a space I'm creating where students can interact, find free courses, and access online schedules so they can learn and connect outside of formal classes.",
-    slots: [],
+    slots: ["clock-side"],
   },
 ];

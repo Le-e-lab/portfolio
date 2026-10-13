@@ -12,12 +12,26 @@ import heroAvatar from "@/assets/images/hero-avatar.webp";
 import chefMuseCover from "@/assets/images/work/chefmuse-cover.webp";
 import guardianCover from "@/assets/images/work/guardian-cover.webp";
 import gymPalCover from "@/assets/images/work/gympal-cover.webp";
+import sushi from "@/assets/images/food/sushi.webp";
+import pasta from "@/assets/images/food/pasta.webp";
+import steak from "@/assets/images/food/steak.webp";
+import clockF1 from "@/assets/images/clock/f1.webp";
+import clockAnime from "@/assets/images/clock/anime.webp";
+import clockSide from "@/assets/images/clock/side.webp";
+import mascotPit from "@/assets/images/mascot/pit.webp";
 
 export const STATIC_IMAGES: Record<string, StaticImageData> = {
   "hero-avatar": heroAvatar,
   "work-chefmuse-cover": chefMuseCover,
   "work-guardian-cover": guardianCover,
   "work-gympal-cover": gymPalCover,
+  "food-1": sushi,
+  "food-2": pasta,
+  "food-3": steak,
+  "clock-f1": clockF1,
+  "clock-anime": clockAnime,
+  "clock-side": clockSide,
+  "mascot-pit": mascotPit,
 };
 
 export function getImage(slotId: string): StaticImageData | undefined {
