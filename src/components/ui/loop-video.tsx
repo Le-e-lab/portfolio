@@ -48,7 +48,7 @@ export function LoopVideo({ name, className }: { name: string; className?: strin
 
 type Connection = { saveData?: boolean; effectiveType?: string };
 
-function canAffordVideo(): boolean {
+export function canAffordVideo(): boolean {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
   // Chromium only; Safari and Firefox have no signal, so they get the clip.
   const conn = (navigator as Navigator & { connection?: Connection }).connection;
