@@ -118,7 +118,7 @@ export const IMAGE_SLOTS = {
     ratio: "1 / 1",
     minWidth: 1000,
     minHeight: 1000,
-    alt: "[[FILL]] Name the dish",
+    alt: "Bowl of ramen with chashu pork, a soft egg and greens on a matte black plate",
   },
   "clock-f1": {
     id: "clock-f1",
@@ -146,15 +146,6 @@ export const IMAGE_SLOTS = {
     minWidth: 800,
     minHeight: 800,
     alt: "Isometric laptop showing a course grid, with calendar and chat icons floating around it",
-  },
-  "mascot-pit": {
-    id: "mascot-pit",
-    where: "404",
-    required: false,
-    ratio: "1 / 1",
-    minWidth: 800,
-    minHeight: 800,
-    alt: "Pit, the site's small off-white robot mascot",
   },
   og: {
     id: "og",

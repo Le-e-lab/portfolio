@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/motion-primitives";
 import { getAllWork } from "@/lib/work";
-import { ImageSlot } from "@/components/ui/image-slot";
+import { LoopVideo } from "@/components/ui/loop-video";
 
 /**
  * 404. Same editorial register as the home sections rather than a stock apology
@@ -36,7 +36,7 @@ export default function NotFound() {
         </div>
 
         <Reveal delay={0.1}>
-          <ImageSlot id="mascot-pit" priority sizes="200px" className="w-[140px] shrink-0 sm:w-[200px]" />
+          <LoopVideo name="pit-idle" className="hairline w-[140px] shrink-0 sm:w-[200px]" />
         </Reveal>
       </div>
 

@@ -14,9 +14,9 @@ const OWNER_MARKER = "[[FILL";
  * With strictImages on, a production build fails when a required
  * slot has no file. This runs from the root layout so it covers every route.
  *
- * Currently returns [] because the four About photos and food-4 are
+ * Currently returns [] because the four About photos are
  * not supplied yet, which is why strictImages ships as false. Flip it to true
- * in site.config.ts once those five files exist.
+ * in site.config.ts once those four files exist.
  */
 export function findMissingRequiredImages(): string[] {
   const missing: string[] = [];
