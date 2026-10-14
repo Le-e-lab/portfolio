@@ -7,7 +7,7 @@ fills, the size it needs and how to finish the file.
 
 - **Gemini image generation makes stills, not animations.** For motion, make
   the still first, then use **Veo** (Gemini app → Video) with the still as the
-  first frame. Veo gives an 8-second MP4.
+  first frame. Veo gives a 10-second 1280×720 MP4.
 - **Loop and compress every clip** before it goes in the repo:
 
   ```bash
@@ -17,11 +17,11 @@ fills, the size it needs and how to finish the file.
 
   Keep each loop **under 600 KB**. Ship WebM/MP4, not GIF: a GIF is 5–10× larger.
 - **Stills** export to WebP: `cwebp -q 82 in.png -o out.webp`.
-- **Keep it in the site palette.** Background near-black `#0b0b0a`, accent
-  orange-red `#ff4f2b`, warm off-white `#efede6`. No neon, no glow, no
+- **Keep it in the site palette.** Background near-black `#0b0a09`, accent
+  orange-red `#ff4d2e`, warm off-white `#f0ede6`. No neon, no glow, no
   gradients. Paste this tail onto every prompt:
 
-  > Dark near-black background (#0b0b0a), single orange-red accent (#ff4f2b),
+  > Dark near-black background (#0b0a09), single orange-red accent (#ff4d2e),
   > warm off-white highlights. Flat studio lighting, no glow, no lens flare,
   > no gradients, no text, no watermark.
 
@@ -34,37 +34,95 @@ fills, the size it needs and how to finish the file.
 
 ---
 
-## 1. Mascot: "Pit", a small 3D robot
+## 1. Mascot: "Pit"
 
-Why a robot: it's a full-stack dev site, so a built thing fits, and it can wear
-your interests as props without becoming a fan-art collage. Pit sits in
-*Off the clock*, on the 404 page and as a small reaction next to the contact
-form. It stays out of the hero, where the ID card already does that job.
+Pit already lives on the site: he waves beside your name once per visit,
+idles in the corner after a quiet minute and waves back when touched, and
+idles on the 404 page. You design him in Gemini, animate him in Veo, and
+hand the raw files over. No drawing or 3D skills needed.
 
-**Base character (Gemini still, 1:1, 1024×1024):**
+### Step 0: redesign or keep?
+
+**Redesigning means remaking every clip.** The site swaps between his idle
+and wave clips, so if the wave shows the new Pit and the idle shows the old
+one, he visibly changes into a different robot. A redesign is a set: base
+still, `pit-idle` and `pit-wave` at minimum, all from the same new still.
+If you only want new moves, skip to Step 3 and use your current Pit still.
+
+### Step 1: design him (Gemini, stills only)
+
+Start from the base prompt, then change **one thing per message** and say
+"keep everything else the same". Changing several things at once makes
+Gemini redraw him from scratch.
+
+**Base prompt (1:1):**
 
 > 3D character render of a small, chunky robot mascot, about two heads tall.
-> Matte off-white plastic body with orange-red (#ff4f2b) panel accents, a
-> rounded-rectangle visor face with two flat white dot eyes,
-> short stubby arms and legs, a tiny antenna. Soft clay-like Pixar-style
-> materials, subtle bevels, slight subsurface. Standing front three-quarter
-> view, neutral friendly pose, centred with space around it. Dark near-black
-> background (#0b0b0a). Flat studio lighting, no glow, no gradients, no text.
+> Matte off-white plastic body with orange-red (#ff4d2e) panel accents, a
+> rounded-rectangle visor face with two flat white dot eyes, short stubby
+> arms and legs, a tiny antenna. Soft clay-like materials, subtle bevels.
+> Full body, standing front three-quarter view, neutral friendly pose,
+> centred with empty space around him. Plain flat near-black background
+> (#0b0a09). Flat studio lighting, no glow, no gradients, no text.
 
-Regenerate until you like one, then **reuse that exact image as the reference**
-for every pose below ("same character as the reference image").
+**Things worth trying, one at a time:**
 
-**Poses (Veo, first frame = base still, 4 s loop):**
+- Body: "rounder, more like a gumdrop" / "boxier, like a small appliance"
+- Face: "visor eyes as two short horizontal lines" / "eyes as small arcs, smiling"
+- Something that's yours: "a thin orange-red racing stripe down his chest",
+  "a small skipping rope looped over one shoulder", "a headband"
+- Size of the head: "head 20% bigger" (bigger heads read better when small,
+  and he is often only 120px wide on phones)
 
-| File | Prompt |
-| --- | --- |
-| `pit-idle` | Same robot breathing gently, visor eyes blink once, antenna sways slightly. Camera locked, seamless loop. |
-| `pit-wave` | Same robot raises its right arm and waves twice, then returns to rest. Camera locked. |
-| `pit-race` | Same robot wearing a plain orange-red racing helmet with a small white "44", crouched as if on a start line, then bursts forward a step. Camera locked. |
-| `pit-train` | Same robot skipping rope at a steady rhythm, rope blurring, small hop each turn. Camera locked, seamless loop. |
-| `pit-power` | Same robot clenches its fists and powers up: a soft off-white energy outline flickers around its body, antenna trembles. No fire, no glow bloom. Camera locked. |
-| `pit-eat` | Same robot holding a small bowl and chopsticks, takes a bite, eyes squint happily. Camera locked. |
-| `pit-lost` (404) | Same robot holding a paper map upside down, looks left, looks right, shrugs. Camera locked. |
+**Pick him by looking at him small.** Shrink the image to thumb size. If you
+can't read his face and his pose at that size, keep going.
+
+### Step 2: lock him in
+
+Once you like one, ask for a character sheet in the same chat so later
+images stay consistent:
+
+> Same robot as the image above, character turnaround sheet: front, side,
+> back, three-quarter. Same proportions, materials and colours, plain
+> near-black background, no text.
+
+Save the chosen base still as `pit-base.png`. Every Veo clip starts from it.
+
+### Step 3: animate him (Veo)
+
+In Veo, upload `pit-base.png` as the **first frame**, then the prompt. The
+site needs every clip to follow these rules, or I can't cut it to fit:
+
+- **Same framing as the still.** Full body, centred, camera locked. No zoom,
+  pan or cut.
+- **Start and end on his rest pose.** The site swaps clips mid-play; matching
+  first and last frames is what makes the swap invisible.
+- **Plain background, nothing else in frame.** No props flying off-screen,
+  no shadows on a floor, no text.
+
+Add this tail to every Veo prompt:
+
+> Camera locked, no camera movement. Plain flat near-black background. He
+> starts and ends standing in the same neutral pose as the first frame.
+
+| File | Where it shows | Prompt |
+| --- | --- | --- |
+| `pit-idle` (**needed**) | corner after a quiet minute, 404 page | He breathes gently, blinks twice, antenna sways a little, looks straight at the camera. Seamless loop. |
+| `pit-wave` (**needed**) | hero "hey", touch reaction | He raises his right arm high and gives a big, happy wave toward the camera, then lowers it. |
+| `pit-poke` (nice to have) | when someone touches him | He flinches as if tapped, eyes go wide, a small hop, then he laughs and gives a quick wave. |
+| `pit-race` | later | He crouches as if on a start line, then bursts forward one step and stops. |
+| `pit-train` | later | He skips rope at a steady rhythm, small hop each turn. Seamless loop. |
+| `pit-eat` | later | He holds a small bowl and chopsticks, takes a bite, eyes squint happily. |
+| `pit-lost` | 404 page | He holds a paper map upside down, looks left, looks right, shrugs. |
+
+Make each clip a few times and keep the best. A take where he drifts
+sideways or the camera moves won't fit the site.
+
+### Step 4: hand over
+
+Drop the raw Veo MP4s in `images/` (it's gitignored) named as in the table,
+e.g. `images/pit-poke.mp4`, and tell Claude. Claude crops, grades the
+background to the page colour, compresses and wires them in.
 
 ---
 
