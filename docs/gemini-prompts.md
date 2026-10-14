@@ -55,24 +55,80 @@ Start from the base prompt, then change **one thing per message** and say
 "keep everything else the same". Changing several things at once makes
 Gemini redraw him from scratch.
 
-**Base prompt (1:1):**
+**The idea: Pit is a mini racing driver.** His name already fits (pit
+lane, pit crew). His head *is* a racing helmet and the visor is his face, so
+the helmet's eyes replace the robot's. He stands on his own two feet in a
+little race suit, which keeps every placement on the site working: a kart or
+car-shaped Pit would need new crops everywhere and reads too close to
+Pixar's *Cars*.
 
-> 3D character render of a small, chunky robot mascot, about two heads tall.
-> Matte off-white plastic body with orange-red (#ff4d2e) panel accents, a
-> rounded-rectangle visor face with two flat white dot eyes, short stubby
-> arms and legs, a tiny antenna. Soft clay-like materials, subtle bevels.
-> Full body, standing front three-quarter view, neutral friendly pose,
+**Two rules every style below follows, because of how the site shows him:**
+
+- **Mostly light colours.** The site blends him into the page with
+  `lighten`, so anything close to black (black tyres, a black suit) turns
+  see-through and the text behind shows through it. Keep the suit and helmet
+  off-white or orange-red; a dark visor is fine, that's his face.
+- **No real team, sponsor or driver.** No team colours, no real sponsor
+  logos, no real driver's helmet design or number. Pick **your own number**
+  (a birthday, a lucky number) and use it everywhere.
+
+**Shared start of every prompt (1:1):**
+
+> Full-body 3D character of a tiny racing driver mascot, about two heads
+> tall: an oversized rounded racing helmet for a head, the dark visor is his
+> face with two flat white dot eyes showing through, a small chunky race suit,
+> stubby arms and legs, racing gloves and boots. Race number [YOUR NUMBER] on
+> his chest. Standing front three-quarter view, neutral friendly pose,
 > centred with empty space around him. Plain flat near-black background
-> (#0b0a09). Flat studio lighting, no glow, no gradients, no text.
+> (#0b0a09). Flat studio lighting, no glow, no gradients, no other text, no
+> real team or sponsor logos.
 
-**Things worth trying, one at a time:**
+Then add **one** of these style endings. Each is a different look; try all
+four and compare them side by side.
 
-- Body: "rounder, more like a gumdrop" / "boxier, like a small appliance"
-- Face: "visor eyes as two short horizontal lines" / "eyes as small arcs, smiling"
-- Something that's yours: "a thin orange-red racing stripe down his chest",
-  "a small skipping rope looped over one shoulder", "a headband"
-- Size of the head: "head 20% bigger" (bigger heads read better when small,
-  and he is often only 120px wide on phones)
+**A. Collectible vinyl toy** *(my pick)*
+> Styled as a designer vinyl collectible figure: smooth matte vinyl, visible
+> part seams at the neck and shoulders, slightly glossy helmet, off-white suit
+> with orange-red (#ff4d2e) side panels and stitching.
+
+Why: it looks like a real object you could hold rather than generic AI
+"Pixar clay", and the seams and gloss read well even at 120px.
+
+**B. Wind-tunnel clay model**
+> Styled as an F1 wind-tunnel scale model: the whole body sculpted in matte
+> light-grey modelling clay with crisp tool marks, orange-red (#ff4d2e) tape
+> strips marking panel lines, small white measurement stickers. A
+> work-in-progress engineering prototype.
+
+Why: the most unusual of the four, and it's an engineer's nod (aero teams
+really do test clay models). Risk: grey can look dull on a dark page.
+
+**C. Personal helmet art**
+> Off-white suit, and the helmet carries a custom hand-painted design like a
+> driver's personal helmet art: orange-red (#ff4d2e) and warm off-white
+> (#f0ede6) bold geometric shapes, a thin stripe across the top, glossy
+> clear-coat finish.
+
+Why: drivers design their own helmets, so this is the most "yours". Tell
+Gemini what to put on it (a shape, your initials, a pattern) and it becomes
+your own livery.
+
+**D. Wind-up tin toy**
+> Styled as a vintage wind-up tin toy: printed lithographed tin with slightly
+> worn edges, visible rivets, a small metal wind-up key in his back,
+> off-white body with orange-red (#ff4d2e) printed details.
+
+Why: charming, and the wind-up key gives free animation ideas (he winds up,
+then zooms). Risk: printed tin can come out busy; ask for "simple, few
+details" if it does.
+
+**Once you have a favourite, change one thing per message:**
+
+- Head: "helmet 20% bigger" (big heads read better when he's small)
+- Eyes: "eyes as two short horizontal lines" / "eyes as small arcs, smiling"
+- Pose: "one hand on his hip, confident"
+- Details: "a small orange-red antenna on top of the helmet, like a radio
+  aerial", "a little skipping rope looped over one shoulder"
 
 **Pick him by looking at him small.** Shrink the image to thumb size. If you
 can't read his face and his pose at that size, keep going.
@@ -82,7 +138,7 @@ can't read his face and his pose at that size, keep going.
 Once you like one, ask for a character sheet in the same chat so later
 images stay consistent:
 
-> Same robot as the image above, character turnaround sheet: front, side,
+> Same character as the image above, character turnaround sheet: front, side,
 > back, three-quarter. Same proportions, materials and colours, plain
 > near-black background, no text.
 
@@ -110,7 +166,7 @@ Add this tail to every Veo prompt:
 | `pit-idle` (**needed**) | corner after a quiet minute, 404 page | He breathes gently, blinks twice, antenna sways a little, looks straight at the camera. Seamless loop. |
 | `pit-wave` (**needed**) | hero "hey", touch reaction | He raises his right arm high and gives a big, happy wave toward the camera, then lowers it. |
 | `pit-poke` (nice to have) | when someone touches him | He flinches as if tapped, eyes go wide, a small hop, then he laughs and gives a quick wave. |
-| `pit-race` | later | He crouches as if on a start line, then bursts forward one step and stops. |
+| `pit-race` | later | He drops into a crouch as if on a start grid, revs with his fists, bursts forward one step and stops. |
 | `pit-train` | later | He skips rope at a steady rhythm, small hop each turn. Seamless loop. |
 | `pit-eat` | later | He holds a small bowl and chopsticks, takes a bite, eyes squint happily. |
 | `pit-lost` | 404 page | He holds a paper map upside down, looks left, looks right, shrugs. |
