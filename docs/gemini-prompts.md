@@ -69,58 +69,59 @@ Pixar's *Cars*.
   see-through and the text behind shows through it. Keep the suit and helmet
   off-white or orange-red; a dark visor is fine, that's his face.
 - **No real team, sponsor or driver.** No team colours, no real sponsor
-  logos, no real driver's helmet design or number. Pick **your own number**
-  (a birthday, a lucky number) and use it everywhere.
+  logos, no real driver's helmet design or number. His number roundel holds
+  your orange-red full stop instead of a number.
 
-**Shared start of every prompt (1:1):**
+**Chosen style: personal helmet art.** Drivers design their own helmets,
+so his carries your brand and his "sponsors" are the languages you write.
+
+**Your logo on him.** The site has no drawn logo; your mark is the wordmark
+"Lesley" with the orange-red full stop. The full stop is the emblem: a big
+orange-red dot is a shape, so it survives Veo animation, while small words
+smear between frames. "LESLEY." goes on the helmet side, where it's large.
+
+**Sponsors.** Your four languages (TypeScript, JavaScript, Python, Dart) as
+plain block-letter names, not their real logos: a real logo reads as an
+endorsement, and Gemini draws logos wrong anyway. Only two face the camera,
+big, so they're readable; at 120px wide on a phone anything smaller is noise.
+
+**Colours.** Alternating blocks of the site's three light tones: orange-red
+`#ff4d2e`, off-white `#f0ede6`, warm grey `#b9b3a8`. No black, no green.
+
+**Prompt (1:1, paste as one message):**
 
 > Full-body 3D character of a tiny racing driver mascot, about two heads
-> tall: an oversized rounded racing helmet for a head, the dark visor is his
-> face with two flat white dot eyes showing through, a small chunky race suit,
-> stubby arms and legs, racing gloves and boots. Race number [YOUR NUMBER] on
-> his chest. Standing front three-quarter view, neutral friendly pose,
-> centred with empty space around him. Plain flat near-black background
-> (#0b0a09). Flat studio lighting, no glow, no gradients, no other text, no
-> real team or sponsor logos.
+> tall: an oversized rounded racing helmet for a head, the dark smoked visor
+> is his face with two flat white dot eyes showing through it, a small chunky
+> race suit, stubby arms and legs, racing gloves and boots.
+>
+> The helmet has custom painted helmet art in alternating colour blocks:
+> glossy off-white (#f0ede6) base, a wide orange-red (#ff4d2e) band running
+> front to back over the top, thin warm-grey (#b9b3a8) pinstripes along its
+> edges, and one large solid orange-red dot on each side of the helmet like a
+> full stop. The word "LESLEY." in bold orange-red block capitals
+> along the side of the helmet, ending in that dot. Glossy clear-coat finish.
+>
+> The race suit alternates the same colours: orange-red body, off-white
+> shoulder and side panels, warm-grey gloves and boots. Sponsor patches in
+> plain bold block letters, no logos: "TYPESCRIPT" across the chest,
+> "PYTHON" on one sleeve. A white circular number roundel on the chest
+> holding just an orange-red dot.
+>
+> Standing front three-quarter view, neutral friendly pose, centred with
+> empty space around him. Plain flat near-black background (#0b0a09). Flat
+> studio lighting, no glow, no gradients, no real team, brand or sponsor
+> logos, no other text.
 
-Then add **one** of these style endings. Each is a different look; try all
-four and compare them side by side.
+**If something comes out wrong, fix it in the same chat, one per message:**
 
-**A. Collectible vinyl toy** *(my pick)*
-> Styled as a designer vinyl collectible figure: smooth matte vinyl, visible
-> part seams at the neck and shoulders, slightly glossy helmet, off-white suit
-> with orange-red (#ff4d2e) side panels and stitching.
-
-Why: it looks like a real object you could hold rather than generic AI
-"Pixar clay", and the seams and gloss read well even at 120px.
-
-**B. Wind-tunnel clay model**
-> Styled as an F1 wind-tunnel scale model: the whole body sculpted in matte
-> light-grey modelling clay with crisp tool marks, orange-red (#ff4d2e) tape
-> strips marking panel lines, small white measurement stickers. A
-> work-in-progress engineering prototype.
-
-Why: the most unusual of the four, and it's an engineer's nod (aero teams
-really do test clay models). Risk: grey can look dull on a dark page.
-
-**C. Personal helmet art**
-> Off-white suit, and the helmet carries a custom hand-painted design like a
-> driver's personal helmet art: orange-red (#ff4d2e) and warm off-white
-> (#f0ede6) bold geometric shapes, a thin stripe across the top, glossy
-> clear-coat finish.
-
-Why: drivers design their own helmets, so this is the most "yours". Tell
-Gemini what to put on it (a shape, your initials, a pattern) and it becomes
-your own livery.
-
-**D. Wind-up tin toy**
-> Styled as a vintage wind-up tin toy: printed lithographed tin with slightly
-> worn edges, visible rivets, a small metal wind-up key in his back,
-> off-white body with orange-red (#ff4d2e) printed details.
-
-Why: charming, and the wind-up key gives free animation ideas (he winds up,
-then zooms). Risk: printed tin can come out busy; ask for "simple, few
-details" if it does.
+- Misspelled word: "Fix the spelling on the chest patch to TYPESCRIPT,
+  keep everything else the same." Reroll if it keeps failing.
+- Too busy: "Remove the sleeve patch and the pinstripes, keep everything
+  else the same."
+- Dark parts creeping in: "Make the gloves and boots warm grey, not black."
+- Want all four languages: put "JAVASCRIPT" and "DART" on the back of the
+  suit, where they only show when he turns.
 
 **Once you have a favourite, change one thing per message:**
 
