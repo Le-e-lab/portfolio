@@ -36,18 +36,12 @@ fills, the size it needs and how to finish the file.
 
 ## 1. Mascot: "Pit"
 
-Pit already lives on the site: he waves beside your name once per visit,
-idles in the corner after a quiet minute and waves back when touched, and
-idles on the 404 page. You design him in Gemini, animate him in Veo, and
-hand the raw files over. No drawing or 3D skills needed.
+**Status:** done. Pit is a still image on the 404 page
+(`src/assets/images/mascot/pit.webp`, from `images/pit-base.png.jpg`). The
+video clips were retired: the still is ~20 KB.
 
-### Step 0: redesign or keep?
-
-**Redesigning means remaking every clip.** The site swaps between his idle
-and wave clips, so if the wave shows the new Pit and the idle shows the old
-one, he visibly changes into a different robot. A redesign is a set: base
-still, `pit-idle` and `pit-wave` at minimum, all from the same new still.
-If you only want new moves, skip to Step 3 and use your current Pit still.
+This section is kept so he can be regenerated or given new poses with the
+same look.
 
 ### Step 1: design him (Gemini, stills only)
 
@@ -143,43 +137,13 @@ images stay consistent:
 > back, three-quarter. Same proportions, materials and colours, plain
 > near-black background, no text.
 
-Save the chosen base still as `pit-base.png`. Every Veo clip starts from it.
+Save the chosen base still as `pit-base.png`.
 
-### Step 3: animate him (Veo)
+### Step 3: new poses (optional)
 
-In Veo, upload `pit-base.png` as the **first frame**, then the prompt. The
-site needs every clip to follow these rules, or I can't cut it to fit:
-
-- **Same framing as the still.** Full body, centred, camera locked. No zoom,
-  pan or cut.
-- **Start and end on his rest pose.** The site swaps clips mid-play; matching
-  first and last frames is what makes the swap invisible.
-- **Plain background, nothing else in frame.** No props flying off-screen,
-  no shadows on a floor, no text.
-
-Add this tail to every Veo prompt:
-
-> Camera locked, no camera movement. Plain flat near-black background. He
-> starts and ends standing in the same neutral pose as the first frame.
-
-| File | Where it shows | Prompt |
-| --- | --- | --- |
-| `pit-idle` (**needed**) | corner after a quiet minute, 404 page | He breathes gently, blinks twice, antenna sways a little, looks straight at the camera. Seamless loop. |
-| `pit-wave` (**needed**) | hero "hey", touch reaction | He raises his right arm high and gives a big, happy wave toward the camera, then lowers it. |
-| `pit-poke` (nice to have) | when someone touches him | He flinches as if tapped, eyes go wide, a small hop, then he laughs and gives a quick wave. |
-| `pit-race` | later | He drops into a crouch as if on a start grid, revs with his fists, bursts forward one step and stops. |
-| `pit-train` | later | He skips rope at a steady rhythm, small hop each turn. Seamless loop. |
-| `pit-eat` | later | He holds a small bowl and chopsticks, takes a bite, eyes squint happily. |
-| `pit-lost` | 404 page | He holds a paper map upside down, looks left, looks right, shrugs. |
-
-Make each clip a few times and keep the best. A take where he drifts
-sideways or the camera moves won't fit the site.
-
-### Step 4: hand over
-
-Drop the raw Veo MP4s in `images/` (it's gitignored) named as in the table,
-e.g. `images/pit-poke.mp4`, and tell Claude. Claude crops, grades the
-background to the page colour, compresses and wires them in.
+Use the same Gemini chat with the base still attached: "Same character as
+the image, [pose]. Same proportions, colours and lettering, plain near-black
+background." Drop the result in `images/` and tell Claude.
 
 ---
 

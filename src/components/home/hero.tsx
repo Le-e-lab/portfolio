@@ -3,7 +3,6 @@
 import { CopyEmailButton } from "@/components/ui/copy-email-button";
 import { MaskedWords, Reveal } from "@/components/ui/motion-primitives";
 import { IdCard } from "@/components/home/id-card";
-import { HeroPit } from "@/components/home/hero-pit";
 import { siteConfig } from "@/config/site.config";
 
 export function Hero() {
@@ -14,11 +13,10 @@ export function Hero() {
     >
       <div className="grid items-start gap-10 lg:grid-cols-[1fr_300px] lg:gap-16">
         <div className="hero-drift max-w-2xl space-y-6 lg:pt-16">
-          <Reveal delay={0.05} className="relative">
+          <Reveal delay={0.05}>
             <h1 className="text-[clamp(3.25rem,13vw,6rem)] leading-[0.95] tracking-[-0.045em]">
               <MaskedWords text={siteConfig.fullName} />
             </h1>
-            <HeroPit />
           </Reveal>
 
           <Reveal delay={0.15}>
